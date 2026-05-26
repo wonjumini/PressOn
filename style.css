@@ -530,6 +530,44 @@ main { padding-bottom: 80px; }
   pointer-events: auto;
 }
 
+/* ═══════ 네팔 일정 미확정 ══════════════════ */
+.nepal-notice {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--yellow-bg);
+  border-radius: 10px; padding: 10px 14px;
+  font-size: 12px; font-weight: 600; color: #B86800;
+  margin-bottom: 12px;
+}
+.nepal-notice-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--yellow); flex-shrink: 0;
+}
+.sch-item.sch-pending {
+  border: 1.5px dashed var(--yellow);
+  background: var(--yellow-bg);
+}
+.pending-badge {
+  display: inline-flex; align-items: center;
+  background: var(--yellow); color: #fff;
+  font-size: 10px; font-weight: 700;
+  padding: 1px 7px; border-radius: 100px;
+  margin-left: 6px; vertical-align: middle;
+}
+.pending-options {
+  display: flex; flex-direction: column; gap: 6px;
+  margin-top: 8px;
+}
+.pending-opt {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--ink-700);
+}
+.pending-opt-label {
+  font-size: 10px; font-weight: 700;
+  background: var(--ink-900); color: #fff;
+  padding: 2px 7px; border-radius: 4px;
+  flex-shrink: 0;
+}
+
 /* ═══════ RESPONSIVE ══════════════════════ */
 @media (min-width: 500px) { .lg-grid { grid-template-columns: repeat(3,1fr); } }
 @media (min-width: 600px) { .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } }
