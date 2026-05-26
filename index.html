@@ -11,11 +11,14 @@
 </head>
 <body>
 
-<!-- ─── Navigation ─────────────────────────── -->
+<!-- ─── Navigation (C style) ─────────────────── -->
 <div class="nav-wrapper">
   <div class="nav-top">
-    <span class="nav-top-icon">✝</span>
-    <span class="nav-top-title">2026 네팔 선교</span>
+    <div class="nav-top-left">
+      <span class="nav-top-icon">🇳🇵</span>
+      <span class="nav-top-title">2026 네팔 선교</span>
+    </div>
+    <span class="nav-top-badge">2026 Spring</span>
   </div>
   <nav class="tab-nav" role="tablist">
     <button class="tab-btn active" data-page="home">홈</button>
@@ -25,7 +28,7 @@
     <button class="tab-btn" data-page="plan">사역계획</button>
     <button class="tab-btn" data-page="attendance">출석</button>
     <button class="tab-btn" data-page="prayer">중보기도</button>
-    <button class="tab-btn" data-page="luggage">짐</button>
+    <button class="tab-btn" data-page="luggage">짐 목록</button>
     <button class="tab-btn" data-page="notice">공지</button>
   </nav>
 </div>
@@ -35,15 +38,11 @@
 <!-- ═══════ HOME ══════════════════════════════ -->
 <section class="page active" id="page-home">
 
-  <!-- PRESS ON 히어로 -->
+  <!-- PRESS ON 히어로 (dark) -->
   <div class="home-header" id="homeView">
     <p class="home-eyebrow">2026 Nepal Outreach</p>
     <div class="press-on-wrap">
       <div class="press-on" id="pressOn">PRESS ON</div>
-      <svg class="ring-svg" id="ringSvg" width="0" height="0">
-        <circle id="ringTrack" fill="none" stroke="#E5E8EB" stroke-width="3" cx="0" cy="0" r="0"/>
-        <circle id="ringFill" fill="none" stroke="#3182F6" stroke-width="3" stroke-linecap="round" cx="0" cy="0" r="0"/>
-      </svg>
     </div>
     <p class="home-slogan">푯대를 향하여</p>
     <div class="home-bottom-row">
@@ -185,39 +184,39 @@
         <div class="value-row">
           <div class="value-letter-box">N</div>
           <div>
-            <div class="value-word">N — New Creation</div>
+            <div class="value-word">New Creation</div>
             <div class="value-desc">복음을 통해 새롭게 변화됨을 믿는다</div>
             <div class="value-ref">고린도후서 5:17</div>
           </div>
         </div>
         <div class="value-row">
-          <div class="value-letter-box">e</div>
+          <div class="value-letter-box">E</div>
           <div>
-            <div class="value-word">e — Evangelism</div>
+            <div class="value-word">Evangelism</div>
             <div class="value-desc">복음을 전하는 게 선교의 사명이다</div>
             <div class="value-ref">마가복음 16:15</div>
           </div>
         </div>
         <div class="value-row">
-          <div class="value-letter-box">p</div>
+          <div class="value-letter-box">P</div>
           <div>
-            <div class="value-word">p — Passion for Worship</div>
+            <div class="value-word">Passion for Worship</div>
             <div class="value-desc">더 순전한 마음을 구하며 예배한다</div>
             <div class="value-ref">요한복음 4:23-24</div>
           </div>
         </div>
         <div class="value-row">
-          <div class="value-letter-box">a</div>
+          <div class="value-letter-box">A</div>
           <div>
-            <div class="value-word">a — Agape</div>
+            <div class="value-word">Agape</div>
             <div class="value-desc">하나님의 사랑 안에 거한다</div>
             <div class="value-ref">요한복음 15:9</div>
           </div>
         </div>
         <div class="value-row" style="border-bottom:none;padding-bottom:0">
-          <div class="value-letter-box">l</div>
+          <div class="value-letter-box">L</div>
           <div>
-            <div class="value-word">l — Love and Serve</div>
+            <div class="value-word">Love and Serve</div>
             <div class="value-desc">혼자가 아니라 팀이 함께 지어져 간다</div>
             <div class="value-ref">에베소서 2:22</div>
           </div>
@@ -367,7 +366,7 @@
 <section class="page" id="page-luggage">
   <div class="coming-soon">
     <div class="cs-icon">🎒</div>
-    <div class="cs-title">짐 목록/ 물품대여현황</div>
+    <div class="cs-title">짐 목록 / 물품대여현황</div>
     <div class="cs-desc">팀별 짐 리스트가<br>곧 올라올 예정입니다</div>
     <span class="pill pill-gray">준비 중</span>
   </div>
@@ -387,11 +386,6 @@
 <!-- 스크롤 업 버튼 -->
 <button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
-<!-- 마지막 업데이트 + 새로고침 -->
-<div class="update-bar">
-  <span id="last-updated">-</span>
-  <button class="refresh-btn" id="refresh-btn" onclick="refreshAll()" aria-label="새로고침">🔄</button>
-</div>
 
 <script src="app.js"></script>
 </body>

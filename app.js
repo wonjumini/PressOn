@@ -824,57 +824,36 @@ function updateDday() {
 }
 
 /* ═══════════════════════════════════════════════
-   9. PRESS ON 인터랙션
+   9. PRESS ON 인터랙션 (dim 방식)
 ═══════════════════════════════════════════════ */
 function initPressOn() {
   const pressEl = document.getElementById('pressOn');
-  const ringSvg = document.getElementById('ringSvg');
-  const ringTrack = document.getElementById('ringTrack');
-  const ringFill  = document.getElementById('ringFill');
   if (!pressEl) return;
 
-  let animFrame = null, startTime = null, ringC = 0;
+  // dim overlay 생성
+  const dimEl = document.createElement('div');
+  dimEl.className = 'dim-overlay';
+  document.body.appendChild(dimEl);
 
-  function setupRing() {
-    const rect = pressEl.getBoundingClientRect();
-    const w = rect.width + 20, h = rect.height + 20;
-    const cx = w / 2, cy = h / 2, r = Math.min(w, h) / 2 - 3;
-    ringSvg.style.display = 'block';
-    ringSvg.setAttribute('width', w);
-    ringSvg.setAttribute('height', h);
-    ringSvg.style.marginLeft = (-w / 2) + 'px';
-    ringSvg.style.marginTop  = (-h / 2) + 'px';
-    [ringTrack, ringFill].forEach(el => {
-      el.setAttribute('cx', cx);
-      el.setAttribute('cy', cy);
-      el.setAttribute('r', r);
-    });
-    const c = 2 * Math.PI * r;
-    ringFill.style.strokeDasharray = '0 ' + c;
-    ringFill.style.transform = 'rotate(-90deg)';
-    ringFill.style.transformOrigin = cx + 'px ' + cy + 'px';
-    return c;
-  }
+  let pressTimer = null;
+  let isHolding = false;
 
   function startPress() {
+    isHolding = true;
     pressEl.classList.add('pressing');
-    ringC = setupRing();
-    startTime = Date.now();
-    function animate() {
-      const ratio = Math.min((Date.now() - startTime) / HOLD_MS, 1);
-      ringFill.style.strokeDasharray = (ratio * ringC) + ' ' + ringC;
-      if (ratio < 1) { animFrame = requestAnimationFrame(animate); }
-      else { cancelAnimationFrame(animFrame); ringSvg.style.display = 'none'; openKV(); }
-    }
-    animFrame = requestAnimationFrame(animate);
+    // dim 서서히 어두워지기 시작
+    dimEl.classList.add('active');
+    pressTimer = setTimeout(() => {
+      if (isHolding) openKV();
+    }, HOLD_MS);
   }
 
   function cancelPress() {
+    if (!isHolding) return;
+    isHolding = false;
     pressEl.classList.remove('pressing');
-    if (animFrame) cancelAnimationFrame(animFrame);
-    ringFill.style.strokeDasharray = '0 ' + ringC;
-    ringSvg.style.display = 'none';
-    startTime = null;
+    clearTimeout(pressTimer);
+    dimEl.classList.remove('active');
   }
 
   pressEl.addEventListener('mousedown', startPress);
@@ -892,7 +871,9 @@ function openKV() {
   const wrap = document.getElementById('kvOverlay');
   const inner = document.getElementById('kvInner');
   const pressEl = document.getElementById('pressOn');
+  const dimEl = document.querySelector('.dim-overlay');
   if (pressEl) pressEl.classList.remove('pressing');
+  if (dimEl) dimEl.classList.remove('active');
   if (home) { home.style.opacity = '0'; home.style.transition = 'opacity .2s'; }
   setTimeout(() => {
     if (home) home.style.display = 'none';
@@ -965,30 +946,15 @@ document.querySelectorAll('.sub-tab-btn').forEach(btn => {
 });
 
 /* ═══════════════════════════════════════════════
-   12. 새로고침 / 마지막 업데이트
+   12. 새로고침 (visibilitychange만 유지)
 ═══════════════════════════════════════════════ */
-function updateTimestamp() {
-  const el = document.getElementById('last-updated');
-  if (!el) return;
-  const now = kstNow();
-  el.textContent = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')} 업데이트`;
-}
-
 async function refreshAll() {
-  const btn = document.getElementById('refresh-btn');
-  if (btn) btn.classList.add('spinning');
-  await Promise.all([
-    loadHome(),
-    loadWeather(),
-  ]);
-  // 현재 열린 탭도 새로고침
+  await Promise.all([ loadHome(), loadWeather() ]);
   const activeTab = document.querySelector('.tab-btn.active')?.dataset?.page;
   if (activeTab === 'schedule')   await loadSchedule();
   if (activeTab === 'team')       await loadTeam();
   if (activeTab === 'plan')       await loadPlan();
   if (activeTab === 'attendance') await loadAttendance();
-  updateTimestamp();
-  if (btn) btn.classList.remove('spinning');
 }
 
 /* ═══════════════════════════════════════════════
@@ -1013,9 +979,7 @@ async function init() {
   updateDday();
   initPressOn();
   loaded.add('home');
-
   await Promise.all([ loadHome(), loadWeather() ]);
-  updateTimestamp();
 }
 
 init();
