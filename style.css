@@ -273,7 +273,7 @@ main { padding-bottom: 80px; }
   background: var(--surface);
   border-radius: var(--r);
   padding: 18px 20px;
-  margin-bottom: 18px;
+  margin-bottom: 8px;
 }
 .dir-tag {
   font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
@@ -335,10 +335,22 @@ main { padding-bottom: 80px; }
   color: var(--ink-900); text-align: center; line-height: 1.4;
 }
 .org-node small { font-size: 12px; font-weight: 400; color: var(--ink-500); }
-.org-node.dir { background: var(--ink-900); color: white; border-color: var(--ink-900); padding: 12px 24px; font-size: 14px; }
-.org-node.dir small { color: rgba(255,255,255,.6); }
-.org-node.sub { border-color: var(--blue); color: var(--blue); }
+.org-node.dir { background: var(--blue); color: white; border-color: var(--blue); padding: 12px 24px; font-size: 14px; }
+.org-node.dir small { color: rgba(255,255,255,.7); }
+.org-node.subdir { border-color: var(--blue-bg); background: var(--blue-bg); color: var(--blue); }
+.org-node.subdir small { color: var(--blue); opacity: .7; }
+.org-node.lead { border-color: var(--line); color: var(--ink-900); background: var(--surface); }
+.org-node.lead small { color: var(--ink-300); }
 .org-node.sec { border-color: var(--purple); color: var(--purple); font-size: 12px; padding: 8px 14px; }
+
+/* 또래 태그 */
+.peer-tag {
+  display: inline-block;
+  font-size: 10px; font-weight: 600;
+  color: var(--ink-300);
+  margin-left: 4px;
+  vertical-align: middle;
+}
 .org-conn { width: 1.5px; height: 14px; background: var(--line); }
 .org-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
 

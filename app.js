@@ -201,62 +201,43 @@ function parseOrg(json) {
 
     // ── 조직도 하드코딩 ──────────────────────────
     const org = {
-      director:    '박지명',
-      subdirector: '정예림',
-      accountant:  '신성민',
-      secretary:   '노해인',
-      leaderM:     '조민희',
-      leaderF:     '고경혜',
+      director:    '박지명(90)',
+      subdirector: '정예림(99)',
+      accountant:  '신성민(01)',
+      secretary:   '노해인(03)',
+      leaderM:     '조민희(91)',
+      leaderF:     '고경혜(91)',
 
-      // ── 사역팀 하드코딩 ─────────────────────────
       teams: [
-        { name:'인터씨드팀',   leader:'정예림', members:['조민희','김윤하','유지훈'] },
-        { name:'하스피팀',     leader:'조희래', members:['정지윤','김준희','노해인'] },
-        { name:'어린이사역팀', leader:'김주찬', members:['신성민','양한솔','박예진','박희원','양예원'] },
-        { name:'문화사역팀',   leader:'양은정', members:['조상운','송무늬','이시훈','김유찬'] },
-        { name:'빅아이디어팀', leader:'이호준', members:['김수빈','김향'] },
-        { name:'예배팀',       leader:'홍예찬', members:['박조한','고경혜','김예은','정은혜'] },
+        { name:'인터씨드팀',   leader:'정예림(99)', members:['조민희(91)','김윤하(07)','유지훈(99)'] },
+        { name:'하스피팀',     leader:'조희래(95)', members:['정지윤(95)','김준희(99)','노해인(03)'] },
+        { name:'어린이사역팀', leader:'김주찬(94)', members:['신성민(01)','양한솔(91)','박예진(95)','박희원(02)','양예원(03)'] },
+        { name:'문화사역팀',   leader:'양은정(94)', members:['조상운(92)','송무늬(98)','이시훈(96)','김유찬(99)'] },
+        { name:'빅아이디어팀', leader:'이호준(93)', members:['김수빈(06)','김향(99)'] },
+        { name:'예배팀',       leader:'홍예찬(96)', members:['박조한(07)','고경혜(91)','김예은(98)','정은혜(98)'] },
       ],
 
-      // ── 생활조 하드코딩 ─────────────────────────
       lifeGroups: [
-        { num:1, leader:'조상운', members:['조민희','이호준','김주찬'] },
-        { num:2, leader:'정지윤', members:['조희래','홍예찬','유지훈'] },
-        { num:3, leader:'이시훈', members:['김유찬','신성민','김수빈','박조한'] },
-        { num:4, leader:'양한솔', members:['고경혜','양은정','박예진','김준희'] },
-        { num:5, leader:'김예은', members:['송무늬','정은혜','김향'] },
-        { num:6, leader:'정예림', members:['박희원','양예원','노해인','김윤하'] },
+        { num:1, leader:'조상운(92)', members:['조민희(91)','이호준(93)','김주찬(94)'] },
+        { num:2, leader:'정지윤(95)', members:['조희래(95)','홍예찬(96)','유지훈(99)'] },
+        { num:3, leader:'이시훈(96)', members:['김유찬(99)','신성민(01)','김수빈(06)','박조한(07)'] },
+        { num:4, leader:'양한솔(91)', members:['고경혜(91)','양은정(94)','박예진(95)','김준희(99)'] },
+        { num:5, leader:'김예은(98)', members:['송무늬(98)','정은혜(98)','김향(99)'] },
+        { num:6, leader:'정예림(99)', members:['박희원(02)','양예원(03)','노해인(03)','김윤하(07)'] },
       ],
 
       jobs: [],
     };
 
-    // ── JOB 파싱 (시트 연동 유지) ────────────────
-    let jobIdx = -1;
-    for (let i = 0; i < rows.length; i++) {
-      if (safeStr(rows[i], 1) === '팀빌딩') { jobIdx = i; break; }
-    }
-    if (jobIdx >= 0) {
-      for (let j = 0; j < 7; j++) {
-        const row = rows[jobIdx + j];
-        if (!row) break;
-        const title = safeStr(row, 1);
-        if (!title) break;
-        const members = [2,3,4,5,6,7,8].map(c => safeStr(row, c)).filter(Boolean);
-        org.jobs.push({ title, members });
-      }
-    }
-
-    // JOB 파싱 실패 시 하드코딩 fallback
     if (org.jobs.length === 0) {
       org.jobs = [
-        { title:'팀빌딩',      members:['조희래','홍예찬','유지훈','김유찬','박희원','김수빈'] },
-        { title:'디자인&데코', members:['송무늬','정지윤','박예진','김예은','양예원'] },
-        { title:'촬영',        members:['김주찬','김준희'] },
-        { title:'웍듀티',      members:['조상운','양한솔','박조한','김윤하'] },
-        { title:'의료지원',    members:['이시훈','김향'] },
-        { title:'라스트키퍼',  members:['이호준','양은정','정은혜'] },
-        { title:'타임키퍼',    members:['고경혜','조민희'] },
+        { title:'팀빌딩',      members:['조희래(95)','홍예찬(96)','유지훈(99)','김유찬(99)','박희원(02)','김수빈(06)'] },
+        { title:'디자인&데코', members:['송무늬(98)','정지윤(95)','박예진(95)','김예은(98)','양예원(03)'] },
+        { title:'촬영',        members:['김주찬(94)','김준희(99)'] },
+        { title:'웍듀티',      members:['조상운(92)','양한솔(91)','박조한(07)','김윤하(07)'] },
+        { title:'의료지원',    members:['이시훈(96)','김향(99)'] },
+        { title:'라스트키퍼',  members:['이호준(93)','양은정(94)','정은혜(98)'] },
+        { title:'타임키퍼',    members:['고경혜(91)','조민희(91)'] },
       ];
     }
 
@@ -500,6 +481,22 @@ function renderSchedule(result) {
   }
 }
 
+// 이름에서 기수 추출해서 "xx년대" 형식으로 변환
+// "박지명(90)" → { name:"박지명", peer:"90년대" }
+// "박지명" → { name:"박지명", peer:"" }
+function parseName(str) {
+  const m = String(str).match(/^(.+?)\((\d{2})\)$/);
+  if (m) return { name: m[1].trim(), peer: m[2] + '년대' };
+  return { name: String(str).trim(), peer: '' };
+}
+
+function nameTag(str) {
+  const { name, peer } = parseName(str);
+  return peer
+    ? `${escHtml(name)}<span class="peer-tag">${escHtml(peer)}</span>`
+    : escHtml(name);
+}
+
 function renderTeam(result) {
   const el = document.getElementById('team-content');
   if (!el) return;
@@ -511,30 +508,30 @@ function renderTeam(result) {
 
   const org = parseOrg(result.data);
 
-  // 조직도
+  // 조직도 — 디렉터 파랑, 부디렉터 연파랑, 전체팀장/회계/서기 동일 색상
   const orgHtml = `
     <div class="section-label">조직도</div>
     <div class="card">
       <div class="org-wrap">
         <div class="org-chart">
-          <div class="org-row"><div class="org-node dir">디렉터<small>${escHtml(org.director)}</small></div></div>
+          <div class="org-row"><div class="org-node dir">${nameTag(org.director)}<small>디렉터</small></div></div>
           <div class="org-conn"></div>
-          <div class="org-row"><div class="org-node sub">부디렉터<small>${escHtml(org.subdirector)}</small></div></div>
+          <div class="org-row"><div class="org-node subdir">${nameTag(org.subdirector)}<small>부디렉터</small></div></div>
           <div class="org-conn"></div>
           <div class="org-row">
-            <div class="org-node">전체팀장(남)<small>${escHtml(org.leaderM)}</small></div>
-            <div class="org-node">전체팀장(여)<small>${escHtml(org.leaderF)}</small></div>
+            <div class="org-node lead">${nameTag(org.leaderM)}<small>전체팀장(남)</small></div>
+            <div class="org-node lead">${nameTag(org.leaderF)}<small>전체팀장(여)</small></div>
           </div>
           <div class="org-conn"></div>
           <div class="org-row">
-            <div class="org-node sec">회계<small>${escHtml(org.accountant)}</small></div>
-            <div class="org-node sec">서기<small>${escHtml(org.secretary)}</small></div>
+            <div class="org-node lead">${nameTag(org.accountant)}<small>회계</small></div>
+            <div class="org-node lead">${nameTag(org.secretary)}<small>서기</small></div>
           </div>
         </div>
       </div>
     </div>`;
 
-  // 사역팀
+  // 사역팀 — 팀장 포함 x명 제거, 이름 옆 또래 표시
   const teamsHtml = org.teams.length > 0 ? `
     <div class="section">
       <div class="section-label">사역팀</div>
@@ -544,22 +541,19 @@ function renderTeam(result) {
           <div class="team-card">
             <div class="team-hd">
               <div class="team-icon" style="background:${meta.bg};color:${meta.color}">${meta.icon}</div>
-              <div>
-                <div class="team-name">${escHtml(t.name)}</div>
-                <div class="team-count">팀장 포함 ${t.members.length + 1}명</div>
-              </div>
+              <div class="team-name">${escHtml(t.name)}</div>
             </div>
             <div class="team-bd">
               <div class="chips">
-                <span class="chip leader">👑 ${escHtml(t.leader)}</span>
-                ${t.members.map(m => `<span class="chip">${escHtml(m)}</span>`).join('')}
+                <span class="chip leader">👑 ${nameTag(t.leader)}</span>
+                ${t.members.map(m => `<span class="chip">${nameTag(m)}</span>`).join('')}
               </div>
             </div>
           </div>`;
       }).join('')}
     </div>` : '';
 
-  // 생활조
+  // 생활조 — 이름 옆 또래 표시
   const lgHtml = org.lifeGroups.length > 0 ? `
     <div class="section">
       <div class="section-label">생활조</div>
@@ -567,15 +561,15 @@ function renderTeam(result) {
         ${org.lifeGroups.map(g => `
           <div class="lg-card">
             <div class="lg-num">${g.num}</div>
-            <div class="lg-leader">👑 ${escHtml(g.leader)}</div>
+            <div class="lg-leader">👑 ${nameTag(g.leader)}</div>
             <div class="chips">
-              ${g.members.map(m => `<span class="chip">${escHtml(m)}</span>`).join('')}
+              ${g.members.map(m => `<span class="chip">${nameTag(m)}</span>`).join('')}
             </div>
           </div>`).join('')}
       </div>
     </div>` : '';
 
-  // JOB
+  // JOB — 이름 옆 또래 표시
   const jobHtml = org.jobs.length > 0 ? `
     <div class="section" style="margin-bottom:0">
       <div class="section-label">JOB</div>
@@ -587,7 +581,7 @@ function renderTeam(result) {
               <div class="job-icon-box" style="background:${meta.bg}">${meta.icon}</div>
               <div>
                 <div class="job-title">${escHtml(j.title)}</div>
-                <div class="job-members">${j.members.map(m => escHtml(m)).join(', ')}</div>
+                <div class="job-members">${j.members.map(m => nameTag(m)).join(' · ')}</div>
               </div>
             </div>`;
         }).join('')}
