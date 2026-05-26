@@ -837,11 +837,20 @@ function closeKV() {
 }
 
 /* ═══════════════════════════════════════════════
-   10. 아코디언 (사역계획)
+   10. 아코디언 (사역계획 + 선교 이야기)
 ═══════════════════════════════════════════════ */
 function togglePlan(idx) {
   const bd    = document.getElementById(`plan-bd-${idx}`);
   const arrow = document.getElementById(`plan-arrow-${idx}`);
+  if (!bd) return;
+  const isOpen = bd.classList.contains('open');
+  bd.classList.toggle('open', !isOpen);
+  if (arrow) arrow.classList.toggle('open', !isOpen);
+}
+
+function toggleStory(idx) {
+  const bd    = document.getElementById(`story-bd-${idx}`);
+  const arrow = document.getElementById(`story-arrow-${idx}`);
   if (!bd) return;
   const isOpen = bd.classList.contains('open');
   bd.classList.toggle('open', !isOpen);

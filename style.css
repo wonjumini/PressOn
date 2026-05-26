@@ -565,6 +565,79 @@ main { padding-bottom: 80px; }
   flex-shrink: 0;
 }
 
+/* ═══════ STORY ══════════════════════════════ */
+.story-video-wrap {
+  background: var(--surface);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-bottom: 8px;
+  position: relative;
+}
+.story-video-wrap iframe {
+  width: 100%; aspect-ratio: 16/9;
+  display: block; border: none;
+}
+.story-video-hint {
+  font-size: 12px; color: var(--ink-300);
+  text-align: center; padding: 12px;
+}
+
+.story-card {
+  background: var(--surface);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.story-hd {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 16px; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.story-hd:active { background: var(--bg); }
+.story-meta {
+  display: flex; flex-direction: column; gap: 2px;
+  flex-shrink: 0;
+}
+.story-num {
+  font-size: 11px; font-weight: 700;
+  color: var(--blue); letter-spacing: .3px;
+}
+.story-date { font-size: 11px; color: var(--ink-300); }
+.story-summary {
+  flex: 1; font-size: 13px; font-weight: 600;
+  color: var(--ink-900); line-height: 1.4;
+}
+
+.story-bd {
+  display: none;
+  padding: 0 16px 16px;
+  border-top: 1px solid var(--line);
+}
+.story-bd.open { display: block; }
+.story-bd p {
+  font-size: 13px; color: var(--ink-500);
+  line-height: 1.8; margin-top: 12px;
+}
+
+.story-prayer {
+  margin-top: 16px;
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.story-prayer-title {
+  font-size: 12px; font-weight: 700;
+  color: var(--ink-700); margin-bottom: 8px;
+}
+.story-prayer ul {
+  padding-left: 16px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.story-prayer ul li {
+  font-size: 12px; color: var(--ink-500); line-height: 1.6;
+}
+
 /* ═══════ RESPONSIVE ══════════════════════ */
 @media (min-width: 500px) { .lg-grid { grid-template-columns: repeat(3,1fr); } }
 @media (min-width: 600px) { .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } }
