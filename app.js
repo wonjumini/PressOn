@@ -508,25 +508,24 @@ function renderTeam(result) {
 
   const org = parseOrg(result.data);
 
-  // 조직도 — 디렉터 파랑, 부디렉터 연파랑, 전체팀장/회계/서기 동일 색상
+  // 조직도 — C 스타일 3레벨 (디렉터 → 부디렉터 → 전체팀장/회계/서기)
   const orgHtml = `
     <div class="section-label">조직도</div>
-    <div class="card">
-      <div class="org-wrap">
-        <div class="org-chart">
-          <div class="org-row"><div class="org-node dir">${nameTag(org.director)}<small>디렉터</small></div></div>
-          <div class="org-conn"></div>
-          <div class="org-row"><div class="org-node subdir">${nameTag(org.subdirector)}<small>부디렉터</small></div></div>
-          <div class="org-conn"></div>
-          <div class="org-row">
-            <div class="org-node lead">${nameTag(org.leaderM)}<small>전체팀장(남)</small></div>
-            <div class="org-node lead">${nameTag(org.leaderF)}<small>전체팀장(여)</small></div>
-          </div>
-          <div class="org-conn"></div>
-          <div class="org-row">
-            <div class="org-node lead">${nameTag(org.accountant)}<small>회계</small></div>
-            <div class="org-node lead">${nameTag(org.secretary)}<small>서기</small></div>
-          </div>
+    <div class="card" style="padding:20px 16px">
+      <div class="org-chart">
+        <div class="org-row">
+          <div class="org-node dir">${escHtml(parseName(org.director).name)}<small>디렉터</small></div>
+        </div>
+        <div class="org-conn"></div>
+        <div class="org-row">
+          <div class="org-node subdir">${escHtml(parseName(org.subdirector).name)}<small>부디렉터</small></div>
+        </div>
+        <div class="org-conn"></div>
+        <div class="org-row">
+          <div class="org-node lead">${escHtml(parseName(org.leaderM).name)}<small>팀장(남)</small></div>
+          <div class="org-node lead">${escHtml(parseName(org.leaderF).name)}<small>팀장(여)</small></div>
+          <div class="org-node lead">${escHtml(parseName(org.accountant).name)}<small>회계</small></div>
+          <div class="org-node lead">${escHtml(parseName(org.secretary).name)}<small>서기</small></div>
         </div>
       </div>
     </div>`;
@@ -545,8 +544,8 @@ function renderTeam(result) {
             </div>
             <div class="team-bd">
               <div class="chips">
-                <span class="chip leader">👑 ${nameTag(t.leader)}</span>
-                ${t.members.map(m => `<span class="chip">${nameTag(m)}</span>`).join('')}
+                <span class="chip leader">👑 ${escHtml(parseName(t.leader).name)}</span>
+                ${t.members.map(m => `<span class="chip">${escHtml(parseName(m).name)}</span>`).join('')}
               </div>
             </div>
           </div>`;
@@ -561,9 +560,9 @@ function renderTeam(result) {
         ${org.lifeGroups.map(g => `
           <div class="lg-card">
             <div class="lg-num">${g.num}</div>
-            <div class="lg-leader">👑 ${nameTag(g.leader)}</div>
+            <div class="lg-leader">👑 ${escHtml(parseName(g.leader).name)}</div>
             <div class="chips">
-              ${g.members.map(m => `<span class="chip">${nameTag(m)}</span>`).join('')}
+              ${g.members.map(m => `<span class="chip">${escHtml(parseName(m).name)}</span>`).join('')}
             </div>
           </div>`).join('')}
       </div>
@@ -581,7 +580,7 @@ function renderTeam(result) {
               <div class="job-icon-box" style="background:${meta.bg}">${meta.icon}</div>
               <div>
                 <div class="job-title">${escHtml(j.title)}</div>
-                <div class="job-members">${j.members.map(m => nameTag(m)).join(' · ')}</div>
+                <div class="job-members">${j.members.map(m => escHtml(parseName(m).name)).join(' · ')}</div>
               </div>
             </div>`;
         }).join('')}
