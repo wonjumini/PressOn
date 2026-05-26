@@ -169,129 +169,69 @@ function parseOverview(json) {
 }
 
 function parseSchedule(json) {
-  try {
-    const rows = json?.table?.rows ?? [];
-    const items = [];
-    const afterItems = [];
+  // 시트 파싱 대신 확정된 한국 일정 하드코딩
+  // (gviz API 캘린더 구조가 복잡해 파싱 불안정 → 하드코딩으로 안정화)
+  const items = [
+    { date:'2026-05-30', title:'팀모임 1회', detail:'웰컴 · 기대 나누기', type:'team' },
+    { date:'2026-05-31', title:'선교학교 1 / 팀모임 2', detail:'여름단기선교의 중요성', type:'school' },
+    { date:'2026-06-06', title:'팀모임 3회', detail:'', type:'team' },
+    { date:'2026-06-07', title:'선교학교 2 / 팀모임 4', detail:'단기선교 준비', type:'school' },
+    { date:'2026-06-13', title:'팀모임 5회', detail:'', type:'team' },
+    { date:'2026-06-14', title:'선교학교 3 / 팀모임 6', detail:'JOB', type:'school' },
+    { date:'2026-06-20', title:'팀모임 7회', detail:'', type:'team' },
+    { date:'2026-06-21', title:'선교학교 4 / 팀모임 8', detail:'영적인 일', type:'school' },
+    { date:'2026-06-27', title:'팀모임 9회', detail:'', type:'team' },
+    { date:'2026-06-28', title:'선교학교 5 / 팀모임 10', detail:'하나 됨 · 파송예배', type:'school' },
+    { date:'2026-06-28', title:'파송예배', detail:'', type:'special' },
+    { date:'2026-07-04', title:'팀모임 11회', detail:'최종 리허설 · 짐 패킹', type:'team' },
+    { date:'2026-07-05', title:'팀모임 12회', detail:'짐 패킹 2', type:'team' },
+  ];
 
-    // 일정 텍스트 파싱 (11번째 컬럼 기준)
-    for (const row of rows) {
-      const txt = safeStr(row, 11);
-      if (!txt) continue;
+  const afterItems = [
+    { date:'2026-08-02', title:'전체 에프터', detail:'', type:'after' },
+    { date:'2026-08-16', title:'보고예배 · 사진전', detail:'', type:'after' },
+  ];
 
-      // 날짜 패턴 파싱: "5.30", "5/30", "6.6" 등
-      const m = txt.match(/^(\d+)[./](\d+)\s+(.+)/);
-      if (!m) continue;
-
-      const month = parseInt(m[1]);
-      const day   = parseInt(m[2]);
-      const desc  = m[3].trim();
-      const year  = 2026;
-      const dateStr = `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-
-      // 유형 판별
-      let type = 'team';
-      if (desc.includes('선교학교')) type = 'school';
-      else if (desc.includes('파송예배')) type = 'special';
-      else if (desc.includes('에프터') || desc.includes('보고예배')) type = 'after';
-
-      const item = { date: dateStr, title: desc, detail: '', type, required: true };
-
-      if (type === 'after') afterItems.push(item);
-      else items.push(item);
-    }
-
-    return { items, afterItems };
-  } catch(e) { return { items: [], afterItems: [] }; }
+  return { items, afterItems };
 }
 
 function parseOrg(json) {
   try {
     const rows = json?.table?.rows ?? [];
+
+    // ── 조직도 하드코딩 ──────────────────────────
     const org = {
-      director: null,
-      subdirector: null,
-      accountant: null,
-      secretary: null,
-      leaderM: null,
-      leaderF: null,
-      teams: [],
-      lifeGroups: [],
+      director:    '박지명',
+      subdirector: '정예림',
+      accountant:  '신성민',
+      secretary:   '노해인',
+      leaderM:     '조민희',
+      leaderF:     '고경혜',
+
+      // ── 사역팀 하드코딩 ─────────────────────────
+      teams: [
+        { name:'인터씨드팀',   leader:'정예림', members:['조민희','김윤하','유지훈'] },
+        { name:'하스피팀',     leader:'조희래', members:['정지윤','김준희','노해인'] },
+        { name:'어린이사역팀', leader:'김주찬', members:['신성민','양한솔','박예진','박희원','양예원'] },
+        { name:'문화사역팀',   leader:'양은정', members:['조상운','송무늬','이시훈','김유찬'] },
+        { name:'빅아이디어팀', leader:'이호준', members:['김수빈','김향'] },
+        { name:'예배팀',       leader:'홍예찬', members:['박조한','고경혜','김예은','정은혜'] },
+      ],
+
+      // ── 생활조 하드코딩 ─────────────────────────
+      lifeGroups: [
+        { num:1, leader:'조상운', members:['조민희','이호준','김주찬'] },
+        { num:2, leader:'정지윤', members:['조희래','홍예찬','유지훈'] },
+        { num:3, leader:'이시훈', members:['김유찬','신성민','김수빈','박조한'] },
+        { num:4, leader:'양한솔', members:['고경혜','양은정','박예진','김준희'] },
+        { num:5, leader:'김예은', members:['송무늬','정은혜','김향'] },
+        { num:6, leader:'정예림', members:['박희원','양예원','노해인','김윤하'] },
+      ],
+
       jobs: [],
     };
 
-    // 디렉터/부디렉터/회계/서기
-    for (const row of rows) {
-      const c8  = safeStr(row, 8);
-      const c13 = safeStr(row, 13);
-      const c14 = safeStr(row, 14);
-      const c7  = safeStr(row, 7);
-
-      if (c8 === '디렉터') {
-        const nameRow = rows[rows.indexOf(row)];
-        org.director = safeStr(nameRow, 8);
-      }
-      if (c13 === '부디렉터') org.subdirector = safeStr(row, 14);
-      if (c13 === '회계') org.accountant = safeStr(row, 14);
-      if (c13 === '서기') org.secretary = safeStr(row, 14);
-      if (c7 === '전체팀장(남)') org.leaderM = safeStr(row, 8);
-      if (c7 === '전체팀장(여)') org.leaderF = safeStr(row, 12);
-    }
-
-    // 직접 파싱 (시트 구조 기반 하드코딩 fallback)
-    if (!org.director) org.director = '박지명(90)';
-    if (!org.subdirector) org.subdirector = '정예림(99)';
-    if (!org.accountant) org.accountant = '신성민(01)';
-    if (!org.secretary) org.secretary = '노해인(03)';
-    if (!org.leaderM) org.leaderM = '조민희(91)';
-    if (!org.leaderF) org.leaderF = '고경혜(91)';
-
-    // 사역팀 파싱
-    const teamNames = ['인터씨드팀','하스피팀','어린이사역팀','문화사역팀','빅아이디어팀','예배팀'];
-    let teamRowIdx = -1;
-    for (let i = 0; i < rows.length; i++) {
-      if (safeStr(rows[i], 1) === '인터씨드팀') { teamRowIdx = i; break; }
-    }
-    if (teamRowIdx >= 0) {
-      const teamRow  = rows[teamRowIdx];
-      const leaderRow = rows[teamRowIdx + 1] ?? {};
-      // 6개 팀, 각 3열 간격
-      const cols = [1, 5, 9, 13, 17, 21];
-      teamNames.forEach((name, ti) => {
-        const ci = cols[ti];
-        const leader = safeStr(leaderRow, ci);
-        const members = [];
-        for (let r = teamRowIdx + 2; r < Math.min(teamRowIdx + 8, rows.length); r++) {
-          const male   = safeStr(rows[r], ci);
-          const female = safeStr(rows[r], ci + 1);
-          if (male)   members.push(male);
-          if (female) members.push(female);
-        }
-        org.teams.push({ name, leader, members: members.filter(m => m && !m.includes('남') && !m.includes('여')) });
-      });
-    }
-
-    // 생활조 파싱
-    let lgIdx = -1;
-    for (let i = 0; i < rows.length; i++) {
-      if (safeStr(rows[i], 1) === '1조') { lgIdx = i; break; }
-    }
-    if (lgIdx >= 0) {
-      for (let g = 0; g < 6; g++) {
-        const ci = 1 + g * 4;
-        const leader = safeStr(rows[lgIdx], ci);
-        const members = [];
-        for (let r = lgIdx + 1; r < Math.min(lgIdx + 4, rows.length); r++) {
-          const m1 = safeStr(rows[r], ci);
-          const m2 = safeStr(rows[r], ci + 1);
-          if (m1) members.push(m1);
-          if (m2) members.push(m2);
-        }
-        org.lifeGroups.push({ num: g + 1, leader, members: members.filter(Boolean) });
-      }
-    }
-
-    // JOB 파싱
+    // ── JOB 파싱 (시트 연동 유지) ────────────────
     let jobIdx = -1;
     for (let i = 0; i < rows.length; i++) {
       if (safeStr(rows[i], 1) === '팀빌딩') { jobIdx = i; break; }
@@ -302,16 +242,31 @@ function parseOrg(json) {
         if (!row) break;
         const title = safeStr(row, 1);
         if (!title) break;
-        const memberCols = [2,3,4,5,6,7,8];
-        const members = memberCols.map(c => safeStr(row, c)).filter(Boolean);
+        const members = [2,3,4,5,6,7,8].map(c => safeStr(row, c)).filter(Boolean);
         org.jobs.push({ title, members });
       }
+    }
+
+    // JOB 파싱 실패 시 하드코딩 fallback
+    if (org.jobs.length === 0) {
+      org.jobs = [
+        { title:'팀빌딩',      members:['조희래','홍예찬','유지훈','김유찬','박희원','김수빈'] },
+        { title:'디자인&데코', members:['송무늬','정지윤','박예진','김예은','양예원'] },
+        { title:'촬영',        members:['김주찬','김준희'] },
+        { title:'웍듀티',      members:['조상운','양한솔','박조한','김윤하'] },
+        { title:'의료지원',    members:['이시훈','김향'] },
+        { title:'라스트키퍼',  members:['이호준','양은정','정은혜'] },
+        { title:'타임키퍼',    members:['고경혜','조민희'] },
+      ];
     }
 
     return org;
   } catch(e) {
     console.error('org parse error', e);
-    return { director:'박지명(90)', subdirector:'정예림(99)', accountant:'신성민(01)', secretary:'노해인(03)', leaderM:'조민희(91)', leaderF:'고경혜(91)', teams:[], lifeGroups:[], jobs:[] };
+    return {
+      director:'박지명', subdirector:'정예림', accountant:'신성민', secretary:'노해인',
+      leaderM:'조민희', leaderF:'고경혜', teams:[], lifeGroups:[], jobs:[]
+    };
   }
 }
 
@@ -448,14 +403,10 @@ function renderHomeOverview(result) {
   el.classList.add('fade-in');
 }
 
-function renderHomeNextMeeting(schedResult) {
+function renderHomeNextMeeting() {
   const el = document.getElementById('home-next-meeting');
   if (!el) return;
-  if (!schedResult.ok) {
-    el.innerHTML = `<div class="next-row"><div class="next-dot"></div><div class="next-info"><div class="next-label">일정을 불러올 수 없습니다</div></div></div>`;
-    return;
-  }
-  const { items } = parseSchedule(schedResult.data);
+  const { items } = parseSchedule(null);
   const today = kstNow(); today.setHours(0,0,0,0);
   const next = items.find(item => {
     const d = new Date(item.date); d.setHours(0,0,0,0);
@@ -534,7 +485,6 @@ function renderSchedule(result) {
           ${item.detail ? `<div class="sch-detail">${escHtml(item.detail)}</div>` : ''}
           <div class="sch-badges">
             <span class="pill ${pillMap[item.type] || 'pill-gray'}">${labelMap[item.type] || item.type}</span>
-            ${item.required ? '<span class="pill pill-gray">필수참석</span>' : ''}
           </div>
         </div>
       </div>`;
@@ -746,21 +696,20 @@ function renderAttendance(result) {
    6. 로드 함수
 ═══════════════════════════════════════════════ */
 async function loadHome() {
-  const [scriptureResult, overviewResult, scheduleResult, noticeResult] = await Promise.all([
+  const [scriptureResult, overviewResult, noticeResult] = await Promise.all([
     fetchSheetSafe(SHEETS.scripture),
     fetchSheetSafe(SHEETS.overview),
-    fetchSheetSafe(SHEETS.schedule),
     fetchSheetSafe(SHEETS.notice),
   ]);
   renderHomeScripture(scriptureResult);
   renderHomeOverview(overviewResult);
-  renderHomeNextMeeting(scheduleResult);
+  renderHomeNextMeeting();
   renderHomeNotice(noticeResult);
 }
 
 async function loadSchedule() {
-  const result = await fetchSheetSafe(SHEETS.schedule);
-  renderSchedule(result);
+  // 일정은 하드코딩 - dummy ok result로 바로 렌더
+  renderSchedule({ ok: true, data: null, offline: false });
 }
 
 async function loadTeam() {
