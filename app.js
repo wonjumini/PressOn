@@ -209,9 +209,9 @@ function parseOrg(json) {
       leaderF:     '고경혜(91)',
 
       teams: [
-        { name:'인터씨드팀',   leader:'정예림(99)', members:['조민희(91)','김윤하(07)','유지훈(99)'] },
-        { name:'하스피팀',     leader:'조희래(95)', members:['정지윤(95)','김준희(99)','노해인(03)'] },
-        { name:'어린이사역팀', leader:'김주찬(94)', members:['신성민(01)','양한솔(91)','박예진(95)','박희원(02)','양예원(03)'] },
+        { name:'인터씨드팀',   leader:'정예림(99)', members:['조민희(91)','유지훈(99)','노해인(03)'] },
+        { name:'하스피팀',     leader:'조희래(95)', members:['정지윤(95)','양한솔(91)','김준희(99)'] },
+        { name:'어린이사역팀', leader:'김주찬(94)', members:['신성민(01)','박예진(95)','박희원(02)','양예원(03)', '김윤하(07)'] },
         { name:'문화사역팀',   leader:'양은정(94)', members:['조상운(92)','송무늬(98)','이시훈(96)','김유찬(99)'] },
         { name:'빅아이디어팀', leader:'이호준(93)', members:['김수빈(06)','김향(99)'] },
         { name:'예배팀',       leader:'홍예찬(96)', members:['박조한(07)','고경혜(91)','김예은(98)','정은혜(98)'] },
@@ -522,8 +522,8 @@ function renderTeam(result) {
         </div>
         <div class="org-conn"></div>
         <div class="org-row">
-          <div class="org-node lead">${escHtml(parseName(org.leaderM).name)}<small>팀장(남)</small></div>
-          <div class="org-node lead">${escHtml(parseName(org.leaderF).name)}<small>팀장(여)</small></div>
+          <div class="org-node lead">${escHtml(parseName(org.leaderM).name)}<small>전체팀장(남)</small></div>
+          <div class="org-node lead">${escHtml(parseName(org.leaderF).name)}<small>전체팀장(여)</small></div>
           <div class="org-node lead">${escHtml(parseName(org.accountant).name)}<small>회계</small></div>
           <div class="org-node lead">${escHtml(parseName(org.secretary).name)}<small>서기</small></div>
         </div>
