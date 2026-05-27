@@ -190,14 +190,10 @@ main { padding-bottom: 80px; }
 .hero-verse-hint { margin-top: 28px; font-size: 12px; color: rgba(255,255,255,.4); letter-spacing: 1px; animation: hintpulse 2s infinite; font-weight: 600; }
 @keyframes hintpulse { 0%,100% { opacity: .4; } 50% { opacity: .9; } }
 
-/* Step 2: 슬로건 + 정보 */
+/* 히어로 컨텐츠 — 항상 보임 */
 .hero-content {
   position: relative; z-index: 2;
-  opacity: 0; transform: translateY(20px);
-  transition: opacity .6s var(--ease), transform .6s var(--ease);
-  pointer-events: none;
 }
-.hero-content.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
 .hero-badge {
   display: inline-flex; align-items: center;
@@ -208,8 +204,12 @@ main { padding-bottom: 80px; }
 }
 .hero-title { font-size: 32px; font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; color: #fff; margin-bottom: 10px; }
 .hero-gradient {
-  background: linear-gradient(135deg, #fff 0%, #93C5FD 40%, var(--acc) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  display: inline;
+  background: linear-gradient(135deg, #ffffff 0%, #93C5FD 40%, #FF6B35 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 .hero-sub { font-size: 13px; color: rgba(255,255,255,.55); margin-bottom: 20px; line-height: 1.6; }
 
