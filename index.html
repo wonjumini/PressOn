@@ -1,600 +1,968 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>2026 NEPAL</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<div class="nav-wrapper" id="navWrapper">
-  <div class="nav-top">
-    <div class="nav-top-left" onclick="showPage('home')" style="cursor:pointer">
-      <span class="nav-top-icon">🇳🇵</span>
-      <span class="nav-top-title">2026 NEPAL</span>
-    </div>
-    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()" aria-label="메뉴">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-  <div class="nav-menu" id="navMenu">
-    <div class="nav-menu-list">
-      <button class="drawer-item" data-page="overview">개요</button>
-      <button class="drawer-item" data-page="schedule">일정</button>
-      <button class="drawer-item" data-page="team">팀</button>
-      <button class="drawer-item" data-page="plan">사역계획</button>
-      <button class="drawer-item" data-page="attendance">출석</button>
-      <button class="drawer-item" data-page="story">선교 이야기</button>
-      <button class="drawer-item" data-page="prayer">중보기도</button>
-      <button class="drawer-item" data-page="luggage">짐 목록</button>
-      <button class="drawer-item" data-page="notice">공지</button>
-    </div>
-  </div>
-</div>
-
-<div class="content-dim" id="contentDim" onclick="closeMenu()"></div>
-
-<main>
-
-<section class="page active" id="page-home">
-
-  <div class="home-hero-full">
-    <div class="hero-bg-circle hero-bg-1"></div>
-    <div class="hero-bg-circle hero-bg-2"></div>
-    <div class="hero-badge">2026 SPRING 단기선교</div>
-    <h1 class="hero-title">
-      푯대를 향하여,<br>
-      <span class="hero-gradient">Press On!</span>
-    </h1>
-    <p class="hero-sub">
-      네팔, 그 땅에 복음의 흐름을 더하다<br>
-      우리는 부르심을 따라, 계속 걸어갑니다.
-    </p>
-    <div class="hero-meta-row">
-      <div class="hero-meta-item">
-        <span class="hero-meta-label">일시</span>
-        <span class="hero-meta-val">2026.07.11 — 07.19</span>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>2026 NEPAL</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="nav-wrapper" id="navWrapper">
+      <div class="nav-top">
+        <div
+          class="nav-top-left"
+          onclick="showPage('home')"
+          style="cursor: pointer"
+        >
+          <span class="nav-top-icon">🇳🇵</span>
+          <span class="nav-top-title">2026 NEPAL</span>
+        </div>
+        <button
+          class="hamburger-btn"
+          id="hamburgerBtn"
+          onclick="toggleMenu()"
+          aria-label="메뉴"
+        >
+          <span></span><span></span><span></span>
+        </button>
       </div>
-      <div class="hero-meta-item">
-        <span class="hero-meta-label">장소</span>
-        <span class="hero-meta-val">카트만두 · 포카라</span>
-      </div>
-    </div>
-    <div class="hero-scroll-hint" onclick="scrollToScripture()">
-      <span>아래로 스크롤</span>
-      <span>↓</span>
-    </div>
-  </div>
-
-  <div class="wrap">
-
-    <div class="section" id="scripture-section">
-      <span class="eyebrow">Promise</span>
-      <h2 class="card-section-title">약속의 말씀</h2>
-      <div class="verse-card-lg" id="home-scripture">
-        <div class="skeleton-block" style="height:100px"></div>
+      <div class="nav-menu" id="navMenu">
+        <div class="nav-menu-list">
+          <button class="drawer-item" data-page="overview">개요</button>
+          <button class="drawer-item" data-page="schedule">일정</button>
+          <button class="drawer-item" data-page="team">팀</button>
+          <button class="drawer-item" data-page="plan">사역계획</button>
+          <button class="drawer-item" data-page="attendance">출석</button>
+          <button class="drawer-item" data-page="story">선교 이야기</button>
+          <button class="drawer-item" data-page="prayer">중보기도</button>
+          <button class="drawer-item" data-page="luggage">짐 목록</button>
+          <button class="drawer-item" data-page="notice">공지</button>
+        </div>
       </div>
     </div>
 
-    <div class="section">
-      <span class="eyebrow">Mission Overview</span>
-      <h2 class="card-section-title">선교 개요</h2>
-      <div class="ov-grid" id="home-overview-grid">
-        <div class="ov-card"><div class="ov-ic">📅</div><div class="ov-lb">기간</div><div class="ov-val">8박 9일<br>7.11 → 7.19</div></div>
-        <div class="ov-card"><div class="ov-ic">🏔️</div><div class="ov-lb">장소</div><div class="ov-val">카트만두<br>+ 포카라</div></div>
-        <div class="ov-card"><div class="ov-ic">👥</div><div class="ov-lb">대상</div><div class="ov-val">박지명 목사 외<br>청년 27명</div></div>
-        <div class="ov-card"><div class="ov-ic">🎯</div><div class="ov-lb">슬로건</div><div class="ov-val">Press On!<br>푯대를 향하여</div></div>
-        <div class="ov-card" style="grid-column:1/-1"><div class="ov-ic">⛪</div><div class="ov-lb">주요 사역지</div><div class="ov-val">다딩 너우모레·썰보트 교회 · 한인교회 · 조이하우스 · 꺼랄교회</div></div>
-      </div>
-    </div>
+    <div class="content-dim" id="contentDim" onclick="closeMenu()"></div>
 
-    <div class="section">
-      <span class="eyebrow">Core Mission</span>
-      <h2 class="card-section-title">핵심 사역</h2>
-      <div class="ms-card"><div class="ms-num">01</div><div><div class="ms-title">어린이 사역</div><div class="ms-desc">조이하우스 · 웰컴·찬양·율동 · 풍선아트·복음팔찌</div></div></div>
-      <div class="ms-card"><div class="ms-num">02</div><div><div class="ms-title">문화 / 교회 사역</div><div class="ms-desc">다딩썰보트 · 다딩너우모레 · 꺼랄교회 청장년</div></div></div>
-      <div class="ms-card"><div class="ms-num">03</div><div><div class="ms-title">비전트립 / 베이스 격려</div><div class="ms-desc">오스트리안 베이스캠프 · 보우더너트 · 인터씨드</div></div></div>
-    </div>
-
-    <div class="section">
-      <span class="eyebrow">Schedule</span>
-      <h2 class="card-section-title">핵심 일정</h2>
-      <div class="home-tl">
-        <div class="htl-item"><div class="htl-left"><div class="htl-dot"></div><div class="htl-line"></div></div><div><div class="htl-date">7/11 (토)</div><div class="htl-title">한국 출발 → 네팔 도착</div><div class="htl-desc">저녁식사 후 OT, 카트만두 도착</div></div></div>
-        <div class="htl-item"><div class="htl-left"><div class="htl-dot"></div><div class="htl-line"></div></div><div><div class="htl-date">7/12 (일)</div><div class="htl-title">한인교회 예배 · 어린이 사역</div><div class="htl-desc">조이하우스 어린이사역</div></div></div>
-        <div class="htl-item"><div class="htl-left"><div class="htl-dot"></div><div class="htl-line"></div></div><div><div class="htl-date">7/13 — 14</div><div class="htl-title">다딩 교회 사역</div><div class="htl-desc">썰보트·너우모레 교회 → 포카라 이동</div></div></div>
-        <div class="htl-item"><div class="htl-left"><div class="htl-dot htl-dot-grad"></div><div class="htl-line"></div></div><div><div class="htl-date">7/15 (수)</div><div class="htl-title">오스트리안 베이스캠프 트레킹</div><div class="htl-desc">예배 · 하나님의 창조를 품다</div></div></div>
-        <div class="htl-item"><div class="htl-left"><div class="htl-dot"></div><div class="htl-line"></div></div><div><div class="htl-date">7/16 — 18</div><div class="htl-title">카트만두 · 교회 사역</div><div class="htl-desc">인터씨드 · 꺼랄교회 · 현지교회 예배</div></div></div>
-        <div class="htl-item"><div class="htl-left"><div class="htl-dot"></div></div><div><div class="htl-date">7/19 (일)</div><div class="htl-title">한국 도착</div><div class="htl-desc">귀국</div></div></div>
-      </div>
-    </div>
-
-    <div class="section" style="margin-bottom:0">
-      <span class="eyebrow">Live Info</span>
-      <h2 class="card-section-title">지금 네팔</h2>
-      <div class="live-row">
-        <div class="live-card">
-          <div class="live-label">카트만두 날씨</div>
-          <div class="live-main">
-            <span class="live-val" id="w-temp">—</span>
-            <span class="live-unit">°C</span>
+    <main>
+      <section class="page active" id="page-home">
+        <div class="home-hero-full">
+          <div class="hero-bg-circle hero-bg-1"></div>
+          <div class="hero-bg-circle hero-bg-2"></div>
+          <div class="hero-badge">2026 SPRING 단기선교</div>
+          <h1 class="hero-title">
+            푯대를 향하여,<br />
+            <span class="hero-gradient">Press On!</span>
+          </h1>
+          <p class="hero-sub">
+            네팔, 그 땅에 복음의 흐름을 더하다<br />
+            우리는 부르심을 따라, 계속 걸어갑니다.
+          </p>
+          <div class="hero-meta-row">
+            <div class="hero-meta-item">
+              <span class="hero-meta-label">일시</span>
+              <span class="hero-meta-val">2026.07.11 — 07.19</span>
+            </div>
+            <div class="hero-meta-item">
+              <span class="hero-meta-label">장소</span>
+              <span class="hero-meta-val">카트만두 · 포카라</span>
+            </div>
           </div>
-          <div class="live-sub" id="w-desc">불러오는 중</div>
-        </div>
-        <div class="live-card">
-          <div class="live-label">네팔 환율</div>
-          <div class="live-main">
-            <span class="live-val" id="exchange-val">—</span>
-            <span class="live-unit">원</span>
-          </div>
-          <div class="live-sub">1 NPR 기준</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section" id="home-notice-section" style="display:none;margin-bottom:0">
-      <span class="eyebrow">공지사항</span>
-      <div id="home-notice-list"></div>
-    </div>
-
-  </div>
-</section>
-
-<section class="page" id="page-overview">
-  <div class="wrap">
-
-    <div style="margin-top:24px;margin-bottom:20px">
-      <span class="eyebrow">Mission</span>
-      <h2 class="page-title">우리가 걸어가는 길</h2>
-    </div>
-
-    <div class="mission-card">
-      <div class="mission-text">
-        <p>우리는 하나님께서 먼저 사랑하신 땅, <span class="mission-highlight">네팔</span>로 갑니다.</p>
-        <p style="margin-top:14px">우리가 향하는 곳은 네팔이지만,<br>우리의 푯대는 <span class="mission-highlight">낮아지신 그리스도의 자리</span>입니다.</p>
-        <p style="margin-top:14px">예배 위에 서서,<br>복음의 능력을 믿고,<br>우리의 유익보다 그들의 유익을 구하며,<br>부르신 길을 끝까지 걸어갑니다.</p>
-        <p style="margin-top:14px;font-weight:900;font-size:1.1em;color:#FFD93D">Press On!</p>
-      </div>
-    </div>
-
-    <div class="section">
-      <span class="eyebrow">Vision</span>
-      <h3 class="card-section-title">우리 팀의 구체화된 목표</h3>
-      <div class="vision-grid">
-        <div class="vision-card"><div class="vision-num">01</div><div class="vision-txt">어떤 상황에서든 뜨겁게 예배한다</div></div>
-        <div class="vision-card"><div class="vision-num">02</div><div class="vision-txt">기회가 주어질 때마다 복음을 전한다</div></div>
-        <div class="vision-card" style="grid-column:1/-1"><div class="vision-num">03</div><div class="vision-txt">한계를 뛰어넘어 사랑한다</div></div>
-      </div>
-    </div>
-
-    <div class="section">
-      <span class="eyebrow">Value</span>
-      <h3 class="card-section-title">N · E · P · A · L</h3>
-      <div class="nepal-letters">
-        <button class="nepal-letter" onclick="openNepal('N')">N</button>
-        <button class="nepal-letter" onclick="openNepal('E')">E</button>
-        <button class="nepal-letter" onclick="openNepal('P')">P</button>
-        <button class="nepal-letter" onclick="openNepal('A')">A</button>
-        <button class="nepal-letter" onclick="openNepal('L')">L</button>
-      </div>
-      <div class="nepal-detail" id="nepalDetail" style="display:none">
-        <div class="nepal-detail-letter" id="ndLetter"></div>
-        <div class="nepal-detail-word" id="ndWord"></div>
-        <div class="nepal-detail-desc" id="ndDesc"></div>
-        <div class="nepal-detail-verse" id="ndVerse"></div>
-        <button class="nepal-detail-close" onclick="closeNepal()">닫기</button>
-      </div>
-      <div class="card" style="margin-top:10px">
-        <div class="value-row">
-          <div class="value-letter-box">N</div>
-          <div><div class="value-word">New Creation</div><div class="value-desc">복음을 통해 새롭게 변화됨을 믿는다</div><div class="value-ref">고린도후서 5:17</div></div>
-        </div>
-        <div class="value-row">
-          <div class="value-letter-box">E</div>
-          <div><div class="value-word">Evangelism</div><div class="value-desc">복음을 전하는 게 선교의 사명이다</div><div class="value-ref">마가복음 16:15</div></div>
-        </div>
-        <div class="value-row">
-          <div class="value-letter-box">P</div>
-          <div><div class="value-word">Passion for Worship</div><div class="value-desc">더 순전한 마음을 구하며 예배한다</div><div class="value-ref">요한복음 4:23-24</div></div>
-        </div>
-        <div class="value-row">
-          <div class="value-letter-box">A</div>
-          <div><div class="value-word">Agape</div><div class="value-desc">하나님의 사랑 안에 거한다</div><div class="value-ref">요한복음 15:9</div></div>
-        </div>
-        <div class="value-row" style="border-bottom:none;padding-bottom:0">
-          <div class="value-letter-box">L</div>
-          <div><div class="value-word">Love and Serve</div><div class="value-desc">혼자가 아니라 팀이 함께 지어져 간다</div><div class="value-ref">에베소서 2:22</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="card">
-        <span class="eyebrow">Attitude</span>
-        <h3 class="card-section-title">사역을 대하는 태도</h3>
-        <ul class="ac-list">
-          <li><span class="num">1</span>치밀하게 계획한다</li>
-          <li><span class="num">2</span>흐름과 디테일을 끝까지 고민한다</li>
-          <li><span class="num">3</span>방식과 결과가 복음에 부합한지 점검한다</li>
-          <li><span class="num">4</span>그 무엇보다 사람을 소중히 여긴다</li>
-          <li><span class="num">5</span>그리고 연약한 지체를 보호한다</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="section" style="margin-bottom:0">
-      <div class="card">
-        <span class="eyebrow">Culture</span>
-        <h3 class="card-section-title">우리 팀의 문화</h3>
-        <p style="font-size:14px;color:var(--t2);line-height:1.75">각 팀과 생활조는 이 세 가지 문화를 적극적으로 적용하며 우리 팀에 접촉하는 모든 이들에게 하나님의 은혜가 생생하게 경험되도록 합니다.</p>
-        <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
-          <span class="pill pill-blue">은혜</span>
-          <span class="pill pill-green">재미</span>
-          <span class="pill pill-orange">감동</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="page" id="page-schedule">
-  <div class="wrap">
-    <p class="page-title">일정</p>
-    <div class="sub-tab-nav">
-      <button class="sub-tab-btn active" data-sub="korea">한국 일정</button>
-      <button class="sub-tab-btn" data-sub="nepal">네팔 일정</button>
-    </div>
-
-    <div class="sub-page active" id="sub-korea">
-      <div class="legend">
-        <span class="pill pill-blue">팀모임</span>
-        <span class="pill pill-purple">선교학교</span>
-        <span class="pill pill-green">파송예배</span>
-        <span class="pill pill-red">에프터</span>
-      </div>
-      <div id="schedule-list">
-        <div class="skeleton-block" style="height:72px;margin-bottom:8px"></div>
-        <div class="skeleton-block" style="height:72px;margin-bottom:8px"></div>
-        <div class="skeleton-block" style="height:72px"></div>
-      </div>
-      <div class="section" id="after-section" style="display:none">
-        <div class="section-label">에프터 일정</div>
-        <div id="after-list"></div>
-      </div>
-    </div>
-
-    <div class="sub-page" id="sub-nepal">
-      <div style="padding-top:4px">
-
-        <div class="nepal-notice">
-          <span class="nepal-notice-dot"></span>
-          7/12 오후 사역지는 두 안 중 확정 예정입니다
-        </div>
-
-        <div class="sch-item">
-          <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">11</div><div class="sch-wd">토</div></div>
-          <div class="sch-divider"></div>
-          <div class="sch-content">
-            <div class="sch-title">한국 출발 → 네팔 도착</div>
-            <div class="sch-detail">저녁식사 · OT</div>
-            <div class="sch-badges"><span class="pill pill-yellow">이동</span></div>
+          <div class="hero-scroll-hint" onclick="scrollToScripture()">
+            <span>아래로 스크롤</span>
+            <span>↓</span>
           </div>
         </div>
 
-        <div class="sch-item">
-          <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">12</div><div class="sch-wd">일</div></div>
-          <div class="sch-divider"></div>
-          <div class="sch-content">
-            <div class="sch-title">한인교회 예배</div>
-            <div class="sch-detail">오전 · 카트만두</div>
-            <div class="sch-badges"><span class="pill pill-blue">예배</span></div>
+        <div class="wrap">
+          <div class="section" id="scripture-section">
+            <span class="eyebrow">Promise</span>
+            <h2 class="card-section-title">약속의 말씀</h2>
+            <div class="verse-card-lg" id="home-scripture">
+              <div class="skeleton-block" style="height: 100px"></div>
+            </div>
           </div>
-        </div>
 
-        <div class="sch-item sch-pending">
-          <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">12</div><div class="sch-wd">일</div></div>
-          <div class="sch-divider"></div>
-          <div class="sch-content">
-            <div class="sch-title">오후 사역 <span class="pending-badge">확정 전</span></div>
-            <div class="pending-options">
-              <div class="pending-opt">
-                <span class="pending-opt-label">안 1</span>
-                죠이 하우스 어린이 사역
+          <div class="section">
+            <span class="eyebrow">Mission Overview</span>
+            <h2 class="card-section-title">선교 개요</h2>
+            <div class="ov-grid" id="home-overview-grid">
+              <div class="ov-card">
+                <div class="ov-ic">📅</div>
+                <div class="ov-lb">기간</div>
+                <div class="ov-val">8박 9일<br />7.11 → 7.19</div>
               </div>
-              <div class="pending-opt">
-                <span class="pending-opt-label">안 2</span>
-                리빙필라델피아
+              <div class="ov-card">
+                <div class="ov-ic">🏔️</div>
+                <div class="ov-lb">장소</div>
+                <div class="ov-val">카트만두<br />+ 포카라</div>
+              </div>
+              <div class="ov-card">
+                <div class="ov-ic">👥</div>
+                <div class="ov-lb">대상</div>
+                <div class="ov-val">박지명 목사 외<br />청년 27명</div>
+              </div>
+              <div class="ov-card">
+                <div class="ov-ic">🎯</div>
+                <div class="ov-lb">슬로건</div>
+                <div class="ov-val">Press On!<br />푯대를 향하여</div>
+              </div>
+              <div class="ov-card" style="grid-column: 1/-1">
+                <div class="ov-ic">⛪</div>
+                <div class="ov-lb">주요 사역지</div>
+                <div class="ov-val">
+                  다딩 너우모레·썰보트 교회 · 한인교회 · 조이하우스 · 꺼랄교회
+                </div>
               </div>
             </div>
-            <div class="sch-detail" style="margin-top:6px">두 팀으로 나눠서 진행</div>
-            <div class="sch-badges"><span class="pill pill-green">사역</span></div>
+          </div>
+
+          <div class="section">
+            <span class="eyebrow">Core Mission</span>
+            <h2 class="card-section-title">핵심 사역</h2>
+            <div class="ms-card">
+              <div class="ms-num">01</div>
+              <div>
+                <div class="ms-title">어린이 사역</div>
+                <div class="ms-desc">
+                  조이하우스 · 웰컴·찬양·율동 · 풍선아트·복음팔찌
+                </div>
+              </div>
+            </div>
+            <div class="ms-card">
+              <div class="ms-num">02</div>
+              <div>
+                <div class="ms-title">문화 / 교회 사역</div>
+                <div class="ms-desc">
+                  다딩썰보트 · 다딩너우모레 · 꺼랄교회 청장년
+                </div>
+              </div>
+            </div>
+            <div class="ms-card">
+              <div class="ms-num">03</div>
+              <div>
+                <div class="ms-title">비전트립 / 베이스 격려</div>
+                <div class="ms-desc">
+                  오스트리안 베이스캠프 · 보우더너트 · 인터씨드
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <span class="eyebrow">Schedule</span>
+            <h2 class="card-section-title">핵심 일정</h2>
+            <div class="home-tl">
+              <div class="htl-item">
+                <div class="htl-left">
+                  <div class="htl-dot"></div>
+                  <div class="htl-line"></div>
+                </div>
+                <div>
+                  <div class="htl-date">7/11 (토)</div>
+                  <div class="htl-title">한국 출발 → 네팔 도착</div>
+                  <div class="htl-desc">저녁식사 후 OT, 카트만두 도착</div>
+                </div>
+              </div>
+              <div class="htl-item">
+                <div class="htl-left">
+                  <div class="htl-dot"></div>
+                  <div class="htl-line"></div>
+                </div>
+                <div>
+                  <div class="htl-date">7/12 (일)</div>
+                  <div class="htl-title">한인교회 예배 · 어린이 사역</div>
+                  <div class="htl-desc">조이하우스 어린이사역</div>
+                </div>
+              </div>
+              <div class="htl-item">
+                <div class="htl-left">
+                  <div class="htl-dot"></div>
+                  <div class="htl-line"></div>
+                </div>
+                <div>
+                  <div class="htl-date">7/13 — 14</div>
+                  <div class="htl-title">다딩 교회 사역</div>
+                  <div class="htl-desc">썰보트·너우모레 교회 → 포카라 이동</div>
+                </div>
+              </div>
+              <div class="htl-item">
+                <div class="htl-left">
+                  <div class="htl-dot htl-dot-grad"></div>
+                  <div class="htl-line"></div>
+                </div>
+                <div>
+                  <div class="htl-date">7/15 (수)</div>
+                  <div class="htl-title">오스트리안 베이스캠프 트레킹</div>
+                  <div class="htl-desc">예배 · 하나님의 창조를 품다</div>
+                </div>
+              </div>
+              <div class="htl-item">
+                <div class="htl-left">
+                  <div class="htl-dot"></div>
+                  <div class="htl-line"></div>
+                </div>
+                <div>
+                  <div class="htl-date">7/16 — 18</div>
+                  <div class="htl-title">카트만두 · 교회 사역</div>
+                  <div class="htl-desc">
+                    인터씨드 · 꺼랄교회 · 현지교회 예배
+                  </div>
+                </div>
+              </div>
+              <div class="htl-item">
+                <div class="htl-left"><div class="htl-dot"></div></div>
+                <div>
+                  <div class="htl-date">7/19 (일)</div>
+                  <div class="htl-title">한국 도착</div>
+                  <div class="htl-desc">귀국</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section" style="margin-bottom: 0">
+            <span class="eyebrow">Live Info</span>
+            <h2 class="card-section-title">지금 네팔</h2>
+            <div class="live-row">
+              <div class="live-card">
+                <div class="live-label">카트만두 날씨</div>
+                <div class="live-main">
+                  <span class="live-val" id="w-temp">—</span>
+                  <span class="live-unit">°C</span>
+                </div>
+                <div class="live-sub" id="w-desc">불러오는 중</div>
+              </div>
+              <div class="live-card">
+                <div class="live-label">네팔 환율</div>
+                <div class="live-main">
+                  <span class="live-val" id="exchange-val">—</span>
+                  <span class="live-unit">원</span>
+                </div>
+                <div class="live-sub">1 NPR 기준</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="section"
+            id="home-notice-section"
+            style="display: none; margin-bottom: 0"
+          >
+            <span class="eyebrow">공지사항</span>
+            <div id="home-notice-list"></div>
           </div>
         </div>
+      </section>
 
-        <div class="sch-item">
-          <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">13</div><div class="sch-wd">월</div></div>
-          <div class="sch-divider"></div>
-          <div class="sch-content">
-            <div class="sch-title">다딩 썰보트 교회 사역</div>
-            <div class="sch-detail">카트만두 → 다딩</div>
-            <div class="sch-badges"><span class="pill pill-green">사역</span><span class="pill pill-yellow">이동</span></div>
+      <section class="page" id="page-overview">
+        <div class="wrap">
+          <div style="margin-top: 24px; margin-bottom: 20px">
+            <span class="eyebrow">Mission</span>
+            <h2 class="page-title">우리가 걸어가는 길</h2>
+          </div>
+
+          <div class="mission-card">
+            <div class="mission-text">
+              <p>
+                우리는 하나님께서 먼저 사랑하신 땅,
+                <span class="mission-highlight">네팔</span>로 갑니다.
+              </p>
+              <p style="margin-top: 14px">
+                우리가 향하는 곳은 네팔이지만,<br />우리의 푯대는
+                <span class="mission-highlight">낮아지신 그리스도의 자리</span
+                >입니다.
+              </p>
+              <p style="margin-top: 14px">
+                예배 위에 서서,<br />복음의 능력을 믿고,<br />우리의 유익보다
+                그들의 유익을 구하며,<br />부르신 길을 끝까지 걸어갑니다.
+              </p>
+              <p
+                style="
+                  margin-top: 14px;
+                  font-weight: 900;
+                  font-size: 1.1em;
+                  color: #ffd93d;
+                "
+              >
+                Press On!
+              </p>
+            </div>
+          </div>
+
+          <div class="section">
+            <span class="eyebrow">Vision</span>
+            <h3 class="card-section-title">우리 팀의 구체화된 목표</h3>
+            <div class="vision-grid">
+              <div class="vision-card">
+                <div class="vision-num">01</div>
+                <div class="vision-txt">어떤 상황에서든 뜨겁게 예배한다</div>
+              </div>
+              <div class="vision-card">
+                <div class="vision-num">02</div>
+                <div class="vision-txt">기회가 주어질 때마다 복음을 전한다</div>
+              </div>
+              <div class="vision-card" style="grid-column: 1/-1">
+                <div class="vision-num">03</div>
+                <div class="vision-txt">한계를 뛰어넘어 사랑한다</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <span class="eyebrow">Value</span>
+            <h3 class="card-section-title">N · E · P · A · L</h3>
+            <div class="nepal-letters">
+              <button class="nepal-letter" onclick="openNepal('N')">N</button>
+              <button class="nepal-letter" onclick="openNepal('E')">E</button>
+              <button class="nepal-letter" onclick="openNepal('P')">P</button>
+              <button class="nepal-letter" onclick="openNepal('A')">A</button>
+              <button class="nepal-letter" onclick="openNepal('L')">L</button>
+            </div>
+            <div class="nepal-detail" id="nepalDetail" style="display: none">
+              <div class="nepal-detail-letter" id="ndLetter"></div>
+              <div class="nepal-detail-word" id="ndWord"></div>
+              <div class="nepal-detail-desc" id="ndDesc"></div>
+              <div class="nepal-detail-verse" id="ndVerse"></div>
+              <button class="nepal-detail-close" onclick="closeNepal()">
+                닫기
+              </button>
+            </div>
+            <div class="card" style="margin-top: 10px">
+              <div class="value-row">
+                <div class="value-letter-box">N</div>
+                <div>
+                  <div class="value-word">New Creation</div>
+                  <div class="value-desc">
+                    복음을 통해 새롭게 변화됨을 믿는다
+                  </div>
+                  <div class="value-ref">고린도후서 5:17</div>
+                </div>
+              </div>
+              <div class="value-row">
+                <div class="value-letter-box">E</div>
+                <div>
+                  <div class="value-word">Evangelism</div>
+                  <div class="value-desc">복음을 전하는 게 선교의 사명이다</div>
+                  <div class="value-ref">마가복음 16:15</div>
+                </div>
+              </div>
+              <div class="value-row">
+                <div class="value-letter-box">P</div>
+                <div>
+                  <div class="value-word">Passion for Worship</div>
+                  <div class="value-desc">더 순전한 마음을 구하며 예배한다</div>
+                  <div class="value-ref">요한복음 4:23-24</div>
+                </div>
+              </div>
+              <div class="value-row">
+                <div class="value-letter-box">A</div>
+                <div>
+                  <div class="value-word">Agape</div>
+                  <div class="value-desc">하나님의 사랑 안에 거한다</div>
+                  <div class="value-ref">요한복음 15:9</div>
+                </div>
+              </div>
+              <div
+                class="value-row"
+                style="border-bottom: none; padding-bottom: 0"
+              >
+                <div class="value-letter-box">L</div>
+                <div>
+                  <div class="value-word">Love and Serve</div>
+                  <div class="value-desc">
+                    혼자가 아니라 팀이 함께 지어져 간다
+                  </div>
+                  <div class="value-ref">에베소서 2:22</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="card">
+              <span class="eyebrow">Attitude</span>
+              <h3 class="card-section-title">사역을 대하는 태도</h3>
+              <ul class="ac-list">
+                <li><span class="num">1</span>치밀하게 계획한다</li>
+                <li>
+                  <span class="num">2</span>흐름과 디테일을 끝까지 고민한다
+                </li>
+                <li>
+                  <span class="num">3</span>방식과 결과가 복음에 부합한지
+                  점검한다
+                </li>
+                <li>
+                  <span class="num">4</span>그 무엇보다 사람을 소중히 여긴다
+                </li>
+                <li><span class="num">5</span>그리고 연약한 지체를 보호한다</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="section" style="margin-bottom: 0">
+            <div class="card">
+              <span class="eyebrow">Culture</span>
+              <h3 class="card-section-title">우리 팀의 문화</h3>
+              <p style="font-size: 14px; color: var(--t2); line-height: 1.75">
+                각 팀과 생활조는 이 세 가지 문화를 적극적으로 적용하며 우리 팀에
+                접촉하는 모든 이들에게 하나님의 은혜가 생생하게 경험되도록
+                합니다.
+              </p>
+              <div
+                style="
+                  display: flex;
+                  gap: 8px;
+                  margin-top: 14px;
+                  flex-wrap: wrap;
+                "
+              >
+                <span class="pill pill-blue">은혜</span>
+                <span class="pill pill-green">재미</span>
+                <span class="pill pill-orange">감동</span>
+              </div>
+            </div>
           </div>
         </div>
+      </section>
 
-        <div class="sch-item">
-          <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">14</div><div class="sch-wd">화</div></div>
-          <div class="sch-divider"></div>
-          <div class="sch-content">
-            <div class="sch-title">다딩 너우모레 교회 사역</div>
-            <div class="sch-detail">다딩 → 포카라</div>
-            <div class="sch-badges"><span class="pill pill-green">사역</span><span class="pill pill-yellow">이동</span></div>
+      <section class="page" id="page-schedule">
+        <div class="wrap">
+          <p class="page-title">일정</p>
+          <div class="sub-tab-nav">
+            <button class="sub-tab-btn active" data-sub="korea">
+              한국 일정
+            </button>
+            <button class="sub-tab-btn" data-sub="nepal">네팔 일정</button>
+          </div>
+
+          <div class="sub-page active" id="sub-korea">
+            <div class="legend">
+              <span class="pill pill-blue">팀모임</span>
+              <span class="pill pill-purple">선교학교</span>
+              <span class="pill pill-green">파송예배</span>
+              <span class="pill pill-red">에프터</span>
+            </div>
+            <div id="schedule-list">
+              <div
+                class="skeleton-block"
+                style="height: 72px; margin-bottom: 8px"
+              ></div>
+              <div
+                class="skeleton-block"
+                style="height: 72px; margin-bottom: 8px"
+              ></div>
+              <div class="skeleton-block" style="height: 72px"></div>
+            </div>
+            <div class="section" id="after-section" style="display: none">
+              <div class="section-label">에프터 일정</div>
+              <div id="after-list"></div>
+            </div>
+          </div>
+
+          <div class="sub-page" id="sub-nepal">
+            <div style="padding-top: 4px">
+              <div class="nepal-notice">
+                <span class="nepal-notice-dot"></span>
+                7/12 오후 사역지는 두 안 중 확정 예정입니다
+              </div>
+
+              <div class="sch-item">
+                <div class="sch-date">
+                  <div class="sch-month">7월</div>
+                  <div class="sch-day">11</div>
+                  <div class="sch-wd">토</div>
+                </div>
+                <div class="sch-divider"></div>
+                <div class="sch-content">
+                  <div class="sch-title">한국 출발 → 네팔 도착</div>
+                  <div class="sch-detail">저녁식사 · OT</div>
+                  <div class="sch-badges">
+                    <span class="pill pill-yellow">이동</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sch-item">
+                <div class="sch-date">
+                  <div class="sch-month">7월</div>
+                  <div class="sch-day">12</div>
+                  <div class="sch-wd">일</div>
+                </div>
+                <div class="sch-divider"></div>
+                <div class="sch-content">
+                  <div class="sch-title">한인교회 예배</div>
+                  <div class="sch-detail">오전 · 카트만두</div>
+                  <div class="sch-badges">
+                    <span class="pill pill-blue">예배</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sch-item sch-pending">
+                <div class="sch-date">
+                  <div class="sch-month">7월</div>
+                  <div class="sch-day">12</div>
+                  <div class="sch-wd">일</div>
+                </div>
+                <div class="sch-divider"></div>
+                <div class="sch-content">
+                  <div class="sch-title">
+                    오후 사역 <span class="pending-badge">확정 전</span>
+                  </div>
+                  <div class="pending-options">
+                    <div class="pending-opt">
+                      <span class="pending-opt-label">안 1</span>
+                      죠이 하우스 어린이 사역
+                    </div>
+                    <div class="pending-opt">
+                      <span class="pending-opt-label">안 2</span>
+                      리빙필라델피아
+                    </div>
+                  </div>
+                  <div class="sch-detail" style="margin-top: 6px">
+                    두 팀으로 나눠서 진행
+                  </div>
+                  <div class="sch-badges">
+                    <span class="pill pill-green">사역</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sch-item">
+                <div class="sch-date">
+                  <div class="sch-month">7월</div>
+                  <div class="sch-day">13</div>
+                  <div class="sch-wd">월</div>
+                </div>
+                <div class="sch-divider"></div>
+                <div class="sch-content">
+                  <div class="sch-title">다딩 썰보트 교회 사역</div>
+                  <div class="sch-detail">카트만두 → 다딩</div>
+                  <div class="sch-badges">
+                    <span class="pill pill-green">사역</span
+                    ><span class="pill pill-yellow">이동</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sch-item">
+                <div class="sch-date">
+                  <div class="sch-month">7월</div>
+                  <div class="sch-day">14</div>
+                  <div class="sch-wd">화</div>
+                </div>
+                <div class="sch-divider"></div>
+                <div class="sch-content">
+                  <div class="sch-title">다딩 너우모레 교회 사역</div>
+                  <div class="sch-detail">다딩 → 포카라</div>
+                  <div class="sch-badges">
+                    <span class="pill pill-green">사역</span
+                    ><span class="pill pill-yellow">이동</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sch-item">
+                <div class="sch-date">
+                  <div class="sch-month">7월</div>
+                  <div class="sch-day">15</div>
+                  <div class="sch-wd">수</div>
+                </div>
+                <div class="sch-divider"></div>
+                <div class="sch-content">
+                  <div class="sch-title">오스트리안 베이스 캠프 트레킹</div>
+                  <div class="sch-detail">포카라 · 예배</div>
+                  <div class="sch-badges">
+                    <span class="pill pill-purple">예배</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sch-item">
+                <div class="sch-date">
+                  <div class="sch-month">7월</div>
+                  <div class="sch-day">16</div>
+                  <div class="sch-wd">목</div>
+                </div>
+                <div class="sch-divider"></div>
+                <div class="sch-content">
+                  <div class="sch-title">포카라 → 카트만두</div>
+                  <div class="sch-detail">이동일</div>
+                  <div class="sch-badges">
+                    <span class="pill pill-yellow">이동</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sch-item">
+                <div class="sch-date">
+                  <div class="sch-month">7월</div>
+                  <div class="sch-day">17</div>
+                  <div class="sch-wd">금</div>
+                </div>
+                <div class="sch-divider"></div>
+                <div class="sch-content">
+                  <div class="sch-title">카트만두 사역</div>
+                  <div class="sch-detail">인터씨드 사역 · 쇼핑</div>
+                  <div class="sch-badges">
+                    <span class="pill pill-green">사역</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sch-item">
+                <div class="sch-date">
+                  <div class="sch-month">7월</div>
+                  <div class="sch-day">18</div>
+                  <div class="sch-wd">토</div>
+                </div>
+                <div class="sch-divider"></div>
+                <div class="sch-content">
+                  <div class="sch-title">한국 출발</div>
+                  <div class="sch-detail">귀국</div>
+                  <div class="sch-badges">
+                    <span class="pill pill-yellow">이동</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </section>
 
-        <div class="sch-item">
-          <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">15</div><div class="sch-wd">수</div></div>
-          <div class="sch-divider"></div>
-          <div class="sch-content">
-            <div class="sch-title">오스트리안 베이스 캠프 트레킹</div>
-            <div class="sch-detail">포카라 · 예배</div>
-            <div class="sch-badges"><span class="pill pill-purple">예배</span></div>
+      <section class="page" id="page-team">
+        <div class="wrap">
+          <p class="page-title">팀 구성</p>
+          <div id="team-content">
+            <div
+              class="skeleton-block"
+              style="height: 160px; margin-bottom: 16px"
+            ></div>
+            <div
+              class="skeleton-block"
+              style="height: 200px; margin-bottom: 16px"
+            ></div>
+            <div class="skeleton-block" style="height: 160px"></div>
           </div>
         </div>
+      </section>
 
-        <div class="sch-item">
-          <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">16</div><div class="sch-wd">목</div></div>
-          <div class="sch-divider"></div>
-          <div class="sch-content">
-            <div class="sch-title">포카라 → 카트만두</div>
-            <div class="sch-detail">이동일</div>
-            <div class="sch-badges"><span class="pill pill-yellow">이동</span></div>
+      <section class="page" id="page-plan">
+        <div class="wrap">
+          <p class="page-title">사역계획</p>
+          <div id="plan-list">
+            <div
+              class="skeleton-block"
+              style="height: 64px; margin-bottom: 8px"
+            ></div>
+            <div
+              class="skeleton-block"
+              style="height: 64px; margin-bottom: 8px"
+            ></div>
+            <div class="skeleton-block" style="height: 64px"></div>
           </div>
         </div>
+      </section>
 
-        <div class="sch-item">
-          <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">17</div><div class="sch-wd">금</div></div>
-          <div class="sch-divider"></div>
-          <div class="sch-content">
-            <div class="sch-title">카트만두 사역</div>
-            <div class="sch-detail">인터씨드 사역 · 쇼핑</div>
-            <div class="sch-badges"><span class="pill pill-green">사역</span></div>
+      <section class="page" id="page-attendance">
+        <div class="wrap">
+          <p class="page-title">출석 현황</p>
+          <div class="att-stats" id="att-stats">
+            <div class="att-stat">
+              <div class="att-stat-val" id="att-total">—</div>
+              <div class="att-stat-label">전체 인원</div>
+            </div>
+            <div class="att-stat">
+              <div class="att-stat-val" id="att-rate">—</div>
+              <div class="att-stat-label">평균 출석률</div>
+            </div>
+            <div class="att-stat">
+              <div class="att-stat-val" id="att-count">—</div>
+              <div class="att-stat-label">총 모임 수</div>
+            </div>
+          </div>
+          <div id="att-content">
+            <div class="skeleton-block" style="height: 300px"></div>
           </div>
         </div>
+      </section>
 
-        <div class="sch-item">
-          <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">18</div><div class="sch-wd">토</div></div>
-          <div class="sch-divider"></div>
-          <div class="sch-content">
-            <div class="sch-title">한국 출발</div>
-            <div class="sch-detail">귀국</div>
-            <div class="sch-badges"><span class="pill pill-yellow">이동</span></div>
+      <section class="page" id="page-story">
+        <div class="wrap">
+          <p class="page-title">선교 이야기</p>
+
+          <div class="section-label">네팔 선교 영상</div>
+          <div class="story-video-wrap">
+            <iframe
+              src="https://www.youtube.com/embed/Go3qHZosLuY"
+              title="네팔 선교 영상"
+              frameborder="0"
+              allow="
+                accelerometer;
+                autoplay;
+                clipboard-write;
+                encrypted-media;
+                gyroscope;
+                picture-in-picture;
+              "
+              allowfullscreen
+            >
+            </iframe>
+          </div>
+
+          <div class="section">
+            <div class="section-label">김경순 선교사님 기도편지</div>
+
+            <div class="story-card">
+              <div class="story-hd" onclick="toggleStory(0)">
+                <div class="story-meta">
+                  <span class="story-num">68번째</span>
+                  <span class="story-date">2026년 4월 23일</span>
+                </div>
+                <div class="story-summary">
+                  네팔 새 정부 출범, 바나바 훈련 10주년
+                </div>
+                <span class="plan-arrow" id="story-arrow-0">▼</span>
+              </div>
+              <div class="story-bd" id="story-bd-0">
+                <p>
+                  네팔은 지난 3월 27일 새로운 정부가 출범했습니다. 새로운 정부가
+                  내세우는 것은 과거에 부패 척결이라고 합니다. 학생비자 서류를
+                  위해 대사관에 갔을 때 네팔 사람들이 한국에 가기 위해 서류를
+                  들고 긴장한 모습을 보면서, 고난 가운데 예수님의 십자가를
+                  묵상했습니다.
+                </p>
+                <p>
+                  올해는 바나바 훈련 10주년입니다. 하나님의 은혜로 이번 훈련에
+                  훈련생은 25명으로 시작했습니다. 멀리 네팔간즈, 치투완, 다딩,
+                  부리야, 카투만두에서 모여 훈련을 시작했습니다.
+                </p>
+                <div class="story-prayer">
+                  <div class="story-prayer-title">🙏 함께 기도해주세요</div>
+                  <ul>
+                    <li>네팔 성경통독 운동 본부 사역을 위해서</li>
+                    <li>
+                      아침 학교에서 공부하는 아이들이 예수님을 믿을 수 있도록
+                    </li>
+                    <li>네팔에 하나님이 기뻐하시는 교회가 세워지도록</li>
+                    <li>네팔 교회들이 성경을 읽고 묵상하는 삶을 살도록</li>
+                    <li>2026년 5월 18-21일 2차 바나바 훈련을 위해서</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="story-card">
+              <div class="story-hd" onclick="toggleStory(1)">
+                <div class="story-meta">
+                  <span class="story-num">67번째</span>
+                  <span class="story-date">2026년 3월 23일</span>
+                </div>
+                <div class="story-summary">
+                  리빙필라델피아 교회 아침학교, 바나바 훈련 리트릿
+                </div>
+                <span class="plan-arrow" id="story-arrow-1">▼</span>
+              </div>
+              <div class="story-bd" id="story-bd-1">
+                <p>
+                  꽃 피는 3월이 깊어가고 있습니다. 비자를 받기 위해 미술
+                  학교에서 그림을 그리고 있습니다. 네팔의 힌두교
+                  승려들(브라만)은 가가호호 방문하여 축복기도를 해주고 보시를
+                  받아서 먹고 사는 사람들입니다.
+                </p>
+                <p>
+                  리빙필라델피아 교회 아침 학교 — 작년에 신촌교회 청년팀이 와서
+                  사역한 후에 아침 학교에 공부하러 오는 아이들이 증가하였고,
+                  예배를 드리는 아이들도 증가하고 있습니다.
+                </p>
+                <p>
+                  바나바 훈련 리트릿이 3월 31일, 4월 1일-2일에 있습니다. 4월
+                  20부터 23일까지 1차 바나바 훈련을 진행합니다.
+                </p>
+                <div class="story-prayer">
+                  <div class="story-prayer-title">🙏 함께 기도해주세요</div>
+                  <ul>
+                    <li>네팔 성경통독 운동 본부 사역을 위해서</li>
+                    <li>
+                      아침 학교에서 공부하는 아이들이 예수님을 믿을 수 있도록
+                    </li>
+                    <li>네팔에 하나님이 기뻐하시는 교회가 세워지도록</li>
+                    <li>네팔 교회들이 성경을 읽고 묵상하는 삶을 살도록</li>
+                    <li>리트릿과 바나바 훈련을 위해서</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="story-card">
+              <div class="story-hd" onclick="toggleStory(2)">
+                <div class="story-meta">
+                  <span class="story-num">66번째</span>
+                  <span class="story-date">2026년 2월 23일</span>
+                </div>
+                <div class="story-summary">
+                  네팔 무정부 상태, 써보트·살룸 교회 성경 읽기
+                </div>
+                <span class="plan-arrow" id="story-arrow-2">▼</span>
+              </div>
+              <div class="story-bd" id="story-bd-2">
+                <p>
+                  구정 명절 잘 보내셨죠. 네팔은 이제 총선을 기다리고 있습니다.
+                  폭동을 일으킨 젠지가 정부에 외국인에게 불법적인 비자를 주지
+                  말라고 해서 비자를 받는 것이 어려워지고 있습니다.
+                </p>
+                <p>
+                  2026년에는 써보트 교회와 살룸 교회가 성경 읽기를
+                  시작하였습니다. 하나님의 은혜로 성경 읽기를 하는 교회들이
+                  늘어나고 있음에 감사드립니다. 창세기부터 요한계시록까지 꾸준히
+                  잘 읽을 수 있도록 기도 부탁드립니다.
+                </p>
+                <div class="story-prayer">
+                  <div class="story-prayer-title">🙏 함께 기도해주세요</div>
+                  <ul>
+                    <li>네팔 성경통독 운동 본부 사역을 위해서</li>
+                    <li>
+                      아침 학교에서 공부하는 아이들이 예수님을 믿을 수 있도록
+                    </li>
+                    <li>네팔에 하나님이 기뻐하시는 교회가 세워지도록</li>
+                    <li>네팔 교회들이 성경을 읽고 묵상하는 삶을 살도록</li>
+                    <li>2026년 바나바 훈련을 위해서</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="story-card">
+              <div class="story-hd" onclick="toggleStory(3)">
+                <div class="story-meta">
+                  <span class="story-num">65번째</span>
+                  <span class="story-date">2026년 1월 23일</span>
+                </div>
+                <div class="story-summary">꺼랄 교회 성탄예배, NEHC 신년회</div>
+                <span class="plan-arrow" id="story-arrow-3">▼</span>
+              </div>
+              <div class="story-bd" id="story-bd-3">
+                <p>
+                  한국에 1월은 눈꽃이 아름답지만, 네팔은 예쁜 유채꽃이 활짝
+                  핍니다. 지난 성탄예배는 리더 중에 한 분인 로메시 목사님이
+                  목회하시는 꺼랄 교회에서 예배를 드렸습니다. 디모데 목사가
+                  주일학교를 맡아서 사역하고 있어서 주일학교 아이들에게 성탄
+                  선물을 하였는데 준비한 선물보다 아이들이 더 많이 왔다고 기쁜
+                  하소연을 하여 함께 웃으며 성탄절을 보냈습니다.
+                </p>
+                <p>
+                  새해가 되어서 NEHC(네팔 성결교회) 지방회장들의 신년회에
+                  참석했습니다. NEHC에는 7개의 지방회가 있습니다. 선교사들을
+                  부모처럼 생각한다는 한 목회자의 고백을 들으며 가슴이
+                  먹먹했습니다.
+                </p>
+                <div class="story-prayer">
+                  <div class="story-prayer-title">🙏 함께 기도해주세요</div>
+                  <ul>
+                    <li>네팔 성경통독 운동 본부 사역을 위해서</li>
+                    <li>
+                      아침 학교에서 공부하는 아이들이 예수님을 믿을 수 있도록
+                    </li>
+                    <li>네팔에 하나님이 기뻐하시는 교회가 세워지도록</li>
+                    <li>네팔 교회들이 성경을 읽고 묵상하는 삶을 살도록</li>
+                    <li>2026년 바나바 훈련을 위해서</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="story-card" style="margin-bottom: 0">
+              <div class="story-hd" onclick="toggleStory(4)">
+                <div class="story-meta">
+                  <span class="story-num">64번째</span>
+                  <span class="story-date">2025년 12월 23일</span>
+                </div>
+                <div class="story-summary">
+                  써보트 교회 헌당예배, 바나바 훈련 리더들 삼겹살 파티
+                </div>
+                <span class="plan-arrow" id="story-arrow-4">▼</span>
+              </div>
+              <div class="story-bd" id="story-bd-4">
+                <p>
+                  어느새 2025년 한 해가 저물어 갑니다. 9월 데모로 마무어졌던
+                  써보트 아커터 교회 헌당 예배를 드렸습니다. 군워교회 105주년
+                  기념교회가 이상훈 안수집사님과 이외자 권사님의 헌금으로
+                  지어졌습니다.
+                </p>
+                <p>
+                  2025년 한 해 함께 수고하고, 땀 흘려준 바나바 훈련 리더들과
+                  가족들이 함께 모여 삼겹살 파티를 하였습니다. 서울수정교회
+                  이득희 장로님이 회식비를 후원해주셔서 네팔 가족들과 함께
+                  맛있는 저녁 식사를 하였습니다.
+                </p>
+                <p>
+                  네팔에서 사역하면서 정말 감사한 것은 하나님께 좋은 사역자들과
+                  함께 하는 축복을 주셨다는 것입니다. 2026년에는 써보트 교회도
+                  한 달에 한번 성도들이 모여서 성경 읽기를 시작하려고 합니다.
+                </p>
+                <div class="story-prayer">
+                  <div class="story-prayer-title">🙏 함께 기도해주세요</div>
+                  <ul>
+                    <li>네팔 성경통독 운동 본부 사역을 위해서</li>
+                    <li>
+                      아침 학교에서 공부하는 아이들이 예수님을 믿을 수 있도록
+                    </li>
+                    <li>네팔에 하나님이 기뻐하시는 교회가 세워지도록</li>
+                    <li>네팔 교회들이 성경을 읽고 묵상하는 삶을 살도록</li>
+                    <li>2026년 새해 사역을 위해서</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </section>
 
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="page" id="page-team">
-  <div class="wrap">
-    <p class="page-title">팀 구성</p>
-    <div id="team-content">
-      <div class="skeleton-block" style="height:160px;margin-bottom:16px"></div>
-      <div class="skeleton-block" style="height:200px;margin-bottom:16px"></div>
-      <div class="skeleton-block" style="height:160px"></div>
-    </div>
-  </div>
-</section>
-
-<section class="page" id="page-plan">
-  <div class="wrap">
-    <p class="page-title">사역계획</p>
-    <div id="plan-list">
-      <div class="skeleton-block" style="height:64px;margin-bottom:8px"></div>
-      <div class="skeleton-block" style="height:64px;margin-bottom:8px"></div>
-      <div class="skeleton-block" style="height:64px"></div>
-    </div>
-  </div>
-</section>
-
-<section class="page" id="page-attendance">
-  <div class="wrap">
-    <p class="page-title">출석 현황</p>
-    <div class="att-stats" id="att-stats">
-      <div class="att-stat"><div class="att-stat-val" id="att-total">—</div><div class="att-stat-label">전체 인원</div></div>
-      <div class="att-stat"><div class="att-stat-val" id="att-rate">—</div><div class="att-stat-label">평균 출석률</div></div>
-      <div class="att-stat"><div class="att-stat-val" id="att-count">—</div><div class="att-stat-label">총 모임 수</div></div>
-    </div>
-    <div id="att-content">
-      <div class="skeleton-block" style="height:300px"></div>
-    </div>
-  </div>
-</section>
-
-<section class="page" id="page-story">
-  <div class="wrap">
-    <p class="page-title">선교 이야기</p>
-
-    <div class="section-label">네팔 선교 영상</div>
-    <div class="story-video-wrap">
-      <iframe
-        src="https://www.youtube.com/embed/Go3qHZosLuY"
-        title="네팔 선교 영상"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
-    </div>
-
-    <div class="section">
-      <div class="section-label">김경순 선교사님 기도편지</div>
-
-      <div class="story-card">
-        <div class="story-hd" onclick="toggleStory(0)">
-          <div class="story-meta">
-            <span class="story-num">68번째</span>
-            <span class="story-date">2026년 4월 23일</span>
+      <section class="page" id="page-prayer">
+        <div class="coming-soon">
+          <div class="cs-icon">🙏</div>
+          <div class="cs-title">중보기도 일정</div>
+          <div class="cs-desc">
+            중보기도 일정과 제목이<br />곧 업데이트됩니다
           </div>
-          <div class="story-summary">네팔 새 정부 출범, 바나바 훈련 10주년</div>
-          <span class="plan-arrow" id="story-arrow-0">▼</span>
+          <span class="pill pill-gray">준비 중</span>
         </div>
-        <div class="story-bd" id="story-bd-0">
-          <p>네팔은 지난 3월 27일 새로운 정부가 출범했습니다. 새로운 정부가 내세우는 것은 과거에 부패 척결이라고 합니다. 학생비자 서류를 위해 대사관에 갔을 때 네팔 사람들이 한국에 가기 위해 서류를 들고 긴장한 모습을 보면서, 고난 가운데 예수님의 십자가를 묵상했습니다.</p>
-          <p>올해는 바나바 훈련 10주년입니다. 하나님의 은혜로 이번 훈련에 훈련생은 25명으로 시작했습니다. 멀리 네팔간즈, 치투완, 다딩, 부리야, 카투만두에서 모여 훈련을 시작했습니다.</p>
-          <div class="story-prayer">
-            <div class="story-prayer-title">🙏 함께 기도해주세요</div>
-            <ul>
-              <li>네팔 성경통독 운동 본부 사역을 위해서</li>
-              <li>아침 학교에서 공부하는 아이들이 예수님을 믿을 수 있도록</li>
-              <li>네팔에 하나님이 기뻐하시는 교회가 세워지도록</li>
-              <li>네팔 교회들이 성경을 읽고 묵상하는 삶을 살도록</li>
-              <li>2026년 5월 18-21일 2차 바나바 훈련을 위해서</li>
-            </ul>
-          </div>
+      </section>
+
+      <section class="page" id="page-luggage">
+        <div class="coming-soon">
+          <div class="cs-icon">🎒</div>
+          <div class="cs-title">짐 목록 / 물품대여현황</div>
+          <div class="cs-desc">팀별 짐 리스트가<br />곧 올라올 예정입니다</div>
+          <span class="pill pill-gray">준비 중</span>
         </div>
-      </div>
+      </section>
 
-      <div class="story-card">
-        <div class="story-hd" onclick="toggleStory(1)">
-          <div class="story-meta">
-            <span class="story-num">67번째</span>
-            <span class="story-date">2026년 3월 23일</span>
-          </div>
-          <div class="story-summary">리빙필라델피아 교회 아침학교, 바나바 훈련 리트릿</div>
-          <span class="plan-arrow" id="story-arrow-1">▼</span>
+      <section class="page" id="page-notice">
+        <div class="coming-soon">
+          <div class="cs-icon">📢</div>
+          <div class="cs-title">공지사항</div>
+          <div class="cs-desc">공지사항이 곧 올라올 예정입니다</div>
+          <span class="pill pill-gray">준비 중</span>
         </div>
-        <div class="story-bd" id="story-bd-1">
-          <p>꽃 피는 3월이 깊어가고 있습니다. 비자를 받기 위해 미술 학교에서 그림을 그리고 있습니다. 네팔의 힌두교 승려들(브라만)은 가가호호 방문하여 축복기도를 해주고 보시를 받아서 먹고 사는 사람들입니다.</p>
-          <p>리빙필라델피아 교회 아침 학교 — 작년에 신촌교회 청년팀이 와서 사역한 후에 아침 학교에 공부하러 오는 아이들이 증가하였고, 예배를 드리는 아이들도 증가하고 있습니다.</p>
-          <p>바나바 훈련 리트릿이 3월 31일, 4월 1일-2일에 있습니다. 4월 20부터 23일까지 1차 바나바 훈련을 진행합니다.</p>
-          <div class="story-prayer">
-            <div class="story-prayer-title">🙏 함께 기도해주세요</div>
-            <ul>
-              <li>네팔 성경통독 운동 본부 사역을 위해서</li>
-              <li>아침 학교에서 공부하는 아이들이 예수님을 믿을 수 있도록</li>
-              <li>네팔에 하나님이 기뻐하시는 교회가 세워지도록</li>
-              <li>네팔 교회들이 성경을 읽고 묵상하는 삶을 살도록</li>
-              <li>리트릿과 바나바 훈련을 위해서</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      </section>
+    </main>
 
-      <div class="story-card">
-        <div class="story-hd" onclick="toggleStory(2)">
-          <div class="story-meta">
-            <span class="story-num">66번째</span>
-            <span class="story-date">2026년 2월 23일</span>
-          </div>
-          <div class="story-summary">네팔 무정부 상태, 써보트·살룸 교회 성경 읽기</div>
-          <span class="plan-arrow" id="story-arrow-2">▼</span>
-        </div>
-        <div class="story-bd" id="story-bd-2">
-          <p>구정 명절 잘 보내셨죠. 네팔은 이제 총선을 기다리고 있습니다. 폭동을 일으킨 젠지가 정부에 외국인에게 불법적인 비자를 주지 말라고 해서 비자를 받는 것이 어려워지고 있습니다.</p>
-          <p>2026년에는 써보트 교회와 살룸 교회가 성경 읽기를 시작하였습니다. 하나님의 은혜로 성경 읽기를 하는 교회들이 늘어나고 있음에 감사드립니다. 창세기부터 요한계시록까지 꾸준히 잘 읽을 수 있도록 기도 부탁드립니다.</p>
-          <div class="story-prayer">
-            <div class="story-prayer-title">🙏 함께 기도해주세요</div>
-            <ul>
-              <li>네팔 성경통독 운동 본부 사역을 위해서</li>
-              <li>아침 학교에서 공부하는 아이들이 예수님을 믿을 수 있도록</li>
-              <li>네팔에 하나님이 기뻐하시는 교회가 세워지도록</li>
-              <li>네팔 교회들이 성경을 읽고 묵상하는 삶을 살도록</li>
-              <li>2026년 바나바 훈련을 위해서</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+    <button
+      class="scroll-top"
+      id="scroll-top"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    >
+      ↑
+    </button>
 
-      <div class="story-card">
-        <div class="story-hd" onclick="toggleStory(3)">
-          <div class="story-meta">
-            <span class="story-num">65번째</span>
-            <span class="story-date">2026년 1월 23일</span>
-          </div>
-          <div class="story-summary">꺼랄 교회 성탄예배, NEHC 신년회</div>
-          <span class="plan-arrow" id="story-arrow-3">▼</span>
-        </div>
-        <div class="story-bd" id="story-bd-3">
-          <p>한국에 1월은 눈꽃이 아름답지만, 네팔은 예쁜 유채꽃이 활짝 핍니다. 지난 성탄예배는 리더 중에 한 분인 로메시 목사님이 목회하시는 꺼랄 교회에서 예배를 드렸습니다. 디모데 목사가 주일학교를 맡아서 사역하고 있어서 주일학교 아이들에게 성탄 선물을 하였는데 준비한 선물보다 아이들이 더 많이 왔다고 기쁜 하소연을 하여 함께 웃으며 성탄절을 보냈습니다.</p>
-          <p>새해가 되어서 NEHC(네팔 성결교회) 지방회장들의 신년회에 참석했습니다. NEHC에는 7개의 지방회가 있습니다. 선교사들을 부모처럼 생각한다는 한 목회자의 고백을 들으며 가슴이 먹먹했습니다.</p>
-          <div class="story-prayer">
-            <div class="story-prayer-title">🙏 함께 기도해주세요</div>
-            <ul>
-              <li>네팔 성경통독 운동 본부 사역을 위해서</li>
-              <li>아침 학교에서 공부하는 아이들이 예수님을 믿을 수 있도록</li>
-              <li>네팔에 하나님이 기뻐하시는 교회가 세워지도록</li>
-              <li>네팔 교회들이 성경을 읽고 묵상하는 삶을 살도록</li>
-              <li>2026년 바나바 훈련을 위해서</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="story-card" style="margin-bottom:0">
-        <div class="story-hd" onclick="toggleStory(4)">
-          <div class="story-meta">
-            <span class="story-num">64번째</span>
-            <span class="story-date">2025년 12월 23일</span>
-          </div>
-          <div class="story-summary">써보트 교회 헌당예배, 바나바 훈련 리더들 삼겹살 파티</div>
-          <span class="plan-arrow" id="story-arrow-4">▼</span>
-        </div>
-        <div class="story-bd" id="story-bd-4">
-          <p>어느새 2025년 한 해가 저물어 갑니다. 9월 데모로 마무어졌던 써보트 아커터 교회 헌당 예배를 드렸습니다. 군워교회 105주년 기념교회가 이상훈 안수집사님과 이외자 권사님의 헌금으로 지어졌습니다.</p>
-          <p>2025년 한 해 함께 수고하고, 땀 흘려준 바나바 훈련 리더들과 가족들이 함께 모여 삼겹살 파티를 하였습니다. 서울수정교회 이득희 장로님이 회식비를 후원해주셔서 네팔 가족들과 함께 맛있는 저녁 식사를 하였습니다.</p>
-          <p>네팔에서 사역하면서 정말 감사한 것은 하나님께 좋은 사역자들과 함께 하는 축복을 주셨다는 것입니다. 2026년에는 써보트 교회도 한 달에 한번 성도들이 모여서 성경 읽기를 시작하려고 합니다.</p>
-          <div class="story-prayer">
-            <div class="story-prayer-title">🙏 함께 기도해주세요</div>
-            <ul>
-              <li>네팔 성경통독 운동 본부 사역을 위해서</li>
-              <li>아침 학교에서 공부하는 아이들이 예수님을 믿을 수 있도록</li>
-              <li>네팔에 하나님이 기뻐하시는 교회가 세워지도록</li>
-              <li>네팔 교회들이 성경을 읽고 묵상하는 삶을 살도록</li>
-              <li>2026년 새해 사역을 위해서</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section class="page" id="page-prayer">
-  <div class="coming-soon">
-    <div class="cs-icon">🙏</div>
-    <div class="cs-title">중보기도 일정</div>
-    <div class="cs-desc">중보기도 일정과 제목이<br>곧 업데이트됩니다</div>
-    <span class="pill pill-gray">준비 중</span>
-  </div>
-</section>
-
-<section class="page" id="page-luggage">
-  <div class="coming-soon">
-    <div class="cs-icon">🎒</div>
-    <div class="cs-title">짐 목록 / 물품대여현황</div>
-    <div class="cs-desc">팀별 짐 리스트가<br>곧 올라올 예정입니다</div>
-    <span class="pill pill-gray">준비 중</span>
-  </div>
-</section>
-
-<section class="page" id="page-notice">
-  <div class="coming-soon">
-    <div class="cs-icon">📢</div>
-    <div class="cs-title">공지사항</div>
-    <div class="cs-desc">공지사항이 곧 올라올 예정입니다</div>
-    <span class="pill pill-gray">준비 중</span>
-  </div>
-</section>
-
-</main>
-
-<button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
-
-<script src="app.js"></script>
-</body>
+    <script src="app.js"></script>
+  </body>
 </html>
