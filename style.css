@@ -33,7 +33,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ─── Nav ────────────────────────────────────── */
+/* ─── Nav (햄버거) ───────────────────────────── */
 .nav-wrapper {
   position: sticky; top: 0; z-index: 100;
   background: var(--surface);
@@ -41,32 +41,73 @@ body {
 }
 .nav-top {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 16px 10px;
+  padding: 14px 16px;
 }
 .nav-top-left { display: flex; align-items: center; gap: 8px; }
 .nav-top-icon { font-size: 20px; }
 .nav-top-title { font-size: 20px; font-weight: 800; color: var(--ink-900); letter-spacing: -.5px; }
 
-.tab-nav {
-  display: flex; overflow-x: auto;
-  scrollbar-width: none; -ms-overflow-style: none;
-  padding: 0 12px;
-  gap: 2px;
+.hamburger-btn {
+  background: none; border: none; cursor: pointer;
+  display: flex; flex-direction: column; gap: 5px; padding: 4px;
+  -webkit-tap-highlight-color: transparent;
 }
-.tab-nav::-webkit-scrollbar { display: none; }
+.hamburger-btn span {
+  display: block; width: 22px; height: 2px;
+  background: var(--ink-900); border-radius: 2px;
+}
 
-.tab-btn {
-  flex-shrink: 0;
-  padding: 10px 14px;
-  border: none; background: none;
-  font-family: var(--font); font-size: 13px; font-weight: 500;
-  color: var(--ink-300); cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all var(--tr);
-  white-space: nowrap;
+/* ─── 드로어 ─────────────────────────────────── */
+.drawer-dim {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0);
+  z-index: 200;
+  pointer-events: none;
+  transition: background .25s;
 }
-.tab-btn.active { color: var(--ink-900); border-bottom-color: var(--ink-900); font-weight: 700; }
-.tab-btn:hover:not(.active) { color: var(--ink-500); }
+.drawer-dim.on { background: rgba(0,0,0,.4); pointer-events: auto; }
+
+.drawer {
+  position: fixed; top: 0; right: -280px;
+  width: 280px; height: 100%;
+  background: var(--surface);
+  z-index: 201;
+  transition: right .28s cubic-bezier(.4,0,.2,1);
+  box-shadow: -4px 0 32px rgba(0,0,0,.1);
+  display: flex; flex-direction: column;
+}
+.drawer.open { right: 0; }
+.drawer-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+.drawer-logo { display: flex; align-items: center; gap: 8px; }
+.drawer-title { font-size: 16px; font-weight: 800; color: var(--ink-900); letter-spacing: -.3px; }
+.drawer-close {
+  background: none; border: none; cursor: pointer;
+  font-size: 18px; color: var(--ink-300); padding: 4px;
+}
+.drawer-menu {
+  flex: 1; overflow-y: auto;
+  padding: 10px 0;
+  display: flex; flex-direction: column;
+}
+.drawer-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 20px;
+  background: none; border: none;
+  font-family: var(--font); font-size: 15px; font-weight: 500;
+  color: var(--ink-700); cursor: pointer; text-align: left;
+  border-left: 3px solid transparent;
+  transition: all var(--tr);
+  -webkit-tap-highlight-color: transparent;
+  width: 100%;
+}
+.drawer-item:hover { background: var(--bg); }
+.drawer-item.active { background: var(--blue-bg); border-left-color: var(--blue); color: var(--blue); font-weight: 700; }
+.drawer-icon { font-size: 20px; width: 24px; text-align: center; flex-shrink: 0; }
 
 /* ─── Sub Tabs ─────────────────────────────── */
 .sub-tab-nav {
@@ -273,7 +314,7 @@ main { padding-bottom: 80px; }
   background: var(--surface);
   border-radius: var(--r);
   padding: 18px 20px;
-  margin-bottom: 18px;
+  margin-bottom: 8px;
 }
 .dir-tag {
   font-size: 10px; font-weight: 700; letter-spacing: 1.2px;

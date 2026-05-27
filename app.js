@@ -858,20 +858,30 @@ function toggleStory(idx) {
 }
 
 /* ═══════════════════════════════════════════════
-   11. 네비게이션
+   11. 드로어 + 네비게이션
 ═══════════════════════════════════════════════ */
 const loaded = new Set();
 
+function openDrawer() {
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawerDim').classList.add('on');
+}
+
+function closeDrawer() {
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawerDim').classList.remove('on');
+}
+
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.drawer-item').forEach(b => b.classList.remove('active'));
   const page = document.getElementById('page-' + id);
-  const btn  = document.querySelector(`[data-page="${id}"]`);
+  const btn  = document.querySelector(`.drawer-item[data-page="${id}"]`);
   if (page) page.classList.add('active');
   if (btn)  btn.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  closeDrawer();
 
-  // 탭별 첫 로드
   if (!loaded.has(id)) {
     loaded.add(id);
     if (id === 'schedule')   loadSchedule();
@@ -881,7 +891,7 @@ function showPage(id) {
   }
 }
 
-document.querySelectorAll('.tab-btn').forEach(btn => {
+document.querySelectorAll('.drawer-item').forEach(btn => {
   btn.addEventListener('click', () => showPage(btn.dataset.page));
 });
 
@@ -897,15 +907,15 @@ document.querySelectorAll('.sub-tab-btn').forEach(btn => {
 });
 
 /* ═══════════════════════════════════════════════
-   12. 새로고침 (visibilitychange만 유지)
+   12. 새로고침
 ═══════════════════════════════════════════════ */
 async function refreshAll() {
   await Promise.all([ loadHome(), loadWeather() ]);
-  const activeTab = document.querySelector('.tab-btn.active')?.dataset?.page;
-  if (activeTab === 'schedule')   await loadSchedule();
-  if (activeTab === 'team')       await loadTeam();
-  if (activeTab === 'plan')       await loadPlan();
-  if (activeTab === 'attendance') await loadAttendance();
+  const activeId = document.querySelector('.page.active')?.id?.replace('page-','');
+  if (activeId === 'schedule')   await loadSchedule();
+  if (activeId === 'team')       await loadTeam();
+  if (activeId === 'plan')       await loadPlan();
+  if (activeId === 'attendance') await loadAttendance();
 }
 
 /* ═══════════════════════════════════════════════

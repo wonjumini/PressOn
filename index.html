@@ -11,25 +11,39 @@
 </head>
 <body>
 
-<!-- ─── Navigation (C style) ─────────────────── -->
+<!-- ─── Navigation (햄버거 드로어) ───────────── -->
 <div class="nav-wrapper">
   <div class="nav-top">
-    <div class="nav-top-left">
+    <div class="nav-top-left" onclick="showPage('home')" style="cursor:pointer">
       <span class="nav-top-icon">🇳🇵</span>
       <span class="nav-top-title">2026 네팔 선교</span>
     </div>
+    <button class="hamburger-btn" onclick="openDrawer()" aria-label="메뉴 열기">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-  <nav class="tab-nav" role="tablist">
-    <button class="tab-btn active" data-page="home">홈</button>
-    <button class="tab-btn" data-page="overview">개요</button>
-    <button class="tab-btn" data-page="schedule">일정</button>
-    <button class="tab-btn" data-page="team">팀</button>
-    <button class="tab-btn" data-page="plan">사역계획</button>
-    <button class="tab-btn" data-page="attendance">출석</button>
-    <button class="tab-btn" data-page="story">선교 이야기</button>
-    <button class="tab-btn" data-page="prayer">중보기도</button>
-    <button class="tab-btn" data-page="luggage">짐 목록</button>
-    <button class="tab-btn" data-page="notice">공지</button>
+</div>
+
+<!-- ─── 드로어 오버레이 ──────────────────────── -->
+<div class="drawer-dim" id="drawerDim" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <div class="drawer-logo">
+      <span>🇳🇵</span>
+      <span class="drawer-title">2026 네팔 선교</span>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <nav class="drawer-menu">
+    <button class="drawer-item" data-page="overview"><span class="drawer-icon">🌍</span><span>개요</span></button>
+    <button class="drawer-item" data-page="schedule"><span class="drawer-icon">📅</span><span>일정</span></button>
+    <button class="drawer-item" data-page="team"><span class="drawer-icon">👥</span><span>팀</span></button>
+    <button class="drawer-item" data-page="plan"><span class="drawer-icon">📋</span><span>사역계획</span></button>
+    <button class="drawer-item" data-page="attendance"><span class="drawer-icon">✅</span><span>출석</span></button>
+    <button class="drawer-item" data-page="story"><span class="drawer-icon">📖</span><span>선교 이야기</span></button>
+    <button class="drawer-item" data-page="prayer"><span class="drawer-icon">🙏</span><span>중보기도</span></button>
+    <button class="drawer-item" data-page="luggage"><span class="drawer-icon">🎒</span><span>짐 목록</span></button>
+    <button class="drawer-item" data-page="notice"><span class="drawer-icon">📢</span><span>공지</span></button>
   </nav>
 </div>
 
@@ -426,18 +440,17 @@
     <div class="section-label">네팔 선교 영상</div>
     <div class="story-video-wrap">
       <iframe
-        src="https://www.youtube.com/embed/VIDEO_ID_HERE"
+        src="https://www.youtube.com/embed/Go3qHZosLuY"
         title="네팔 선교 영상"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen>
       </iframe>
-      <p class="story-video-hint">유튜브 링크 공유해주시면 바로 연결할게요 🙏</p>
     </div>
 
     <!-- 기도편지 아코디언 -->
     <div class="section">
-      <div class="section-label">김경순 선교사님 기도편지</div>
+      <div class="section-label">김경순 선교사 기도편지</div>
 
       <!-- 68회 - 2026년 4월 -->
       <div class="story-card">
