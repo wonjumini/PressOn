@@ -801,8 +801,37 @@ function closeKV() {
 }
 
 /* ═══════════════════════════════════════════════
-   10. 아코디언 (사역계획 + 선교 이야기)
+   10. 아코디언 + NEPAL 말씀 팝업
 ═══════════════════════════════════════════════ */
+const NEPAL_DATA = {
+  N: { word: 'New Creation', desc: '복음을 통해 새롭게 변화됨을 믿는다', ref: '고린도후서 5:17', verse: '그런즉 누구든지 그리스도 안에 있으면 새로운 피조물이라. 이전 것은 지나갔으니 보라 새것이 되었도다.' },
+  E: { word: 'Evangelism', desc: '복음을 전하는 게 선교의 사명이다', ref: '마가복음 16:15', verse: '또 이르시되 너희는 온 천하에 다니며 만민에게 복음을 전파하라.' },
+  P: { word: 'Passion for Worship', desc: '더 순전한 마음을 구하며 예배한다', ref: '요한복음 4:23-24', verse: '아버지께서는 이렇게 자기에게 예배하는 자들을 찾으시느니라. 하나님은 영이시니 예배하는 자가 영과 진리로 예배할지니라.' },
+  A: { word: 'Agape', desc: '하나님의 사랑 안에 거한다', ref: '요한복음 15:9', verse: '아버지께서 나를 사랑하신 것 같이 나도 너희를 사랑하였으니 나의 사랑 안에 거하라.' },
+  L: { word: 'Love and Serve', desc: '혼자가 아니라 팀이 함께 지어져 간다', ref: '에베소서 2:22', verse: '너희도 성령 안에서 하나님이 거하실 처소가 되기 위하여 그리스도 예수 안에서 함께 지어져 가느니라.' },
+};
+
+function openNepal(letter) {
+  const data = NEPAL_DATA[letter];
+  if (!data) return;
+
+  // 활성 버튼 표시
+  document.querySelectorAll('.nepal-letter').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.nepal-letter').forEach(b => { if (b.textContent === letter) b.classList.add('active'); });
+
+  const detail = document.getElementById('nepalDetail');
+  document.getElementById('ndLetter').textContent = letter;
+  document.getElementById('ndWord').textContent = data.word;
+  document.getElementById('ndDesc').textContent = data.desc;
+  document.getElementById('ndVerse').innerHTML = `<strong style="display:block;font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.5px;margin-bottom:6px">${escHtml(data.ref)}</strong>${escHtml(data.verse)}`;
+  detail.style.display = 'block';
+  detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function closeNepal() {
+  document.getElementById('nepalDetail').style.display = 'none';
+  document.querySelectorAll('.nepal-letter').forEach(b => b.classList.remove('active'));
+}
 function togglePlan(idx) {
   const bd    = document.getElementById(`plan-bd-${idx}`);
   const arrow = document.getElementById(`plan-arrow-${idx}`);

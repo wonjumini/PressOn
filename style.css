@@ -276,11 +276,50 @@ main { padding-bottom: 80px; }
 .value-desc { font-size: 13px; color: var(--t3); line-height: 1.6; }
 .value-ref { font-size: 11px; color: var(--pri); font-weight: 700; margin-top: 4px; }
 
-/* 비전 카드 그리드 */
+/* 비전 카드 */
 .vision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.vision-card { background: var(--bg2); border: 1px solid var(--bd); border-radius: var(--r); padding: 22px 18px; }
-.vision-num { font-size: 36px; font-weight: 900; color: var(--pri-lt); line-height: 1; margin-bottom: 8px; letter-spacing: -2px; }
-.vision-txt { font-size: 14px; font-weight: 700; color: var(--t1); line-height: 1.5; }
+.vision-card { background: var(--bg2); border: 1px solid var(--bd); border-radius: var(--r); padding: 20px 16px; }
+.vision-num { font-size: 34px; font-weight: 900; color: #93C5FD; line-height: 1; margin-bottom: 8px; letter-spacing: -1px; }
+.vision-txt { font-size: 13px; font-weight: 700; color: var(--t1); line-height: 1.5; }
+
+/* 카드 내 섹션 타이틀 */
+.card-section-title { font-size: 18px; font-weight: 900; color: var(--t1); letter-spacing: -.5px; margin-bottom: 14px; }
+
+/* NEPAL 글자 버튼 */
+.nepal-letters { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; margin-bottom: 12px; }
+.nepal-letter {
+  aspect-ratio: 1; background: var(--bg2); border: 1.5px solid var(--bd);
+  border-radius: var(--r); font-family: var(--font);
+  font-size: 24px; font-weight: 900; color: var(--t1);
+  cursor: pointer; transition: all .2s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.nepal-letter:active { transform: scale(.93); background: var(--pri-lt); border-color: var(--pri); color: var(--pri); }
+.nepal-letter.active { background: var(--pri); color: #fff; border-color: var(--pri); }
+
+/* NEPAL 말씀 패널 */
+.nepal-detail {
+  background: linear-gradient(135deg, #0B1524, #0A2A5E);
+  border-radius: var(--r); padding: 24px 20px 20px;
+  margin-bottom: 10px; position: relative;
+  animation: fadeIn .25s var(--ease);
+}
+.nepal-detail-letter { font-size: 48px; font-weight: 900; color: #fff; line-height: 1; margin-bottom: 6px; letter-spacing: -2px; }
+.nepal-detail-word { font-size: 16px; font-weight: 700; color: #93C5FD; margin-bottom: 8px; }
+.nepal-detail-desc { font-size: 14px; color: rgba(255,255,255,.75); line-height: 1.7; margin-bottom: 14px; }
+.nepal-detail-verse {
+  background: rgba(255,255,255,.08); border-radius: 10px;
+  padding: 14px 16px; border-left: 3px solid var(--pri);
+  font-size: 13px; color: rgba(255,255,255,.8); line-height: 1.75;
+}
+.nepal-detail-close {
+  margin-top: 14px; background: rgba(255,255,255,.12);
+  border: none; border-radius: 100px; padding: 6px 16px;
+  font-family: var(--font); font-size: 12px; font-weight: 600;
+  color: rgba(255,255,255,.6); cursor: pointer;
+  transition: background .15s;
+}
+.nepal-detail-close:active { background: rgba(255,255,255,.2); }
 
 /* 자세/문화 카드 */
 .ac-lb {

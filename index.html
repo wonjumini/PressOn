@@ -116,15 +116,15 @@
 <!-- ═══════ OVERVIEW ════════════════════════ -->
 <section class="page" id="page-overview">
   <div class="wrap">
-    <div style="margin-top:24px">
-      <span class="eyebrow">MISSION · VISION · VALUE</span>
+
+    <!-- 타이틀 — Mission 파란 태그 위에 -->
+    <div style="margin-top:24px;margin-bottom:20px">
+      <span class="eyebrow">Mission</span>
       <h2 class="page-title">우리가 걸어가는 길</h2>
-      <p class="page-desc">우리 팀의 존재 이유와 푯대, 그리고 소중히 여기는 것들.</p>
     </div>
 
-    <!-- 사명 — 다크 카드 -->
+    <!-- 사명 — 다크 카드 (라벨 없이 텍스트만) -->
     <div class="mission-card">
-      <div class="mission-label">MISSION · 우리 팀의 존재 이유 · 푯대를 향하여!</div>
       <div class="mission-text">
         <p>우리는 하나님께서 먼저 사랑하신 땅, <span class="mission-highlight">네팔</span>로 갑니다.</p>
         <p style="margin-top:14px">우리가 향하는 곳은 네팔이지만,<br>우리의 푯대는 <span class="mission-highlight">낮아지신 그리스도의 자리</span>입니다.</p>
@@ -135,8 +135,8 @@
 
     <!-- 비전 -->
     <div class="section">
-      <span class="eyebrow">VISION</span>
-      <h3 style="font-size:20px;font-weight:900;letter-spacing:-.5px;margin-bottom:14px;color:var(--t1)">우리 팀의 구체화된 목표</h3>
+      <span class="eyebrow">Vision</span>
+      <h3 class="card-section-title">우리 팀의 구체화된 목표</h3>
       <div class="vision-grid">
         <div class="vision-card"><div class="vision-num">01</div><div class="vision-txt">어떤 상황에서든 뜨겁게 예배한다</div></div>
         <div class="vision-card"><div class="vision-num">02</div><div class="vision-txt">기회가 주어질 때마다 복음을 전한다</div></div>
@@ -144,11 +144,27 @@
       </div>
     </div>
 
-    <!-- Value NEPAL -->
+    <!-- Value NEPAL — 각 글자 탭하면 말씀 팝업 -->
     <div class="section">
-      <span class="eyebrow">VALUE</span>
-      <h3 style="font-size:20px;font-weight:900;letter-spacing:-.5px;margin-bottom:14px;color:var(--t1)">N · E · P · A · L</h3>
-      <div class="card">
+      <span class="eyebrow">Value</span>
+      <h3 class="card-section-title">N · E · P · A · L</h3>
+      <!-- 글자 버튼 -->
+      <div class="nepal-letters">
+        <button class="nepal-letter" onclick="openNepal('N')">N</button>
+        <button class="nepal-letter" onclick="openNepal('E')">E</button>
+        <button class="nepal-letter" onclick="openNepal('P')">P</button>
+        <button class="nepal-letter" onclick="openNepal('A')">A</button>
+        <button class="nepal-letter" onclick="openNepal('L')">L</button>
+      </div>
+      <!-- 말씀 팝업 -->
+      <div class="nepal-detail" id="nepalDetail" style="display:none">
+        <div class="nepal-detail-letter" id="ndLetter"></div>
+        <div class="nepal-detail-word" id="ndWord"></div>
+        <div class="nepal-detail-desc" id="ndDesc"></div>
+        <div class="nepal-detail-verse" id="ndVerse"></div>
+        <button class="nepal-detail-close" onclick="closeNepal()">닫기</button>
+      </div>
+      <div class="card" style="margin-top:10px">
         <div class="value-row">
           <div class="value-letter-box">N</div>
           <div><div class="value-word">New Creation</div><div class="value-desc">복음을 통해 새롭게 변화됨을 믿는다</div><div class="value-ref">고린도후서 5:17</div></div>
@@ -175,8 +191,8 @@
     <!-- 자세 -->
     <div class="section">
       <div class="card">
-        <span class="ac-lb">ATTITUDE · 사역을 대하는 태도</span>
-        <h3 class="ac-title">우리의 자세</h3>
+        <span class="eyebrow">Attitude</span>
+        <h3 class="card-section-title">사역을 대하는 태도</h3>
         <ul class="ac-list">
           <li><span class="num">1</span>치밀하게 계획한다</li>
           <li><span class="num">2</span>흐름과 디테일을 끝까지 고민한다</li>
@@ -190,8 +206,8 @@
     <!-- 문화 -->
     <div class="section" style="margin-bottom:0">
       <div class="card">
-        <span class="ac-lb orange">CULTURE · 우리 팀의 문화</span>
-        <h3 class="ac-title">은혜 · 재미 · 감동</h3>
+        <span class="eyebrow">Culture</span>
+        <h3 class="card-section-title">우리 팀의 문화</h3>
         <p style="font-size:14px;color:var(--t2);line-height:1.75">각 팀과 생활조는 이 세 가지 문화를 적극적으로 적용하며 우리 팀에 접촉하는 모든 이들에게 하나님의 은혜가 생생하게 경험되도록 합니다.</p>
         <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
           <span class="pill pill-blue">은혜</span>
