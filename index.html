@@ -43,65 +43,105 @@
 <!-- ═══════ HOME ══════════════════════════════ -->
 <section class="page active" id="page-home">
 
-  <div class="wrap">
-    <!-- 히어로 카드 — 바로 표시 -->
-    <div class="hero-card" id="heroCard">
-      <div class="hero-bg-circle hero-bg-1"></div>
-      <div class="hero-bg-circle hero-bg-2"></div>
-      <div class="hero-badge">2026 SPRING 단기선교</div>
-      <h1 class="hero-title">
-        푯대를 향하여,<br>
-        <span class="hero-gradient">Press On!</span>
-      </h1>
-      <p class="hero-sub">네팔, 그 땅에 복음의 흐름을 더하다</p>
-      <div class="hero-meta-row">
-        <div class="hero-meta-item">
-          <span class="hero-meta-label">일시</span>
-          <span class="hero-meta-val">2026.07.11 — 07.19</span>
-        </div>
-        <div class="hero-meta-item">
-          <span class="hero-meta-label">장소</span>
-          <span class="hero-meta-val">카트만두 · 포카라</span>
-        </div>
+  <!-- 풀스크린 히어로 -->
+  <div class="home-hero-full">
+    <div class="hero-bg-circle hero-bg-1"></div>
+    <div class="hero-bg-circle hero-bg-2"></div>
+    <div class="hero-badge">2026 SPRING 단기선교</div>
+    <h1 class="hero-title">
+      푯대를 향하여,<br>
+      <span class="hero-gradient">Press On!</span>
+    </h1>
+    <p class="hero-sub">
+      네팔, 그 땅에 복음의 흐름을 더하다<br>
+      우리는 부르심을 따라, 계속 걸어갑니다.
+    </p>
+    <div class="hero-meta-row">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">일시</span>
+        <span class="hero-meta-val">2026.07.11 — 07.19</span>
       </div>
-      <div class="hero-boxes">
-        <div class="hero-box">
-          <div class="hero-box-label">출발까지</div>
-          <div class="hero-box-val" id="dday-dep">—</div>
-          <div class="hero-box-unit" id="dday-dep-unit">일 남음</div>
-        </div>
-        <div class="hero-box">
-          <div class="hero-box-label">지금 카트만두</div>
-          <div class="hero-box-weather">
-            <span class="hero-box-val" id="w-temp">—</span>
-            <span class="hero-box-unit">°C</span>
-          </div>
-          <div class="hero-box-unit" id="w-desc">불러오는 중</div>
-        </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">장소</span>
+        <span class="hero-meta-val">카트만두 · 포카라</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">대상</span>
+        <span class="hero-meta-val">박지명 목사, 정예림 간사 외 26명</span>
       </div>
     </div>
+    <div class="hero-scroll-hint">↓ SCROLL</div>
+  </div>
+
+  <!-- 스크롤 이후 컨텐츠 -->
+  <div class="wrap">
 
     <!-- 약속의 말씀 -->
     <div class="section">
-      <span class="eyebrow">약속의 말씀</span>
-      <div class="card" id="home-scripture">
-        <div class="skeleton-block" style="height:80px"></div>
+      <span class="eyebrow">Promise</span>
+      <h2 class="card-section-title">약속의 말씀</h2>
+      <div class="verse-card-lg" id="home-scripture">
+        <div class="skeleton-block" style="height:100px"></div>
       </div>
     </div>
 
     <!-- 선교 개요 -->
     <div class="section">
-      <span class="eyebrow">선교 개요</span>
-      <div class="card" id="home-overview">
-        <div class="skeleton-block" style="height:120px"></div>
+      <span class="eyebrow">Mission Overview</span>
+      <h2 class="card-section-title">선교 개요</h2>
+      <div class="ov-grid" id="home-overview-grid">
+        <div class="ov-card"><div class="ov-ic">📅</div><div class="ov-lb">기간</div><div class="ov-val">8박 9일<br>7.11 → 7.19</div></div>
+        <div class="ov-card"><div class="ov-ic">🏔️</div><div class="ov-lb">장소</div><div class="ov-val">카트만두<br>+ 포카라</div></div>
+        <div class="ov-card"><div class="ov-ic">👥</div><div class="ov-lb">대상</div><div class="ov-val">박지명 목사 외<br>청년 27명</div></div>
+        <div class="ov-card"><div class="ov-ic">🎯</div><div class="ov-lb">슬로건</div><div class="ov-val">Press On!<br>푯대를 향하여</div></div>
+        <div class="ov-card" style="grid-column:1/-1"><div class="ov-ic">⛪</div><div class="ov-lb">주요 사역지</div><div class="ov-val">다딩 너우모레·썰보트 교회 · 한인교회 · 조이하우스 · 꺼랄교회</div></div>
       </div>
     </div>
 
-    <!-- 다음 팀모임 -->
+    <!-- 핵심 사역 -->
     <div class="section">
-      <span class="eyebrow">다음 팀모임</span>
-      <div class="card" id="home-next-meeting">
-        <div class="skeleton-block" style="height:48px"></div>
+      <span class="eyebrow">Core Mission</span>
+      <h2 class="card-section-title">핵심 사역</h2>
+      <div class="ms-card"><div class="ms-num">01</div><div><div class="ms-title">어린이 사역</div><div class="ms-desc">조이하우스 · 웰컴·찬양·율동 · 풍선아트·복음팔찌</div></div></div>
+      <div class="ms-card"><div class="ms-num">02</div><div><div class="ms-title">문화 / 교회 사역</div><div class="ms-desc">다딩썰보트 · 다딩너우모레 · 꺼랄교회 청장년</div></div></div>
+      <div class="ms-card"><div class="ms-num">03</div><div><div class="ms-title">비전트립 / 베이스 격려</div><div class="ms-desc">오스트리안 베이스캠프 · 보우더너트 · 인터씨드</div></div></div>
+    </div>
+
+    <!-- 핵심 일정 -->
+    <div class="section">
+      <span class="eyebrow">Schedule</span>
+      <h2 class="card-section-title">핵심 일정</h2>
+      <div class="home-tl">
+        <div class="htl-item"><div class="htl-left"><div class="htl-dot"></div><div class="htl-line"></div></div><div><div class="htl-date">7/11 (토)</div><div class="htl-title">한국 출발 → 네팔 도착</div><div class="htl-desc">저녁식사 후 OT, 카트만두 도착</div></div></div>
+        <div class="htl-item"><div class="htl-left"><div class="htl-dot"></div><div class="htl-line"></div></div><div><div class="htl-date">7/12 (일)</div><div class="htl-title">한인교회 예배 · 어린이 사역</div><div class="htl-desc">조이하우스 어린이사역</div></div></div>
+        <div class="htl-item"><div class="htl-left"><div class="htl-dot"></div><div class="htl-line"></div></div><div><div class="htl-date">7/13 — 14</div><div class="htl-title">다딩 교회 사역</div><div class="htl-desc">썰보트·너우모레 교회 → 포카라 이동</div></div></div>
+        <div class="htl-item"><div class="htl-left"><div class="htl-dot htl-dot-grad"></div><div class="htl-line"></div></div><div><div class="htl-date">7/15 (수)</div><div class="htl-title">오스트리안 베이스캠프 트레킹</div><div class="htl-desc">예배 · 하나님의 창조를 품다</div></div></div>
+        <div class="htl-item"><div class="htl-left"><div class="htl-dot"></div><div class="htl-line"></div></div><div><div class="htl-date">7/16 — 18</div><div class="htl-title">카트만두 · 교회 사역</div><div class="htl-desc">인터씨드 · 꺼랄교회 · 현지교회 예배</div></div></div>
+        <div class="htl-item"><div class="htl-left"><div class="htl-dot"></div></div><div><div class="htl-date">7/19 (일)</div><div class="htl-title">한국 도착</div><div class="htl-desc">귀국</div></div></div>
+      </div>
+    </div>
+
+    <!-- 지금 네팔 (날씨 + 환율) -->
+    <div class="section" style="margin-bottom:0">
+      <span class="eyebrow">Live Info</span>
+      <h2 class="card-section-title">지금 네팔</h2>
+      <div class="live-row">
+        <div class="live-card">
+          <div class="live-label">카트만두 날씨</div>
+          <div class="live-main">
+            <span class="live-val" id="w-temp">—</span>
+            <span class="live-unit">°C</span>
+          </div>
+          <div class="live-sub" id="w-desc">불러오는 중</div>
+        </div>
+        <div class="live-card">
+          <div class="live-label">네팔 환율</div>
+          <div class="live-main">
+            <span class="live-val" id="exchange-val">—</span>
+            <span class="live-unit">원</span>
+          </div>
+          <div class="live-sub">1 NPR 기준</div>
+        </div>
       </div>
     </div>
 
@@ -110,6 +150,7 @@
       <span class="eyebrow">공지사항</span>
       <div id="home-notice-list"></div>
     </div>
+
   </div>
 </section>
 

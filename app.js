@@ -350,17 +350,15 @@ function parseNotice(json) {
 function renderHomeScripture(result) {
   const el = document.getElementById('home-scripture');
   if (!el) return;
-  if (!result.ok) {
-    el.innerHTML = `<div class="scripture-block"><p class="scripture-text">푯대를 향하여 그리스도 예수 안에서 하나님이 위에서 부르신 부름의 상을 위하여 달려가노라</p><p class="scripture-ref">빌립보서 3:14</p></div>`;
-    return;
-  }
-  const d = parseScripture(result.data);
+  const d = result.ok ? parseScripture(result.data) : {
+    text: '푯대를 향하여 그리스도 예수 안에서 하나님이 위에서 부르신 부름의 상을 위하여 달려가노라',
+    ref: '빌립보서 3:14'
+  };
+  const verseText = d.text.replace('하나님이 위에서 부르신 부름의 상', '<span style="color:var(--pri)">하나님이 위에서 부르신 부름의 상</span>');
   el.innerHTML = `
     ${result.offline ? '<div class="offline-badge">📴 오프라인 데이터</div>' : ''}
-    <div class="scripture-block">
-      <p class="scripture-text">"${escHtml(d.text)}"</p>
-      <p class="scripture-ref">${escHtml(d.ref)}</p>
-    </div>`;
+    <p class="scripture-text">${verseText}</p>
+    <p class="scripture-ref">— ${escHtml(d.ref)}</p>`;
   el.classList.add('fade-in');
 }
 
@@ -689,14 +687,11 @@ function renderAttendance(result) {
    6. 로드 함수
 ═══════════════════════════════════════════════ */
 async function loadHome() {
-  const [scriptureResult, overviewResult, noticeResult] = await Promise.all([
+  const [scriptureResult, noticeResult] = await Promise.all([
     fetchSheetSafe(SHEETS.scripture),
-    fetchSheetSafe(SHEETS.overview),
     fetchSheetSafe(SHEETS.notice),
   ]);
   renderHomeScripture(scriptureResult);
-  renderHomeOverview(overviewResult);
-  renderHomeNextMeeting();
   renderHomeNotice(noticeResult);
 }
 
@@ -737,6 +732,20 @@ async function loadWeather() {
   } catch(e) {
     const descEl = document.getElementById('w-desc');
     if (descEl) descEl.textContent = '정보 없음';
+  }
+}
+
+async function loadExchange() {
+  const el = document.getElementById('exchange-val');
+  if (!el) return;
+  try {
+    const res = await fetch('https://api.exchangerate-api.com/v4/latest/NPR');
+    const data = await res.json();
+    const rate = data.rates?.KRW;
+    if (rate) el.textContent = rate.toFixed(2);
+    else el.textContent = '—';
+  } catch(e) {
+    el.textContent = '—';
   }
 }
 
@@ -945,7 +954,7 @@ async function init() {
   updateDday();
   initPressOn();
   loaded.add('home');
-  await Promise.all([ loadHome(), loadWeather() ]);
+  await Promise.all([ loadHome(), loadWeather(), loadExchange() ]);
 }
 
 init();
