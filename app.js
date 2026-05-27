@@ -858,18 +858,27 @@ function toggleStory(idx) {
 }
 
 /* ═══════════════════════════════════════════════
-   11. 드로어 + 네비게이션
+   11. 메뉴 (헤더 확장형)
 ═══════════════════════════════════════════════ */
 const loaded = new Set();
+let menuOpen = false;
 
-function openDrawer() {
-  document.getElementById('drawer').classList.add('open');
-  document.getElementById('drawerDim').classList.add('on');
+function toggleMenu() {
+  menuOpen ? closeMenu() : openMenu();
 }
 
-function closeDrawer() {
-  document.getElementById('drawer').classList.remove('open');
-  document.getElementById('drawerDim').classList.remove('on');
+function openMenu() {
+  menuOpen = true;
+  document.getElementById('navMenu').classList.add('open');
+  document.getElementById('hamburgerBtn').classList.add('open');
+  document.getElementById('contentDim').classList.add('on');
+}
+
+function closeMenu() {
+  menuOpen = false;
+  document.getElementById('navMenu').classList.remove('open');
+  document.getElementById('hamburgerBtn').classList.remove('open');
+  document.getElementById('contentDim').classList.remove('on');
 }
 
 function showPage(id) {
@@ -880,7 +889,7 @@ function showPage(id) {
   if (page) page.classList.add('active');
   if (btn)  btn.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  closeDrawer();
+  closeMenu();
 
   if (!loaded.has(id)) {
     loaded.add(id);

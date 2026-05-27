@@ -11,41 +11,34 @@
 </head>
 <body>
 
-<!-- ─── Navigation (햄버거 드로어) ───────────── -->
-<div class="nav-wrapper">
+<!-- ─── Navigation (헤더 확장형) ────────────── -->
+<div class="nav-wrapper" id="navWrapper">
   <div class="nav-top">
     <div class="nav-top-left" onclick="showPage('home')" style="cursor:pointer">
       <span class="nav-top-icon">🇳🇵</span>
       <span class="nav-top-title">2026 네팔 선교</span>
     </div>
-    <button class="hamburger-btn" onclick="openDrawer()" aria-label="메뉴 열기">
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()" aria-label="메뉴">
       <span></span><span></span><span></span>
     </button>
   </div>
+  <div class="nav-menu" id="navMenu">
+    <div class="nav-menu-list">
+      <button class="drawer-item" data-page="overview">개요</button>
+      <button class="drawer-item" data-page="schedule">일정</button>
+      <button class="drawer-item" data-page="team">팀</button>
+      <button class="drawer-item" data-page="plan">사역계획</button>
+      <button class="drawer-item" data-page="attendance">출석</button>
+      <button class="drawer-item" data-page="story">선교 이야기</button>
+      <button class="drawer-item" data-page="prayer">중보기도</button>
+      <button class="drawer-item" data-page="luggage">짐 목록</button>
+      <button class="drawer-item" data-page="notice">공지</button>
+    </div>
+  </div>
 </div>
 
-<!-- ─── 드로어 오버레이 ──────────────────────── -->
-<div class="drawer-dim" id="drawerDim" onclick="closeDrawer()"></div>
-<div class="drawer" id="drawer">
-  <div class="drawer-head">
-    <div class="drawer-logo">
-      <span>🇳🇵</span>
-      <span class="drawer-title">2026 네팔 선교</span>
-    </div>
-    <button class="drawer-close" onclick="closeDrawer()">✕</button>
-  </div>
-  <nav class="drawer-menu">
-    <button class="drawer-item" data-page="overview"><span class="drawer-icon">🌍</span><span>개요</span></button>
-    <button class="drawer-item" data-page="schedule"><span class="drawer-icon">📅</span><span>일정</span></button>
-    <button class="drawer-item" data-page="team"><span class="drawer-icon">👥</span><span>팀</span></button>
-    <button class="drawer-item" data-page="plan"><span class="drawer-icon">📋</span><span>사역계획</span></button>
-    <button class="drawer-item" data-page="attendance"><span class="drawer-icon">✅</span><span>출석</span></button>
-    <button class="drawer-item" data-page="story"><span class="drawer-icon">📖</span><span>선교 이야기</span></button>
-    <button class="drawer-item" data-page="prayer"><span class="drawer-icon">🙏</span><span>중보기도</span></button>
-    <button class="drawer-item" data-page="luggage"><span class="drawer-icon">🎒</span><span>짐 목록</span></button>
-    <button class="drawer-item" data-page="notice"><span class="drawer-icon">📢</span><span>공지</span></button>
-  </nav>
-</div>
+<!-- 메뉴 열렸을 때 뒤 클릭하면 닫힘 -->
+<div class="content-dim" id="contentDim" onclick="closeMenu()"></div>
 
 <main>
 
