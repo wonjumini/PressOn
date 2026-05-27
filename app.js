@@ -544,7 +544,7 @@ function renderTeam(result) {
             </div>
             <div class="team-bd">
               <div class="chips">
-                <span class="chip leader">👑 ${escHtml(parseName(t.leader).name)}</span>
+                <span class="chip leader">${escHtml(parseName(t.leader).name)}</span>
                 ${t.members.map(m => `<span class="chip">${escHtml(parseName(m).name)}</span>`).join('')}
               </div>
             </div>
@@ -560,7 +560,7 @@ function renderTeam(result) {
         ${org.lifeGroups.map(g => `
           <div class="lg-card">
             <div class="lg-num">${g.num}</div>
-            <div class="lg-leader">👑 ${escHtml(parseName(g.leader).name)}</div>
+            <div class="lg-leader"> ${escHtml(parseName(g.leader).name)}</div>
             <div class="chips">
               ${g.members.map(m => `<span class="chip">${escHtml(parseName(m).name)}</span>`).join('')}
             </div>
