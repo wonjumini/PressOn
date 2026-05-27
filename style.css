@@ -410,29 +410,28 @@ main {
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
-  filter: blur(2px);
 }
 
 /* 오른쪽 위 블루 */
 .hero-bg-1 {
-  width: 760px;
-  height: 760px;
+  width: 520px;
+  height: 520px;
 
-  background: rgba(0, 100, 255, 0.06);
+  background: rgba(0,100,255,.05);
 
-  top: -340px;
-  right: -280px;
+  top: -220px;
+  right: -180px;
 }
 
 /* 왼쪽 아래 오렌지 */
 .hero-bg-2 {
-  width: 620px;
-  height: 620px;
+  width: 420px;
+  height: 420px;
 
-  background: rgba(255, 107, 53, 0.05);
+  background: rgba(255,107,53,.045);
 
-  bottom: -320px;
-  left: -260px;
+  bottom: -220px;
+  left: -180px;
 }
 .hero-badge {
   position: relative;
