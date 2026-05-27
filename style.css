@@ -392,7 +392,7 @@ main {
 .home-hero-full {
   position: relative;
   overflow: hidden;
-  background: #f8fafd;
+  background: #FAFAFA;
 
   min-height: calc(100dvh - 54px);
 
@@ -405,33 +405,36 @@ main {
   padding: 40px 24px 60px;
 }
 
-/* 배경 블롭 */
 .hero-bg-circle {
   position: absolute;
-  border-radius: 50%;
   pointer-events: none;
+  z-index: 0;
 }
 
-/* 오른쪽 위 블루 */
+/* 우측 상단 블루 영역 */
 .hero-bg-1 {
-  width: 520px;
-  height: 520px;
-
-  background: rgba(0,100,255,.05);
-
-  top: -220px;
-  right: -180px;
-}
-
-/* 왼쪽 아래 오렌지 */
-.hero-bg-2 {
   width: 420px;
   height: 420px;
 
-  background: rgba(255,107,53,.045);
+  background: #EEF4FF;
 
-  bottom: -220px;
-  left: -180px;
+  border-radius: 42% 58% 60% 40% / 45% 40% 60% 55%;
+
+  top: -180px;
+  right: -180px;
+}
+
+/* 좌측 하단 오렌지 영역 */
+.hero-bg-2 {
+  width: 340px;
+  height: 340px;
+
+  background: #F8F1EE;
+
+  border-radius: 58% 42% 35% 65% / 50% 60% 40% 50%;
+
+  bottom: -160px;
+  left: -160px;
 }
 .hero-badge {
   position: relative;
