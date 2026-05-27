@@ -43,65 +43,47 @@
 <!-- ═══════ HOME ══════════════════════════════ -->
 <section class="page active" id="page-home">
 
-  <!-- 키비주얼 카드 오버레이 -->
-  <div class="kv-overlay" id="kvOverlay">
-    <div class="kv-inner" id="kvInner">
-      <div class="kv-poster">
-        <div>
-          <div class="kv-cross">✝</div>
-          <div class="kv-eyebrow">2026 Nepal Outreach</div>
-          <div class="kv-main">네팔<br>선교</div>
-          <div class="kv-sub">PRESS ON</div>
-        </div>
-        <div class="kv-divider"></div>
-        <div class="kv-stats">
-          <div><div class="kv-stat-val">28</div><div class="kv-stat-label">팀원</div></div>
-          <div><div class="kv-stat-val">9</div><div class="kv-stat-label">선교 일수</div></div>
-          <div><div class="kv-stat-val">6</div><div class="kv-stat-label">사역팀</div></div>
-          <div><div class="kv-stat-val" id="kv-dday" style="color:#3182F6">D-?</div><div class="kv-stat-label">출발까지</div></div>
-        </div>
-        <div class="kv-info">
-          <div class="kv-info-row"><div class="kv-dot"></div><span class="kv-info-label">기간</span><span class="kv-info-val">2026.07.11 – 07.19</span></div>
-          <div class="kv-info-row"><div class="kv-dot"></div><span class="kv-info-label">장소</span><span class="kv-info-val">카트만두 · 포카라</span></div>
-          <div class="kv-info-row"><div class="kv-dot"></div><span class="kv-info-label">팀</span><span class="kv-info-val">인터씨드 · 하스피 · 어린이 · 문화 · 빅아이디어 · 예배</span></div>
-        </div>
-        <div class="kv-bottom">
-          <p class="kv-verse">"푯대를 향하여 달려가노라"<br>빌립보서 3:14</p>
-          <button class="kv-close" id="kvClose">✕</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="wrap">
-    <!-- 히어로 카드 -->
-    <div class="section" style="margin-top:16px">
-      <div class="home-header" id="homeView">
-        <p class="home-eyebrow">2026 Nepal Outreach</p>
-        <div class="press-on-wrap">
-          <div class="press-on" id="pressOn">PRESS ON</div>
+    <!-- 히어로 카드 — 바로 표시 -->
+    <div class="hero-card" id="heroCard">
+      <div class="hero-bg-circle hero-bg-1"></div>
+      <div class="hero-bg-circle hero-bg-2"></div>
+      <div class="hero-badge">2026 SPRING 단기선교</div>
+      <h1 class="hero-title">
+        푯대를 향하여,<br>
+        <span class="hero-gradient">Press On!</span>
+      </h1>
+      <p class="hero-sub">네팔, 그 땅에 복음의 흐름을 더하다</p>
+      <div class="hero-meta-row">
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">일시</span>
+          <span class="hero-meta-val">2026.07.11 — 07.19</span>
         </div>
-        <p class="home-slogan">푯대를 향하여</p>
-        <div class="home-bottom-row">
-          <div class="home-box">
-            <div class="home-box-label">출발까지</div>
-            <div class="home-box-val" id="dday-dep">—</div>
-            <div class="home-box-unit" id="dday-dep-unit">일 남음</div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">장소</span>
+          <span class="hero-meta-val">카트만두 · 포카라</span>
+        </div>
+      </div>
+      <div class="hero-boxes">
+        <div class="hero-box">
+          <div class="hero-box-label">출발까지</div>
+          <div class="hero-box-val" id="dday-dep">—</div>
+          <div class="hero-box-unit" id="dday-dep-unit">일 남음</div>
+        </div>
+        <div class="hero-box">
+          <div class="hero-box-label">지금 카트만두</div>
+          <div class="hero-box-weather">
+            <span class="hero-box-val" id="w-temp">—</span>
+            <span class="hero-box-unit">°C</span>
           </div>
-          <div class="home-box">
-            <div class="home-box-label">지금 카트만두</div>
-            <div class="weather-main">
-              <span class="weather-temp" id="w-temp">—</span>
-              <span class="weather-unit">°C</span>
-            </div>
-            <div class="weather-desc" id="w-desc">불러오는 중</div>
-          </div>
+          <div class="hero-box-unit" id="w-desc">불러오는 중</div>
         </div>
       </div>
     </div>
+
     <!-- 약속의 말씀 -->
     <div class="section">
-      <div class="section-label">약속의 말씀</div>
+      <span class="eyebrow">약속의 말씀</span>
       <div class="card" id="home-scripture">
         <div class="skeleton-block" style="height:80px"></div>
       </div>
@@ -109,7 +91,7 @@
 
     <!-- 선교 개요 -->
     <div class="section">
-      <div class="section-label">선교 개요</div>
+      <span class="eyebrow">OVERVIEW</span>
       <div class="card" id="home-overview">
         <div class="skeleton-block" style="height:120px"></div>
       </div>
@@ -117,15 +99,15 @@
 
     <!-- 다음 팀모임 -->
     <div class="section">
-      <div class="section-label">다음 팀모임</div>
+      <span class="eyebrow">NEXT MEETING</span>
       <div class="card" id="home-next-meeting">
         <div class="skeleton-block" style="height:48px"></div>
       </div>
     </div>
 
-    <!-- 공지 (시트 데이터 있을 때만 표시) -->
+    <!-- 공지 -->
     <div class="section" id="home-notice-section" style="display:none;margin-bottom:0">
-      <div class="section-label">공지사항</div>
+      <span class="eyebrow">공지사항</span>
       <div id="home-notice-list"></div>
     </div>
   </div>
@@ -134,95 +116,87 @@
 <!-- ═══════ OVERVIEW ════════════════════════ -->
 <section class="page" id="page-overview">
   <div class="wrap">
-    <p class="page-title">선교 방향성</p>
-
-    <div class="dir-card">
-      <div class="dir-tag">Mission</div>
-      <div class="dir-title">우리의 사명</div>
-      <div class="dir-body">우리는 하나님께서 먼저 사랑하신 땅, 네팔로 갑니다.<br><br>우리가 향하는 곳은 네팔이지만,<br>우리의 푯대는 낮아지신 그리스도의 자리입니다.<br><br>예배 위에 서서,<br>복음의 능력을 믿고,<br>우리의 유익보다 그들의 유익을 구하며,<br>부르신 길을 끝까지 걸어갑니다.<br><br>Press On!</div>
+    <div style="margin-top:24px">
+      <span class="eyebrow">MISSION · VISION · VALUE</span>
+      <h2 class="page-title">우리가 걸어가는 길</h2>
+      <p class="page-desc">우리 팀의 존재 이유와 푯대, 그리고 소중히 여기는 것들.</p>
     </div>
 
-    <div class="dir-card">
-      <div class="dir-tag">Vision</div>
-      <div class="dir-title">우리의 비전</div>
-      <div class="dir-body">
-        <ol class="dir-ol">
-          <li>어떤 상황에서든 뜨겁게 예배한다</li>
-          <li>기회가 주어질 때마다 복음을 전한다</li>
-          <li>한계를 뛰어넘어 사랑한다</li>
-        </ol>
+    <!-- 사명 — 다크 카드 -->
+    <div class="mission-card">
+      <div class="mission-label">MISSION · 우리 팀의 존재 이유 · 푯대를 향하여!</div>
+      <div class="mission-text">
+        <p>우리는 하나님께서 먼저 사랑하신 땅, <span class="mission-highlight">네팔</span>로 갑니다.</p>
+        <p style="margin-top:14px">우리가 향하는 곳은 네팔이지만,<br>우리의 푯대는 <span class="mission-highlight">낮아지신 그리스도의 자리</span>입니다.</p>
+        <p style="margin-top:14px">예배 위에 서서,<br>복음의 능력을 믿고,<br>우리의 유익보다 그들의 유익을 구하며,<br>부르신 길을 끝까지 걸어갑니다.</p>
+        <p style="margin-top:14px;font-weight:900;font-size:1.1em;color:#FFD93D">Press On!</p>
       </div>
     </div>
 
-    <div class="dir-card">
-      <div class="dir-tag">Attitude</div>
-      <div class="dir-title">우리의 자세</div>
-      <div class="dir-body">
-        <ol class="dir-ol">
-          <li>치밀하게 계획한다</li>
-          <li>흐름과 디테일을 끝까지 고민한다</li>
-          <li>방식과 결과가 복음에 부합한지 점검한다</li>
-          <li>그 무엇보다 사람을 소중히 여긴다</li>
-          <li>그리고 연약한 지체를 보호한다</li>
-        </ol>
-      </div>
-    </div>
-
-    <div class="dir-card">
-      <div class="dir-tag">Culture</div>
-      <div class="dir-title">우리의 문화</div>
-      <div class="dir-body">
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-          <span class="pill pill-blue">은혜</span>
-          <span class="pill pill-green">재미</span>
-          <span class="pill pill-purple">감동</span>
-        </div>
-        <p style="font-size:13px;color:var(--ink-500);margin-top:10px;line-height:1.7">각 팀과 생활조는 이 세 가지 문화를 적극적으로 적용하며 우리 팀에 접촉하는 모든 이들에게 하나님의 은혜가 생생하게 경험되도록 합니다.</p>
-      </div>
-    </div>
-
+    <!-- 비전 -->
     <div class="section">
-      <div class="section-label">Value — NEPAL</div>
+      <span class="eyebrow">VISION</span>
+      <h3 style="font-size:20px;font-weight:900;letter-spacing:-.5px;margin-bottom:14px;color:var(--t1)">우리 팀의 구체화된 목표</h3>
+      <div class="vision-grid">
+        <div class="vision-card"><div class="vision-num">01</div><div class="vision-txt">어떤 상황에서든 뜨겁게 예배한다</div></div>
+        <div class="vision-card"><div class="vision-num">02</div><div class="vision-txt">기회가 주어질 때마다 복음을 전한다</div></div>
+        <div class="vision-card" style="grid-column:1/-1"><div class="vision-num">03</div><div class="vision-txt">한계를 뛰어넘어 사랑한다</div></div>
+      </div>
+    </div>
+
+    <!-- Value NEPAL -->
+    <div class="section">
+      <span class="eyebrow">VALUE</span>
+      <h3 style="font-size:20px;font-weight:900;letter-spacing:-.5px;margin-bottom:14px;color:var(--t1)">N · E · P · A · L</h3>
       <div class="card">
         <div class="value-row">
           <div class="value-letter-box">N</div>
-          <div>
-            <div class="value-word">New Creation</div>
-            <div class="value-desc">복음을 통해 새롭게 변화됨을 믿는다</div>
-            <div class="value-ref">고린도후서 5:17</div>
-          </div>
+          <div><div class="value-word">New Creation</div><div class="value-desc">복음을 통해 새롭게 변화됨을 믿는다</div><div class="value-ref">고린도후서 5:17</div></div>
         </div>
         <div class="value-row">
           <div class="value-letter-box">E</div>
-          <div>
-            <div class="value-word">Evangelism</div>
-            <div class="value-desc">복음을 전하는 게 선교의 사명이다</div>
-            <div class="value-ref">마가복음 16:15</div>
-          </div>
+          <div><div class="value-word">Evangelism</div><div class="value-desc">복음을 전하는 게 선교의 사명이다</div><div class="value-ref">마가복음 16:15</div></div>
         </div>
         <div class="value-row">
           <div class="value-letter-box">P</div>
-          <div>
-            <div class="value-word">Passion for Worship</div>
-            <div class="value-desc">더 순전한 마음을 구하며 예배한다</div>
-            <div class="value-ref">요한복음 4:23-24</div>
-          </div>
+          <div><div class="value-word">Passion for Worship</div><div class="value-desc">더 순전한 마음을 구하며 예배한다</div><div class="value-ref">요한복음 4:23-24</div></div>
         </div>
         <div class="value-row">
           <div class="value-letter-box">A</div>
-          <div>
-            <div class="value-word">Agape</div>
-            <div class="value-desc">하나님의 사랑 안에 거한다</div>
-            <div class="value-ref">요한복음 15:9</div>
-          </div>
+          <div><div class="value-word">Agape</div><div class="value-desc">하나님의 사랑 안에 거한다</div><div class="value-ref">요한복음 15:9</div></div>
         </div>
         <div class="value-row" style="border-bottom:none;padding-bottom:0">
           <div class="value-letter-box">L</div>
-          <div>
-            <div class="value-word">Love and Serve</div>
-            <div class="value-desc">혼자가 아니라 팀이 함께 지어져 간다</div>
-            <div class="value-ref">에베소서 2:22</div>
-          </div>
+          <div><div class="value-word">Love and Serve</div><div class="value-desc">혼자가 아니라 팀이 함께 지어져 간다</div><div class="value-ref">에베소서 2:22</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 자세 -->
+    <div class="section">
+      <div class="card">
+        <span class="ac-lb">ATTITUDE · 사역을 대하는 태도</span>
+        <h3 class="ac-title">우리의 자세</h3>
+        <ul class="ac-list">
+          <li><span class="num">1</span>치밀하게 계획한다</li>
+          <li><span class="num">2</span>흐름과 디테일을 끝까지 고민한다</li>
+          <li><span class="num">3</span>방식과 결과가 복음에 부합한지 점검한다</li>
+          <li><span class="num">4</span>그 무엇보다 사람을 소중히 여긴다</li>
+          <li><span class="num">5</span>그리고 연약한 지체를 보호한다</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 문화 -->
+    <div class="section" style="margin-bottom:0">
+      <div class="card">
+        <span class="ac-lb orange">CULTURE · 우리 팀의 문화</span>
+        <h3 class="ac-title">은혜 · 재미 · 감동</h3>
+        <p style="font-size:14px;color:var(--t2);line-height:1.75">각 팀과 생활조는 이 세 가지 문화를 적극적으로 적용하며 우리 팀에 접촉하는 모든 이들에게 하나님의 은혜가 생생하게 경험되도록 합니다.</p>
+        <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+          <span class="pill pill-blue">은혜</span>
+          <span class="pill pill-green">재미</span>
+          <span class="pill pill-orange">감동</span>
         </div>
       </div>
     </div>

@@ -522,8 +522,8 @@ function renderTeam(result) {
         </div>
         <div class="org-conn"></div>
         <div class="org-row">
-          <div class="org-node lead">${escHtml(parseName(org.leaderM).name)}<small>전체팀장(남)</small></div>
-          <div class="org-node lead">${escHtml(parseName(org.leaderF).name)}<small>전체팀장(여)</small></div>
+          <div class="org-node lead">${escHtml(parseName(org.leaderM).name)}<small>팀장(남)</small></div>
+          <div class="org-node lead">${escHtml(parseName(org.leaderF).name)}<small>팀장(여)</small></div>
           <div class="org-node lead">${escHtml(parseName(org.accountant).name)}<small>회계</small></div>
           <div class="org-node lead">${escHtml(parseName(org.secretary).name)}<small>서기</small></div>
         </div>
@@ -766,46 +766,10 @@ function updateDday() {
 }
 
 /* ═══════════════════════════════════════════════
-   9. PRESS ON 인터랙션 (dim 방식)
+   9. 히어로 초기화 (단순 D-day 표시)
 ═══════════════════════════════════════════════ */
 function initPressOn() {
-  const pressEl = document.getElementById('pressOn');
-  if (!pressEl) return;
-
-  // dim overlay 생성
-  const dimEl = document.createElement('div');
-  dimEl.className = 'dim-overlay';
-  document.body.appendChild(dimEl);
-
-  let pressTimer = null;
-  let isHolding = false;
-
-  function startPress() {
-    isHolding = true;
-    pressEl.classList.add('pressing');
-    // dim 서서히 어두워지기 시작
-    dimEl.classList.add('active');
-    pressTimer = setTimeout(() => {
-      if (isHolding) openKV();
-    }, HOLD_MS);
-  }
-
-  function cancelPress() {
-    if (!isHolding) return;
-    isHolding = false;
-    pressEl.classList.remove('pressing');
-    clearTimeout(pressTimer);
-    dimEl.classList.remove('active');
-  }
-
-  pressEl.addEventListener('mousedown', startPress);
-  pressEl.addEventListener('touchstart', e => { e.preventDefault(); startPress(); }, { passive: false });
-  pressEl.addEventListener('mouseup', cancelPress);
-  pressEl.addEventListener('mouseleave', cancelPress);
-  pressEl.addEventListener('touchend', cancelPress);
-  pressEl.addEventListener('touchcancel', cancelPress);
-
-  document.getElementById('kvClose')?.addEventListener('click', closeKV);
+  // 히어로 바로 표시 — 별도 인터랙션 없음
 }
 
 function openKV() {
@@ -890,6 +854,9 @@ function showPage(id) {
   if (btn)  btn.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
   closeMenu();
+
+  // 홈 진입 시 히어로 초기화
+  if (id === 'home') initPressOn();
 
   if (!loaded.has(id)) {
     loaded.add(id);
