@@ -891,10 +891,6 @@ function showPage(id) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
   closeMenu();
 
-  // 홈일 때만 파란 헤더, 나머지는 흰 헤더
-  const nav = document.getElementById('navWrapper');
-  if (nav) nav.classList.toggle('home-nav', id === 'home');
-
   if (!loaded.has(id)) {
     loaded.add(id);
     if (id === 'schedule')   loadSchedule();
@@ -953,9 +949,6 @@ async function init() {
   updateDday();
   initPressOn();
   loaded.add('home');
-  // 초기 홈 화면 파란 헤더
-  const nav = document.getElementById('navWrapper');
-  if (nav) nav.classList.add('home-nav');
   await Promise.all([ loadHome(), loadWeather() ]);
 }
 
