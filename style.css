@@ -38,15 +38,28 @@ body {
   position: sticky; top: 0; z-index: 100;
   background: var(--surface);
   overflow: hidden;
+  transition: background .2s ease;
+}
+.nav-wrapper.home-nav {
+  background: #DBEAFE;
 }
 .nav-top {
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px 16px;
   border-bottom: 1px solid var(--line);
+  transition: border-color .2s ease;
+}
+.nav-wrapper.home-nav .nav-top {
+  border-bottom-color: rgba(59,130,246,.15);
 }
 .nav-top-left { display: flex; align-items: center; gap: 8px; }
 .nav-top-icon { font-size: 20px; }
-.nav-top-title { font-size: 20px; font-weight: 800; color: var(--ink-900); letter-spacing: -.5px; }
+.nav-top-title {
+  font-size: 20px; font-weight: 800;
+  color: var(--ink-900); letter-spacing: -.5px;
+  transition: color .2s ease;
+}
+.nav-wrapper.home-nav .nav-top-title { color: #1E3A8A; }
 
 .hamburger-btn {
   background: none; border: none; cursor: pointer;
@@ -56,11 +69,17 @@ body {
 .hamburger-btn span {
   display: block; width: 22px; height: 2px;
   background: var(--ink-900); border-radius: 2px;
-  transition: transform .25s, opacity .2s;
+  transition: transform .25s, opacity .2s, background .2s;
 }
+.nav-wrapper.home-nav .hamburger-btn span { background: #1E3A8A; }
 .hamburger-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
 .hamburger-btn.open span:nth-child(2) { opacity: 0; transform: translateX(-4px); }
 .hamburger-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* 메뉴 열렸을 때 home-nav는 흰 배경으로 */
+.nav-wrapper.home-nav .nav-menu.open {
+  background: #DBEAFE;
+}
 
 /* ─── 메뉴 패널 (헤더에서 아래로 확장) ─────────── */
 .nav-menu {
@@ -197,7 +216,7 @@ main { padding-bottom: 80px; }
 /* ═══════ HOME ════════════════════════════ */
 .home-header {
   background: #DBEAFE;
-  padding: 28px 20px 24px;
+  padding: 16px 20px 28px;
   position: relative;
 }
 .home-eyebrow {
@@ -303,7 +322,7 @@ main { padding-bottom: 80px; }
   background: var(--surface);
   border-radius: var(--r);
   padding: 18px 20px;
-  margin-bottom: 18px;
+  margin-bottom: 8px;
 }
 .dir-tag {
   font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
