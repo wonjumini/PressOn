@@ -958,3 +958,19 @@ async function init() {
 }
 
 init();
+
+/* ═══════════════════════════════════════════════
+   16. 스크롤 유도 버튼 액션
+═══════════════════════════════════════════════ */
+function scrollToScripture() {
+  const targetSection = document.getElementById('scripture-section');
+  if (targetSection) {
+    const navHeight = 54; 
+    const targetPosition = targetSection.getBoundingClientRect().top + window.scrollY - navHeight - 20;
+    
+    window.scrollTo({
+      top: targetPosition,
+      behavior: 'smooth'
+    });
+  }
+}

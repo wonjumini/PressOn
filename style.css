@@ -163,7 +163,7 @@ main { padding-bottom: 80px; }
 /* ═══ HOME HERO (풀스크린) ══════════════════════ */
 .home-hero-full {
   position: relative; overflow: hidden; background: #fff;
-  min-height: calc(100vh - 54px);
+  min-height: calc(100dvh - 54px);
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center; padding: 40px 24px 60px;
@@ -201,12 +201,30 @@ main { padding-bottom: 80px; }
 .hero-meta-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .hero-meta-label { font-size: 10px; font-weight: 700; color: var(--t4); letter-spacing: 1px; text-transform: uppercase; }
 .hero-meta-val { font-size: 12px; font-weight: 600; color: var(--t2); }
+
+/* 토스 감성 스크롤 버튼 수정 파트 */
 .hero-scroll-hint {
-  position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-  font-size: 10px; font-weight: 700; color: var(--t4); letter-spacing: 2px;
-  animation: bounce 2s infinite;
+  position: absolute; 
+  bottom: 30px; 
+  left: 50%; 
+  transform: translateX(-50%);
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 8px;
+  font-size: 11px; 
+  font-weight: 700; 
+  color: var(--t4); 
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  animation: tossBounce 2s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  -webkit-tap-highlight-color: transparent;
 }
-@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0);opacity:.6}50%{transform:translateX(-50%) translateY(5px);opacity:1} }
+
+@keyframes tossBounce { 
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.5; }
+  50% { transform: translateX(-50%) translateY(8px); opacity: 1; }
+}
 
 /* 약속의 말씀 큰 카드 */
 .verse-card-lg {

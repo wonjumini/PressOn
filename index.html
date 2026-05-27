@@ -9,7 +9,6 @@
 </head>
 <body>
 
-<!-- ─── Navigation (헤더 확장형) ────────────── -->
 <div class="nav-wrapper" id="navWrapper">
   <div class="nav-top">
     <div class="nav-top-left" onclick="showPage('home')" style="cursor:pointer">
@@ -35,15 +34,12 @@
   </div>
 </div>
 
-<!-- 메뉴 열렸을 때 뒤 클릭하면 닫힘 -->
 <div class="content-dim" id="contentDim" onclick="closeMenu()"></div>
 
 <main>
 
-<!-- ═══════ HOME ══════════════════════════════ -->
 <section class="page active" id="page-home">
 
-  <!-- 풀스크린 히어로 -->
   <div class="home-hero-full">
     <div class="hero-bg-circle hero-bg-1"></div>
     <div class="hero-bg-circle hero-bg-2"></div>
@@ -65,19 +61,16 @@
         <span class="hero-meta-label">장소</span>
         <span class="hero-meta-val">카트만두 · 포카라</span>
       </div>
-      <div class="hero-meta-item">
-        <span class="hero-meta-label">대상</span>
-        <span class="hero-meta-val">박지명 목사, 정예림 간사 외 26명</span>
-      </div>
     </div>
-    <div class="hero-scroll-hint">↓ SCROLL</div>
+    <div class="hero-scroll-hint" onclick="scrollToScripture()">
+      <span>아래로 스크롤</span>
+      <span>↓</span>
+    </div>
   </div>
 
-  <!-- 스크롤 이후 컨텐츠 -->
   <div class="wrap">
 
-    <!-- 약속의 말씀 -->
-    <div class="section">
+    <div class="section" id="scripture-section">
       <span class="eyebrow">Promise</span>
       <h2 class="card-section-title">약속의 말씀</h2>
       <div class="verse-card-lg" id="home-scripture">
@@ -85,7 +78,6 @@
       </div>
     </div>
 
-    <!-- 선교 개요 -->
     <div class="section">
       <span class="eyebrow">Mission Overview</span>
       <h2 class="card-section-title">선교 개요</h2>
@@ -98,7 +90,6 @@
       </div>
     </div>
 
-    <!-- 핵심 사역 -->
     <div class="section">
       <span class="eyebrow">Core Mission</span>
       <h2 class="card-section-title">핵심 사역</h2>
@@ -107,7 +98,6 @@
       <div class="ms-card"><div class="ms-num">03</div><div><div class="ms-title">비전트립 / 베이스 격려</div><div class="ms-desc">오스트리안 베이스캠프 · 보우더너트 · 인터씨드</div></div></div>
     </div>
 
-    <!-- 핵심 일정 -->
     <div class="section">
       <span class="eyebrow">Schedule</span>
       <h2 class="card-section-title">핵심 일정</h2>
@@ -121,7 +111,6 @@
       </div>
     </div>
 
-    <!-- 지금 네팔 (날씨 + 환율) -->
     <div class="section" style="margin-bottom:0">
       <span class="eyebrow">Live Info</span>
       <h2 class="card-section-title">지금 네팔</h2>
@@ -145,7 +134,6 @@
       </div>
     </div>
 
-    <!-- 공지 -->
     <div class="section" id="home-notice-section" style="display:none;margin-bottom:0">
       <span class="eyebrow">공지사항</span>
       <div id="home-notice-list"></div>
@@ -154,17 +142,14 @@
   </div>
 </section>
 
-<!-- ═══════ OVERVIEW ════════════════════════ -->
 <section class="page" id="page-overview">
   <div class="wrap">
 
-    <!-- 타이틀 — Mission 파란 태그 위에 -->
     <div style="margin-top:24px;margin-bottom:20px">
       <span class="eyebrow">Mission</span>
       <h2 class="page-title">우리가 걸어가는 길</h2>
     </div>
 
-    <!-- 사명 — 다크 카드 (라벨 없이 텍스트만) -->
     <div class="mission-card">
       <div class="mission-text">
         <p>우리는 하나님께서 먼저 사랑하신 땅, <span class="mission-highlight">네팔</span>로 갑니다.</p>
@@ -174,7 +159,6 @@
       </div>
     </div>
 
-    <!-- 비전 -->
     <div class="section">
       <span class="eyebrow">Vision</span>
       <h3 class="card-section-title">우리 팀의 구체화된 목표</h3>
@@ -185,11 +169,9 @@
       </div>
     </div>
 
-    <!-- Value NEPAL — 각 글자 탭하면 말씀 팝업 -->
     <div class="section">
       <span class="eyebrow">Value</span>
       <h3 class="card-section-title">N · E · P · A · L</h3>
-      <!-- 글자 버튼 -->
       <div class="nepal-letters">
         <button class="nepal-letter" onclick="openNepal('N')">N</button>
         <button class="nepal-letter" onclick="openNepal('E')">E</button>
@@ -197,7 +179,6 @@
         <button class="nepal-letter" onclick="openNepal('A')">A</button>
         <button class="nepal-letter" onclick="openNepal('L')">L</button>
       </div>
-      <!-- 말씀 팝업 -->
       <div class="nepal-detail" id="nepalDetail" style="display:none">
         <div class="nepal-detail-letter" id="ndLetter"></div>
         <div class="nepal-detail-word" id="ndWord"></div>
@@ -229,7 +210,6 @@
       </div>
     </div>
 
-    <!-- 자세 -->
     <div class="section">
       <div class="card">
         <span class="eyebrow">Attitude</span>
@@ -244,7 +224,6 @@
       </div>
     </div>
 
-    <!-- 문화 -->
     <div class="section" style="margin-bottom:0">
       <div class="card">
         <span class="eyebrow">Culture</span>
@@ -260,17 +239,14 @@
   </div>
 </section>
 
-<!-- ═══════ SCHEDULE ══════════════════════════ -->
 <section class="page" id="page-schedule">
   <div class="wrap">
     <p class="page-title">일정</p>
-    <!-- 서브탭 -->
     <div class="sub-tab-nav">
       <button class="sub-tab-btn active" data-sub="korea">한국 일정</button>
       <button class="sub-tab-btn" data-sub="nepal">네팔 일정</button>
     </div>
 
-    <!-- 한국 일정 -->
     <div class="sub-page active" id="sub-korea">
       <div class="legend">
         <span class="pill pill-blue">팀모임</span>
@@ -289,17 +265,14 @@
       </div>
     </div>
 
-    <!-- 네팔 일정 -->
     <div class="sub-page" id="sub-nepal">
       <div style="padding-top:4px">
 
-        <!-- 미확정 안내 배지 -->
         <div class="nepal-notice">
           <span class="nepal-notice-dot"></span>
           7/12 오후 사역지는 두 안 중 확정 예정입니다
         </div>
 
-        <!-- 7/11 -->
         <div class="sch-item">
           <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">11</div><div class="sch-wd">토</div></div>
           <div class="sch-divider"></div>
@@ -310,7 +283,6 @@
           </div>
         </div>
 
-        <!-- 7/12 -->
         <div class="sch-item">
           <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">12</div><div class="sch-wd">일</div></div>
           <div class="sch-divider"></div>
@@ -321,7 +293,6 @@
           </div>
         </div>
 
-        <!-- 7/12 오후 미확정 -->
         <div class="sch-item sch-pending">
           <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">12</div><div class="sch-wd">일</div></div>
           <div class="sch-divider"></div>
@@ -342,7 +313,6 @@
           </div>
         </div>
 
-        <!-- 7/13 -->
         <div class="sch-item">
           <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">13</div><div class="sch-wd">월</div></div>
           <div class="sch-divider"></div>
@@ -353,7 +323,6 @@
           </div>
         </div>
 
-        <!-- 7/14 -->
         <div class="sch-item">
           <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">14</div><div class="sch-wd">화</div></div>
           <div class="sch-divider"></div>
@@ -364,7 +333,6 @@
           </div>
         </div>
 
-        <!-- 7/15 -->
         <div class="sch-item">
           <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">15</div><div class="sch-wd">수</div></div>
           <div class="sch-divider"></div>
@@ -375,7 +343,6 @@
           </div>
         </div>
 
-        <!-- 7/16 -->
         <div class="sch-item">
           <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">16</div><div class="sch-wd">목</div></div>
           <div class="sch-divider"></div>
@@ -386,7 +353,6 @@
           </div>
         </div>
 
-        <!-- 7/17 (PDF에 없지만 기존 데이터 유지) -->
         <div class="sch-item">
           <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">17</div><div class="sch-wd">금</div></div>
           <div class="sch-divider"></div>
@@ -397,7 +363,6 @@
           </div>
         </div>
 
-        <!-- 7/18 -->
         <div class="sch-item">
           <div class="sch-date"><div class="sch-month">7월</div><div class="sch-day">18</div><div class="sch-wd">토</div></div>
           <div class="sch-divider"></div>
@@ -413,7 +378,6 @@
   </div>
 </section>
 
-<!-- ═══════ TEAM ════════════════════════════ -->
 <section class="page" id="page-team">
   <div class="wrap">
     <p class="page-title">팀 구성</p>
@@ -425,7 +389,6 @@
   </div>
 </section>
 
-<!-- ═══════ PLAN ════════════════════════════ -->
 <section class="page" id="page-plan">
   <div class="wrap">
     <p class="page-title">사역계획</p>
@@ -437,7 +400,6 @@
   </div>
 </section>
 
-<!-- ═══════ ATTENDANCE ══════════════════════ -->
 <section class="page" id="page-attendance">
   <div class="wrap">
     <p class="page-title">출석 현황</p>
@@ -452,12 +414,10 @@
   </div>
 </section>
 
-<!-- ═══════ STORY ════════════════════════════ -->
 <section class="page" id="page-story">
   <div class="wrap">
     <p class="page-title">선교 이야기</p>
 
-    <!-- 유튜브 영상 상단 고정 -->
     <div class="section-label">네팔 선교 영상</div>
     <div class="story-video-wrap">
       <iframe
@@ -469,11 +429,9 @@
       </iframe>
     </div>
 
-    <!-- 기도편지 아코디언 -->
     <div class="section">
       <div class="section-label">김경순 선교사님 기도편지</div>
 
-      <!-- 68회 - 2026년 4월 -->
       <div class="story-card">
         <div class="story-hd" onclick="toggleStory(0)">
           <div class="story-meta">
@@ -499,7 +457,6 @@
         </div>
       </div>
 
-      <!-- 67회 - 2026년 3월 -->
       <div class="story-card">
         <div class="story-hd" onclick="toggleStory(1)">
           <div class="story-meta">
@@ -526,7 +483,6 @@
         </div>
       </div>
 
-      <!-- 66회 - 2026년 2월 -->
       <div class="story-card">
         <div class="story-hd" onclick="toggleStory(2)">
           <div class="story-meta">
@@ -552,7 +508,6 @@
         </div>
       </div>
 
-      <!-- 65회 - 2026년 1월 -->
       <div class="story-card">
         <div class="story-hd" onclick="toggleStory(3)">
           <div class="story-meta">
@@ -578,7 +533,6 @@
         </div>
       </div>
 
-      <!-- 64회 - 2025년 12월 -->
       <div class="story-card" style="margin-bottom:0">
         <div class="story-hd" onclick="toggleStory(4)">
           <div class="story-meta">
@@ -609,7 +563,6 @@
   </div>
 </section>
 
-<!-- ═══════ COMING SOON 탭들 ══════════════ -->
 <section class="page" id="page-prayer">
   <div class="coming-soon">
     <div class="cs-icon">🙏</div>
@@ -639,7 +592,6 @@
 
 </main>
 
-<!-- 스크롤 업 버튼 -->
 <button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 
