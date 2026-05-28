@@ -145,7 +145,7 @@ body {
   max-height: 600px;
   border-bottom-width: 1px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-  transition: max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: max-height 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .nav-menu-list {
   padding: 6px 0 10px;
@@ -455,7 +455,7 @@ main {
   justify-content: center;
 
   text-align: center;
-  padding: 56px 32px 80px;
+  padding: 56px 32px 100px;
 }
 
 .hero-parallax-inner {
@@ -538,7 +538,7 @@ main {
 /* 토스 감성 스크롤 버튼 수정 파트 */
 .hero-scroll-hint {
   position: absolute;
-  bottom: 28px;
+  bottom: 36px;
   left: 50%;
   transform: translateX(-50%);
   cursor: pointer;

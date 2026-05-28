@@ -1244,6 +1244,18 @@ function closeMenu() {
   document.getElementById("contentDim").classList.remove("on");
 }
 
+const STALE_TIME = 30 * 1000; // 30초
+const lastFetched = {};
+
+function loadIfStale(id, loadFn) {
+  const now = Date.now();
+  const last = lastFetched[id] || 0;
+  if (now - last > STALE_TIME) {
+    lastFetched[id] = now;
+    loadFn();
+  }
+}
+
 function showPage(id) {
   document
     .querySelectorAll(".page")
@@ -1265,9 +1277,10 @@ function showPage(id) {
     loaded.add(id);
     if (id === "schedule") loadSchedule();
     if (id === "team") loadTeam();
-    if (id === "plan") loadPlan();
-    if (id === "attendance") loadAttendance();
   }
+  // 출석/사역계획은 30초 캐시 전략
+  if (id === "plan") loadIfStale("plan", loadPlan);
+  if (id === "attendance") loadIfStale("attendance", loadAttendance);
 }
 
 document.querySelectorAll(".drawer-item").forEach((btn) => {
