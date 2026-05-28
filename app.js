@@ -1199,6 +1199,8 @@ function toggleNepalDay(idx) {
   acc.classList.toggle("open", !isOpen);
   if (chev) chev.classList.toggle("open", !isOpen);
 }
+
+function togglePlan(idx) {
   const bd = document.getElementById(`plan-bd-${idx}`);
   const arrow = document.getElementById(`plan-arrow-${idx}`);
   if (!bd) return;
