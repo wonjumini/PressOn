@@ -447,7 +447,7 @@ main {
   overflow: hidden;
   background: linear-gradient(180deg, #ffffff 0%, #e8f0fb 25%, #c8ddf5 70%, #b8d0f0 100%);
 
-  min-height: calc(100dvh - 54px);
+  min-height: 100dvh;
 
   display: flex;
   flex-direction: column;
