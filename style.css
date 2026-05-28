@@ -520,7 +520,7 @@ main {
 /* 약속의 말씀 큰 카드 */
 .scripture-hero-section {
   background: #ffffff;
-  min-height: 63dvh;
+  min-height: 66dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -531,7 +531,7 @@ main {
 
 .scripture-eyebrow {
   display: block;
-  text-align: left;
+  text-align: center;
   font-size: 11px;
   font-weight: 600;
   color: var(--t4);
