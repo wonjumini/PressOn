@@ -1522,7 +1522,7 @@ main {
   margin-bottom: 0;
 }
 .org-team-badge {
-  background: #1a2236;
+  background: #000000;
   color: #fff;
   font-size: 15px;
   font-weight: 800;
@@ -1598,9 +1598,9 @@ main {
   margin-top: 2px;
 }
 .org-node.dir {
-  background: var(--t1);
+  background: #000000;
   color: white;
-  border-color: var(--t1);
+  border-color: #000000;
   padding: 12px 22px;
   font-size: 14px;
   border-radius: 12px;
@@ -1610,7 +1610,7 @@ main {
 }
 .org-node.subdir {
   background: #f0f2f5;
-  border-color: #3d4a5c;
+  border-color: #000000;
   color: #3d4a5c;
   padding: 9px 18px;
 }
