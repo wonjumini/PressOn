@@ -455,7 +455,7 @@ main {
   justify-content: center;
 
   text-align: center;
-  padding: 56px 32px 80px;
+  padding: 56px 32px 0;
 }
 
 .hero-parallax-inner {
@@ -537,10 +537,8 @@ main {
 
 /* 토스 감성 스크롤 버튼 수정 파트 */
 .hero-scroll-hint {
-  position: absolute;
-  bottom: 36px;
-  left: 50%;
-  transform: translateX(-50%);
+  margin-top: auto;
+  padding-bottom: 52px;
   cursor: pointer;
   animation: tossBounce 2s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94);
   -webkit-tap-highlight-color: transparent;
@@ -549,11 +547,11 @@ main {
 @keyframes tossBounce {
   0%,
   100% {
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(0);
     opacity: 0.5;
   }
   50% {
-    transform: translateX(-50%) translateY(8px);
+    transform: translateY(8px);
     opacity: 1;
   }
 }
