@@ -765,12 +765,37 @@ main {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
+  margin-bottom: 8px;
 }
 .live-card {
   background: var(--surface);
   border-radius: var(--r);
   padding: 16px;
   border: 1px solid var(--bd);
+}
+.live-card-full {
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 16px 20px;
+  border: 1px solid var(--bd);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.live-card-full .live-label {
+  margin-bottom: 0;
+}
+.live-card-full .live-sub {
+  margin-top: 0;
+}
+.live-time {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--t1);
+  letter-spacing: -0.5px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 .live-label {
   font-size: 10px;

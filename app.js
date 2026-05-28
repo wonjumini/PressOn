@@ -1012,18 +1012,40 @@ async function loadWeather() {
   }
 }
 
-async function loadExchange() {
-  const el = document.getElementById("exchange-val");
-  if (!el) return;
-  try {
-    const res = await fetch("https://api.exchangerate-api.com/v4/latest/NPR");
-    const data = await res.json();
-    const rate = data.rates?.KRW;
-    if (rate) el.textContent = rate.toFixed(2);
-    else el.textContent = "—";
-  } catch (e) {
-    el.textContent = "—";
+function loadLiveDday() {
+  const dep = kstDday(DEPARTURE_DATE);
+  const valEl = document.getElementById("dday-val");
+  const unitEl = document.getElementById("dday-unit");
+  const subEl = document.getElementById("dday-sub");
+  if (!valEl) return;
+  if (dep > 0) {
+    valEl.textContent = dep;
+    unitEl.textContent = "일";
+    subEl.textContent = "D-" + dep;
+  } else if (dep === 0) {
+    valEl.textContent = "DAY";
+    unitEl.textContent = "";
+    subEl.textContent = "오늘 출발!";
+  } else {
+    valEl.textContent = Math.abs(dep);
+    unitEl.textContent = "일째";
+    subEl.textContent = "선교 중 🙏";
   }
+}
+
+function startKtmClock() {
+  function tick() {
+    const el = document.getElementById("ktm-time");
+    if (!el) return;
+    const now = new Date();
+    const ktm = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kathmandu" }));
+    const h = String(ktm.getHours()).padStart(2, "0");
+    const m = String(ktm.getMinutes()).padStart(2, "0");
+    const s = String(ktm.getSeconds()).padStart(2, "0");
+    el.textContent = `${h}:${m}:${s}`;
+  }
+  tick();
+  setInterval(tick, 1000);
 }
 
 /* ═══════════════════════════════════════════════
@@ -1279,8 +1301,10 @@ async function init() {
   updateDday();
   initPressOn();
   initRevealObserver();
+  loadLiveDday();
+  startKtmClock();
   loaded.add("home");
-  await Promise.all([loadHome(), loadWeather(), loadExchange()]);
+  await Promise.all([loadHome(), loadWeather()]);
 }
 
 init();
