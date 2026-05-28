@@ -1345,6 +1345,13 @@ async function init() {
   startKtmClock();
   loaded.add("home");
 
+  // 히어로 높이 실제 화면 기준으로 설정 (브라우저 무관)
+  function setHeroHeight() {
+    const hero = document.querySelector(".home-hero-full");
+    if (hero) hero.style.minHeight = window.innerHeight + "px";
+  }
+  setHeroHeight();
+
   // 화살표 위치 동적 계산 (브라우저 무관하게 항상 보이게)
   const hint = document.querySelector(".hero-scroll-hint");
   const hero = document.querySelector(".home-hero-full");
