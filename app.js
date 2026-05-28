@@ -1318,7 +1318,9 @@ function scrollToScripture() {
 
 /* ═══ Reveal Observer (홈 콘텐츠 진입 애니메이션) ═══ */
 function initRevealObserver() {
-  const targets = document.querySelectorAll("#page-home .reveal-item");
+  const targets = document.querySelectorAll(
+    "#page-home .reveal-item, #page-home .stagger-item"
+  );
   if (!targets.length) return;
 
   const observer = new IntersectionObserver(
