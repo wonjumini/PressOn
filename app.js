@@ -675,10 +675,7 @@ function renderSchedule(result) {
   }
 
   const sorted = [...items].sort((a, b) => new Date(a.date) - new Date(b.date));
-  const allItems = [
-    ...sorted,
-    ...afterItems.sort((a, b) => new Date(a.date) - new Date(b.date)),
-  ];
+  const allItems = [...sorted, ...afterItems.sort((a, b) => new Date(a.date) - new Date(b.date))];
   listEl.innerHTML = allItems.map(itemHtml).join("");
   listEl.classList.add("fade-in");
 }
@@ -725,7 +722,7 @@ function renderTeam(result) {
         </div>
         <div class="org-team-card org-team-green">
           <div class="org-team-card-title">JOB</div>
-          <div class="org-team-card-desc">준비 모임부터 애프터까지 팀 안에서 담당하는 역할</div>
+          <div class="org-team-card-desc">팀 안에서 담당하는 역할</div>
         </div>
         <div class="org-team-card org-team-orange">
           <div class="org-team-card-title">사역팀</div>
@@ -733,7 +730,7 @@ function renderTeam(result) {
         </div>
       </div>
     </div>
-    <div class="card" style="padding:20px 16px; margin-top: 36px; margin-bottom: 100px;">
+    <div class="card" style="padding:20px 16px; margin-top: 16px;">
       <div class="org-chart">
         <div class="org-row">
           <div class="org-node dir">${escHtml(parseName(org.director).name)}<small>디렉터</small></div>
@@ -1054,9 +1051,7 @@ function startKtmClock() {
     const el = document.getElementById("ktm-time");
     if (!el) return;
     const now = new Date();
-    const ktm = new Date(
-      now.toLocaleString("en-US", { timeZone: "Asia/Kathmandu" }),
-    );
+    const ktm = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kathmandu" }));
     const h = String(ktm.getHours()).padStart(2, "0");
     const m = String(ktm.getMinutes()).padStart(2, "0");
     const s = String(ktm.getSeconds()).padStart(2, "0");
@@ -1328,6 +1323,7 @@ async function init() {
   updateDday();
   initPressOn();
   initRevealObserver();
+  initHeroParallax();
   loadLiveDday();
   startKtmClock();
   loaded.add("home");
@@ -1335,11 +1331,9 @@ async function init() {
 
   // fallback: 3초 후에도 안 뜬 reveal 요소 강제 표시
   setTimeout(() => {
-    document
-      .querySelectorAll(
-        "#page-home .reveal-item:not(.revealed), #page-home .stagger-item:not(.revealed)",
-      )
-      .forEach((el) => el.classList.add("revealed"));
+    document.querySelectorAll(
+      "#page-home .reveal-item:not(.revealed), #page-home .stagger-item:not(.revealed)"
+    ).forEach(el => el.classList.add("revealed"));
   }, 3000);
 }
 
@@ -1348,6 +1342,24 @@ init();
 /* ═══════════════════════════════════════════════
    16. 스크롤 유도 버튼 액션
 ═══════════════════════════════════════════════ */
+/* ═══ Hero Parallax ═══ */
+function initHeroParallax() {
+  const inner = document.querySelector(".hero-parallax-inner");
+  const hero = document.querySelector(".home-hero-full");
+  if (!inner || !hero) return;
+
+  window.addEventListener("scroll", () => {
+    const scrollY = window.scrollY;
+    const heroHeight = hero.offsetHeight;
+    if (scrollY > heroHeight) return;
+    const progress = scrollY / heroHeight; // 0 ~ 1
+    const translateY = scrollY * 0.35; // 텍스트는 스크롤의 35%만 이동
+    const opacity = 1 - progress * 1.8;
+    inner.style.transform = `translateY(-${translateY}px)`;
+    inner.style.opacity = Math.max(0, opacity);
+  }, { passive: true });
+}
+
 function scrollToScripture() {
   const targetSection = document.getElementById("scripture-section");
   if (targetSection) {
@@ -1369,7 +1381,7 @@ function scrollToScripture() {
 /* ═══ Reveal Observer (홈 콘텐츠 진입 애니메이션) ═══ */
 function initRevealObserver() {
   const targets = document.querySelectorAll(
-    "#page-home .reveal-item, #page-home .stagger-item",
+    "#page-home .reveal-item, #page-home .stagger-item"
   );
   if (!targets.length) return;
 
@@ -1385,7 +1397,7 @@ function initRevealObserver() {
     {
       threshold: 0,
       rootMargin: "0px 0px 0px 0px",
-    },
+    }
   );
 
   targets.forEach((el) => observer.observe(el));

@@ -447,6 +447,14 @@ main {
   padding: 56px 32px 80px;
 }
 
+.hero-parallax-inner {
+  will-change: transform;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
 .hero-bg-circle {
   display: none;
 }
@@ -573,15 +581,16 @@ main {
   position: relative;
   z-index: 1;
   display: inline-flex;
-  background: rgba(99,102,241,0.1);
-  color: var(--pri);
+  background: transparent;
+  color: var(--t4);
   font-size: 11px;
-  font-weight: 700;
-  padding: 6px 16px;
-  border-radius: 100px;
-  letter-spacing: 0.8px;
-  margin-bottom: 32px;
-  border: 1px solid rgba(99,102,241,0.2);
+  font-weight: 600;
+  padding: 4px 0;
+  border-radius: 0;
+  letter-spacing: 1.5px;
+  margin-bottom: 16px;
+  border: none;
+  text-transform: uppercase;
 }
 
 /* 약속의 말씀 큰 카드 */
