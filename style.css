@@ -1599,13 +1599,13 @@ main {
   color: rgba(255, 255, 255, 0.6);
 }
 .org-node.subdir {
-  background: var(--pri-lt);
-  border-color: var(--pri);
-  color: var(--pri);
+  background: #f0f2f5;
+  border-color: #3d4a5c;
+  color: #3d4a5c;
   padding: 9px 18px;
 }
 .org-node.subdir small {
-  color: var(--pri);
+  color: #3d4a5c;
   opacity: 0.7;
 }
 .org-node.lead {
