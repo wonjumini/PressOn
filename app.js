@@ -1142,29 +1142,19 @@ function openNepal(letter) {
   const data = NEPAL_DATA[letter];
   if (!data) return;
 
-  // 활성 버튼 표시
-  document
-    .querySelectorAll(".nepal-letter")
-    .forEach((b) => b.classList.remove("active"));
-  document.querySelectorAll(".nepal-letter").forEach((b) => {
-    if (b.textContent === letter) b.classList.add("active");
-  });
-
-  const detail = document.getElementById("nepalDetail");
   document.getElementById("ndLetter").textContent = letter;
   document.getElementById("ndWord").textContent = data.word;
   document.getElementById("ndDesc").textContent = data.desc;
   document.getElementById("ndVerse").innerHTML =
-    `<strong style="display:block;font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.5px;margin-bottom:6px">${escHtml(data.ref)}</strong>${escHtml(data.verse)}`;
-  detail.style.display = "block";
-  detail.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    `${escHtml(data.verse)}<div style="font-size:12px;color:var(--pri);margin-top:10px;font-weight:600;">${escHtml(data.ref)}</div>`;
+
+  const overlay = document.getElementById("nepalOverlay");
+  overlay.classList.add("open");
 }
 
 function closeNepal() {
-  document.getElementById("nepalDetail").style.display = "none";
-  document
-    .querySelectorAll(".nepal-letter")
-    .forEach((b) => b.classList.remove("active"));
+  const overlay = document.getElementById("nepalOverlay");
+  overlay.classList.remove("open");
 }
 function togglePlan(idx) {
   const bd = document.getElementById(`plan-bd-${idx}`);
