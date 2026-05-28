@@ -404,7 +404,7 @@ main {
 .home-hero-full {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, #ffffff 0%, #f0f5fc 45%, #d8e6f5 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #f0f5fc 30%, #d8e6f5 100%);
 
   min-height: calc(100dvh - 54px);
 
@@ -501,11 +501,11 @@ main {
 }
 .hero-scroll-hint span {
   display: block;
-  width: 28px;
-  height: 16px;
-  border-left: 2px solid var(--t3);
-  border-bottom: 2px solid var(--t3);
-  transform: rotate(-45deg) translateY(-4px);
+  width: 20px;
+  height: 20px;
+  border-right: 2.5px solid var(--t3);
+  border-bottom: 2.5px solid var(--t3);
+  transform: rotate(45deg);
   border-radius: 1px;
 }
 
