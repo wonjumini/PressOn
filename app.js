@@ -1270,6 +1270,9 @@ function showPage(id) {
   window.scrollTo({ top: 0, behavior: "smooth" });
   closeMenu();
 
+  // URL hash에 현재 탭 저장
+  history.replaceState(null, "", "#" + id);
+
   // 홈 진입 시 히어로 초기화
   if (id === "home") initPressOn();
 
@@ -1341,6 +1344,28 @@ async function init() {
   loadLiveDday();
   startKtmClock();
   loaded.add("home");
+
+  // 화살표 위치 동적 계산 (브라우저 무관하게 항상 보이게)
+  const hint = document.querySelector(".hero-scroll-hint");
+  const hero = document.querySelector(".home-hero-full");
+
+  function updateHintPosition() {
+    if (hint) hint.style.bottom = (window.innerHeight * 0.1) + "px";
+  }
+  updateHintPosition();
+  window.addEventListener("resize", updateHintPosition);
+
+  if (hint && hero) {
+    window.addEventListener("scroll", () => {
+      const heroBottom = hero.getBoundingClientRect().bottom;
+      if (heroBottom <= 0) {
+        hint.classList.add("hidden");
+      } else {
+        hint.classList.remove("hidden");
+      }
+    }, { passive: true });
+  }
+
   await Promise.all([loadHome(), loadWeather()]);
 
   // fallback: 3초 후에도 안 뜬 reveal 요소 강제 표시
@@ -1349,6 +1374,13 @@ async function init() {
       "#page-home .reveal-item:not(.revealed), #page-home .stagger-item:not(.revealed)"
     ).forEach(el => el.classList.add("revealed"));
   }, 3000);
+
+  // 초기 로드 시 hash 있으면 해당 탭으로 이동
+  const hash = location.hash.replace("#", "");
+  const validPages = ["home", "overview", "schedule", "team", "plan", "attendance", "story", "prayer", "luggage", "notice"];
+  if (hash && validPages.includes(hash)) {
+    showPage(hash);
+  }
 }
 
 init();
