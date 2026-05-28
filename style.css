@@ -52,7 +52,7 @@
   --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --tr: 450ms cubic-bezier(0.22, 1, 0.36, 1);
   --font:
-    "Paperlogy", "Pretendard", -apple-system, BlinkMacSystemFont, sans-serif;
+    "Pretendard", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body {
@@ -235,13 +235,13 @@ main {
 .wrap {
   max-width: 640px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
 }
 .section {
-  margin-top: 32px;
+  margin-top: 44px;
 }
 .section:first-child {
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
 .eyebrow {
@@ -445,7 +445,7 @@ main {
   justify-content: center;
 
   text-align: center;
-  padding: 40px 24px 60px;
+  padding: 56px 32px 80px;
 }
 
 .hero-bg-circle {
@@ -462,7 +462,7 @@ main {
   padding: 6px 16px;
   border-radius: 100px;
   letter-spacing: 0.8px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 .hero-title {
   position: relative;
@@ -471,8 +471,8 @@ main {
   font-weight: 900;
   color: var(--t1);
   letter-spacing: -2px;
-  line-height: 1.1;
-  margin-bottom: 14px;
+  line-height: 1.15;
+  margin-bottom: 20px;
 }
 .hero-gradient {
   display: inline;
@@ -485,16 +485,16 @@ main {
 .hero-sub {
   position: relative;
   z-index: 1;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--t3);
-  line-height: 1.75;
-  margin-bottom: 28px;
+  line-height: 1.85;
+  margin-bottom: 36px;
 }
 .hero-meta-row {
   position: relative;
   z-index: 1;
   display: flex;
-  gap: 20px;
+  gap: 32px;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -502,7 +502,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 .hero-meta-label {
   font-size: 10px;
@@ -512,7 +512,7 @@ main {
   text-transform: uppercase;
 }
 .hero-meta-val {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--t2);
 }
