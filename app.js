@@ -675,16 +675,9 @@ function renderSchedule(result) {
   }
 
   const sorted = [...items].sort((a, b) => new Date(a.date) - new Date(b.date));
-  listEl.innerHTML = sorted.map(itemHtml).join("");
+  const allItems = [...sorted, ...afterItems.sort((a, b) => new Date(a.date) - new Date(b.date))];
+  listEl.innerHTML = allItems.map(itemHtml).join("");
   listEl.classList.add("fade-in");
-
-  if (afterItems.length > 0 && afterEl && afterSec) {
-    afterSec.style.display = "block";
-    afterEl.innerHTML = afterItems
-      .sort((a, b) => new Date(a.date) - new Date(b.date))
-      .map(itemHtml)
-      .join("");
-  }
 }
 
 // 이름에서 기수 추출해서 "xx년대" 형식으로 변환
