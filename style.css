@@ -70,10 +70,8 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--bd);
+  background: #eef2f9;
+  border-bottom: none;
   overflow: hidden;
 }
 .nav-top {
@@ -392,7 +390,7 @@ main {
 .home-hero-full {
   position: relative;
   overflow: hidden;
-  background: #FAFAFA;
+  background: linear-gradient(180deg, #eef2f9 0%, #e4ecf8 50%, #d8e6f5 100%);
 
   min-height: calc(100dvh - 54px);
 
@@ -406,35 +404,7 @@ main {
 }
 
 .hero-bg-circle {
-  position: absolute;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* 우측 상단 블루 영역 */
-.hero-bg-1 {
-  width: 420px;
-  height: 420px;
-
-  background: #EEF4FF;
-
-  border-radius: 42% 58% 60% 40% / 45% 40% 60% 55%;
-
-  top: -180px;
-  right: -180px;
-}
-
-/* 좌측 하단 오렌지 영역 */
-.hero-bg-2 {
-  width: 340px;
-  height: 340px;
-
-  background: #F8F1EE;
-
-  border-radius: 58% 42% 35% 65% / 50% 60% 40% 50%;
-
-  bottom: -160px;
-  left: -160px;
+  display: none;
 }
 .hero-badge {
   position: relative;
@@ -534,27 +504,53 @@ main {
 }
 
 /* 약속의 말씀 큰 카드 */
+.scripture-hero-section {
+  background: linear-gradient(180deg, #d8e6f5 0%, #ffffff 70%);
+  padding: 40px 24px 36px;
+  text-align: center;
+}
+
+.scripture-eyebrow {
+  display: block;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--t4);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
 .verse-card-lg {
-  background: var(--surface);
-  border-radius: var(--r);
-  border: 1px solid var(--bd);
-  border-left: 4px solid var(--pri);
-  padding: 22px 20px;
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  border-left: none;
+  padding: 0;
 }
 .verse-card-lg .scripture-text {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 400;
   color: var(--t1);
-  line-height: 1.75;
+  line-height: 1.85;
   letter-spacing: -0.3px;
   font-style: normal;
+  text-align: center;
+  word-break: keep-all;
 }
 .verse-card-lg .scripture-ref {
   font-size: 13px;
   color: var(--t3);
-  margin-top: 12px;
+  margin-top: 20px;
   font-weight: 500;
+  text-align: center;
 }
+.offline-badge {
+  font-size: 11px;
+  color: var(--t3);
+  margin-bottom: 12px;
+}
+
 
 /* Scripture */
 .scripture-block {
