@@ -520,11 +520,11 @@ main {
 /* 약속의 말씀 큰 카드 */
 .scripture-hero-section {
   background: #ffffff;
-  min-height: 80dvh;
+  min-height: 70dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 10px 40px 10px;
+  padding: 36px 40px 44px;
   text-align: center;
   position: relative;
 }
