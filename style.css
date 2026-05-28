@@ -505,9 +505,14 @@ main {
 
 /* 약속의 말씀 큰 카드 */
 .scripture-hero-section {
-  background: linear-gradient(180deg, #d8e6f5 0%, #ffffff 70%);
-  padding: 40px 24px 36px;
+  background: #ffffff;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 32px;
   text-align: center;
+  position: relative;
 }
 
 .scripture-eyebrow {
@@ -518,7 +523,7 @@ main {
   color: var(--t4);
   letter-spacing: 0.6px;
   text-transform: uppercase;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
 .verse-card-lg {
@@ -529,19 +534,19 @@ main {
   padding: 0;
 }
 .verse-card-lg .scripture-text {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 400;
   color: var(--t1);
   line-height: 1.85;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.5px;
   font-style: normal;
   text-align: center;
   word-break: keep-all;
 }
 .verse-card-lg .scripture-ref {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--t3);
-  margin-top: 20px;
+  margin-top: 28px;
   font-weight: 500;
   text-align: center;
 }

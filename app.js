@@ -546,10 +546,7 @@ function renderHomeScripture(result) {
         text: "푯대를 향하여 그리스도 예수 안에서 하나님이 위에서 부르신 부름의 상을 위하여 달려가노라",
         ref: "빌립보서 3:14",
       };
-  const verseText = d.text.replace(
-    "하나님이 위에서 부르신 부름의 상",
-    '<span style="color:var(--pri)">하나님이 위에서 부르신 부름의 상</span>',
-  );
+  const verseText = escHtml(d.text);
   el.innerHTML = `
     ${result.offline ? '<div class="offline-badge">📴 오프라인 데이터</div>' : ""}
     <p class="scripture-text">${verseText}</p>
@@ -1318,8 +1315,7 @@ function scrollToScripture() {
     const targetPosition =
       targetSection.getBoundingClientRect().top +
       window.scrollY -
-      navHeight -
-      20;
+      navHeight;
 
     window.scrollTo({
       top: targetPosition,
