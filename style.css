@@ -7,6 +7,10 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --pri: #0064ff;
   --pri-d: #004ecc;
@@ -140,7 +144,7 @@ body {
   z-index: 99;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.18s cubic-bezier(0.4, 0, 1, 1);
+  transition: max-height 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   border-bottom: 0px solid var(--bd);
 }
 .nav-menu.open {
@@ -453,7 +457,7 @@ main {
   overflow: visible;
   background: linear-gradient(180deg, #ffffff 0%, #e8f0fb 25%, #c8ddf5 70%, #b8d0f0 100%);
 
-  min-height: 100dvh;
+  min-height: 100svh;
 
   display: flex;
   flex-direction: column;
@@ -461,7 +465,7 @@ main {
   justify-content: center;
 
   text-align: center;
-  padding: 56px 32px 0;
+  padding: 56px 32px 80px;
 }
 
 .hero-parallax-inner {
@@ -543,7 +547,8 @@ main {
 
 /* 토스 감성 스크롤 버튼 수정 파트 */
 .hero-scroll-hint {
-  position: fixed;
+  position: absolute;
+  bottom: 32px;
   left: 50%;
   transform: translateX(-50%);
   cursor: pointer;

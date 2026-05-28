@@ -1345,23 +1345,9 @@ async function init() {
   startKtmClock();
   loaded.add("home");
 
-  // 히어로 높이 실제 화면 기준으로 설정 (브라우저 무관)
-  function setHeroHeight() {
-    const hero = document.querySelector(".home-hero-full");
-    if (hero) hero.style.minHeight = window.innerHeight + "px";
-  }
-  setHeroHeight();
-
-  // 화살표 위치 동적 계산 (브라우저 무관하게 항상 보이게)
+  // 히어로 벗어나면 화살표 숨기기
   const hint = document.querySelector(".hero-scroll-hint");
   const hero = document.querySelector(".home-hero-full");
-
-  function updateHintPosition() {
-    if (hint) hint.style.bottom = (window.innerHeight * 0.1) + "px";
-  }
-  updateHintPosition();
-  window.addEventListener("resize", updateHintPosition);
-
   if (hint && hero) {
     window.addEventListener("scroll", () => {
       const heroBottom = hero.getBoundingClientRect().bottom;
