@@ -386,7 +386,23 @@ main {
   }
 }
 
-/* ═══ HOME HERO (풀스크린) ══════════════════════ */
+/* ═══ REVEAL (홈 콘텐츠 진입 애니메이션) ══════════ */
+.reveal-container {
+  overflow: hidden;
+}
+.reveal-container .wrap,
+.reveal-container .section {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-container .wrap.revealed,
+.reveal-container .section.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .home-hero-full {
   position: relative;
   overflow: hidden;

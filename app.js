@@ -1299,6 +1299,7 @@ document.addEventListener("visibilitychange", () => {
 async function init() {
   updateDday();
   initPressOn();
+  initRevealObserver();
   loaded.add("home");
   await Promise.all([loadHome(), loadWeather(), loadExchange()]);
 }
@@ -1312,14 +1313,41 @@ function scrollToScripture() {
   const targetSection = document.getElementById("scripture-section");
   if (targetSection) {
     const navHeight = 54;
+    const heroOverlap = 72; // 히어로 하단이 살짝 걸치도록
     const targetPosition =
       targetSection.getBoundingClientRect().top +
       window.scrollY -
-      navHeight;
+      navHeight -
+      heroOverlap;
 
     window.scrollTo({
       top: targetPosition,
       behavior: "smooth",
     });
   }
+}
+
+/* ═══ Reveal Observer (홈 콘텐츠 진입 애니메이션) ═══ */
+function initRevealObserver() {
+  const targets = document.querySelectorAll(
+    "#page-home .reveal-container .wrap, #page-home .reveal-container .section"
+  );
+  if (!targets.length) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("revealed");
+          observer.unobserve(entry.target); // 한번 나타나면 해제
+        }
+      });
+    },
+    {
+      threshold: 0.08, // 8% 진입하면 트리거
+      rootMargin: "0px 0px -40px 0px",
+    }
+  );
+
+  targets.forEach((el) => observer.observe(el));
 }
