@@ -733,7 +733,7 @@ function renderTeam(result) {
         </div>
       </div>
     </div>
-    <div class="card" style="padding:20px 16px; margin-top: 16px;">
+    <div class="card" style="padding:20px 16px; margin-top: 36px; margin-bottom: 100px;">
       <div class="org-chart">
         <div class="org-row">
           <div class="org-node dir">${escHtml(parseName(org.director).name)}<small>디렉터</small></div>
