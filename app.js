@@ -537,20 +537,12 @@ function parseNotice(json) {
 /* ═══════════════════════════════════════════════
    5. 렌더러
 ═══════════════════════════════════════════════ */
-function renderHomeScripture(result) {
+function renderHomeScripture() {
   const el = document.getElementById("home-scripture");
   if (!el) return;
-  const d = result.ok
-    ? parseScripture(result.data)
-    : {
-        text: "푯대를 향하여 그리스도 예수 안에서 하나님이 위에서 부르신 부름의 상을 위하여 달려가노라",
-        ref: "빌립보서 3:14",
-      };
-  const verseText = escHtml(d.text);
   el.innerHTML = `
-    ${result.offline ? '<div class="offline-badge">📴 오프라인 데이터</div>' : ""}
-    <p class="scripture-text">${verseText}</p>
-    <p class="scripture-ref">— ${escHtml(d.ref)}</p>`;
+    <p class="scripture-text">푯대를 향하여 그리스도 예수 안에서 하나님이 위에서 부르신 부름의 상을 위하여 달려가노라</p>
+    <p class="scripture-ref">— 빌립보서 3:14</p>`;
   el.classList.add("fade-in");
 }
 
@@ -960,11 +952,8 @@ function renderAttendance(result) {
    6. 로드 함수
 ═══════════════════════════════════════════════ */
 async function loadHome() {
-  const [scriptureResult, noticeResult] = await Promise.all([
-    fetchSheetSafe(SHEETS.scripture),
-    fetchSheetSafe(SHEETS.notice),
-  ]);
-  renderHomeScripture(scriptureResult);
+  renderHomeScripture();
+  const noticeResult = await fetchSheetSafe(SHEETS.notice);
   renderHomeNotice(noticeResult);
 }
 
