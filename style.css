@@ -524,7 +524,7 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 30px 40px 30px;
+  padding: 20px 40px 20px;
   text-align: center;
   position: relative;
 }
