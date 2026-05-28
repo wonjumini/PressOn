@@ -530,7 +530,7 @@ main {
 /* 약속의 말씀 큰 카드 */
 .scripture-hero-section {
   background: #ffffff;
-  min-height: 60dvh;
+  min-height: 65dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
