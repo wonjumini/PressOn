@@ -489,20 +489,24 @@ main {
 /* 토스 감성 스크롤 버튼 수정 파트 */
 .hero-scroll-hint {
   position: absolute;
-  bottom: 30px;
+  bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--t4);
-  letter-spacing: 1.5px;
+  justify-content: center;
   cursor: pointer;
   animation: tossBounce 2s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94);
   -webkit-tap-highlight-color: transparent;
+}
+.hero-scroll-hint span {
+  display: block;
+  width: 28px;
+  height: 16px;
+  border-left: 2px solid var(--t3);
+  border-bottom: 2px solid var(--t3);
+  transform: rotate(-45deg) translateY(-4px);
+  border-radius: 1px;
 }
 
 @keyframes tossBounce {
