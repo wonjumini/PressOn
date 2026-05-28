@@ -447,7 +447,7 @@ main {
   overflow: hidden;
   background: linear-gradient(180deg, #ffffff 0%, #e8f0fb 25%, #c8ddf5 70%, #b8d0f0 100%);
 
-  min-height: calc(100dvh);
+  min-height: 100dvh;
 
   display: flex;
   flex-direction: column;
@@ -455,7 +455,7 @@ main {
   justify-content: center;
 
   text-align: center;
-  padding: 40px 32px 120px;
+  padding: 56px 32px 80px;
 }
 
 .hero-parallax-inner {
