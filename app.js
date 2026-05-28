@@ -1325,6 +1325,13 @@ async function init() {
   startKtmClock();
   loaded.add("home");
   await Promise.all([loadHome(), loadWeather()]);
+
+  // fallback: 3초 후에도 안 뜬 reveal 요소 강제 표시
+  setTimeout(() => {
+    document.querySelectorAll(
+      "#page-home .reveal-item:not(.revealed), #page-home .stagger-item:not(.revealed)"
+    ).forEach(el => el.classList.add("revealed"));
+  }, 3000);
 }
 
 init();
@@ -1367,8 +1374,8 @@ function initRevealObserver() {
       });
     },
     {
-      threshold: 0.08,
-      rootMargin: "0px 0px -40px 0px",
+      threshold: 0,
+      rootMargin: "0px 0px 0px 0px",
     }
   );
 
