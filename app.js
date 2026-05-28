@@ -1328,6 +1328,16 @@ async function init() {
   loadLiveDday();
   startKtmClock();
   loaded.add("home");
+
+  // 스플래시 0.9초 후 fade-out
+  setTimeout(() => {
+    const splash = document.getElementById("splashScreen");
+    if (splash) {
+      splash.classList.add("hide");
+      setTimeout(() => splash.remove(), 500);
+    }
+  }, 900);
+
   await Promise.all([loadHome(), loadWeather()]);
 
   // fallback: 3초 후에도 안 뜬 reveal 요소 강제 표시
