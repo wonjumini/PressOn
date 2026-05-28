@@ -1325,7 +1325,6 @@ async function init() {
   updateDday();
   initPressOn();
   initRevealObserver();
-  initHeroParallax();
   loadLiveDday();
   startKtmClock();
   loaded.add("home");
@@ -1344,24 +1343,6 @@ init();
 /* ═══════════════════════════════════════════════
    16. 스크롤 유도 버튼 액션
 ═══════════════════════════════════════════════ */
-/* ═══ Hero Parallax ═══ */
-function initHeroParallax() {
-  const inner = document.querySelector(".hero-parallax-inner");
-  const hero = document.querySelector(".home-hero-full");
-  if (!inner || !hero) return;
-
-  window.addEventListener("scroll", () => {
-    const scrollY = window.scrollY;
-    const heroHeight = hero.offsetHeight;
-    if (scrollY > heroHeight) return;
-    const progress = scrollY / heroHeight; // 0 ~ 1
-    const translateY = scrollY * 0.35; // 텍스트는 스크롤의 35%만 이동
-    const opacity = 1 - progress * 1.8;
-    inner.style.transform = `translateY(-${translateY}px)`;
-    inner.style.opacity = Math.max(0, opacity);
-  }, { passive: true });
-}
-
 function scrollToScripture() {
   const targetSection = document.getElementById("scripture-section");
   if (targetSection) {
