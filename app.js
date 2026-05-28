@@ -206,7 +206,7 @@ function parseSchedule(json) {
   const items = [
     {
       date: "2026-05-30",
-      title: "팀모임 1회",
+      title: "팀모임 1",
       detail: "웰컴 · 기대 나누기",
       type: "team",
     },
@@ -216,28 +216,28 @@ function parseSchedule(json) {
       detail: "여름단기선교의 중요성",
       type: "school",
     },
-    { date: "2026-06-06", title: "팀모임 3회", detail: "", type: "team" },
+    { date: "2026-06-06", title: "팀모임 3", detail: "", type: "team" },
     {
       date: "2026-06-07",
       title: "선교학교 2 / 팀모임 4",
       detail: "단기선교 준비",
       type: "school",
     },
-    { date: "2026-06-13", title: "팀모임 5회", detail: "", type: "team" },
+    { date: "2026-06-13", title: "팀모임 5", detail: "", type: "team" },
     {
       date: "2026-06-14",
       title: "선교학교 3 / 팀모임 6",
       detail: "JOB",
       type: "school",
     },
-    { date: "2026-06-20", title: "팀모임 7회", detail: "", type: "team" },
+    { date: "2026-06-20", title: "팀모임 7", detail: "", type: "team" },
     {
       date: "2026-06-21",
       title: "선교학교 4 / 팀모임 8",
       detail: "영적인 일",
       type: "school",
     },
-    { date: "2026-06-27", title: "팀모임 9회", detail: "", type: "team" },
+    { date: "2026-06-27", title: "팀모임 9", detail: "", type: "team" },
     {
       date: "2026-06-28",
       title: "선교학교 5 / 팀모임 10",
@@ -247,13 +247,13 @@ function parseSchedule(json) {
     { date: "2026-06-28", title: "파송예배", detail: "", type: "special" },
     {
       date: "2026-07-04",
-      title: "팀모임 11회",
+      title: "팀모임 11",
       detail: "최종 리허설 · 짐 패킹",
       type: "team",
     },
     {
       date: "2026-07-05",
-      title: "팀모임 12회",
+      title: "팀모임 12",
       detail: "짐 패킹 2",
       type: "team",
     },
@@ -1171,7 +1171,14 @@ function closeNepal() {
   const overlay = document.getElementById("nepalOverlay");
   overlay.classList.remove("open");
 }
-function togglePlan(idx) {
+function toggleNepalDay(idx) {
+  const acc = document.getElementById(`nday-${idx}`);
+  const chev = document.getElementById(`nchev-${idx}`);
+  if (!acc) return;
+  const isOpen = acc.classList.contains("open");
+  acc.classList.toggle("open", !isOpen);
+  if (chev) chev.classList.toggle("open", !isOpen);
+}
   const bd = document.getElementById(`plan-bd-${idx}`);
   const arrow = document.getElementById(`plan-arrow-${idx}`);
   if (!bd) return;

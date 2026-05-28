@@ -480,7 +480,7 @@
           <div class="sub-page" id="sub-nepal">
             <div style="padding-top: 4px">
 
-              <div class="sch-item">
+              <div class="sch-item" onclick="toggleNepalDay(0)">
                 <div class="sch-date">
                   <div class="sch-month">7월</div>
                   <div class="sch-day">11</div>
@@ -490,13 +490,14 @@
                 <div class="sch-content">
                   <div class="sch-title">한국 출발 → 네팔 도착</div>
                   <div class="sch-detail">저녁식사 · OT</div>
-                  <div class="sch-badges">
-                    <span class="pill pill-yellow">이동</span>
-                  </div>
-                </div>
+                  <div class="sch-badges"><span class="pill pill-yellow">이동</span></div>
+                  <div class="sch-accordion" id="nday-0"><div class="sch-time-block">
+                    <div class="sch-time-row"><span class="sch-time">19:00</span><span class="sch-time-content">네팔 도착</span></div>
+                    <div class="sch-time-row"><span class="sch-time">20:00</span><span class="sch-time-content">저녁식사 · OT</span></div>
+                  </div></div></div><span class="sch-chevron" id="nchev-0">∨</span>
               </div>
 
-              <div class="sch-item">
+              <div class="sch-item" onclick="toggleNepalDay(1)">
                 <div class="sch-date">
                   <div class="sch-month">7월</div>
                   <div class="sch-day">12</div>
@@ -504,31 +505,19 @@
                 </div>
                 <div class="sch-divider"></div>
                 <div class="sch-content">
-                  <div class="sch-title">한인교회 예배</div>
-                  <div class="sch-detail">오전 · 카트만두</div>
-                  <div class="sch-badges">
-                    <span class="pill pill-blue">예배</span>
-                  </div>
-                </div>
+                  <div class="sch-title">한인교회 예배 · 조이하우스 사역</div>
+                  <div class="sch-detail">카트만두</div>
+                  <div class="sch-badges"><span class="pill pill-blue">예배</span><span class="pill pill-green">사역</span></div>
+                  <div class="sch-accordion" id="nday-1"><div class="sch-time-block">
+                    <div class="sch-time-row"><span class="sch-time">07:00</span><span class="sch-time-content">아침식사</span></div>
+                    <div class="sch-time-row"><span class="sch-time">08:00</span><span class="sch-time-content">한인교회 예배</span></div>
+                    <div class="sch-time-row"><span class="sch-time">12:00</span><span class="sch-time-content">점심식사</span></div>
+                    <div class="sch-time-row"><span class="sch-time">14:00</span><span class="sch-time-content">조이하우스 어린이 사역<br>(두 팀으로 나눠서)</span></div>
+                    <div class="sch-time-row"><span class="sch-time">19:00</span><span class="sch-time-content">저녁식사</span></div>
+                  </div></div></div><span class="sch-chevron" id="nchev-1">∨</span>
               </div>
 
-              <div class="sch-item">
-                <div class="sch-date">
-                  <div class="sch-month">7월</div>
-                  <div class="sch-day">12</div>
-                  <div class="sch-wd">일</div>
-                </div>
-                <div class="sch-divider"></div>
-                <div class="sch-content">
-                  <div class="sch-title">조이하우스 어린이 사역</div>
-                  <div class="sch-detail">오후 · 카트만두</div>
-                  <div class="sch-badges">
-                    <span class="pill pill-green">사역</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="sch-item">
+              <div class="sch-item" onclick="toggleNepalDay(2)">
                 <div class="sch-date">
                   <div class="sch-month">7월</div>
                   <div class="sch-day">13</div>
@@ -538,13 +527,17 @@
                 <div class="sch-content">
                   <div class="sch-title">다딩 썰보트 교회 사역</div>
                   <div class="sch-detail">카트만두 → 다딩</div>
-                  <div class="sch-badges">
-                    <span class="pill pill-green">사역</span><span class="pill pill-yellow">이동</span>
-                  </div>
-                </div>
+                  <div class="sch-badges"><span class="pill pill-green">사역</span><span class="pill pill-yellow">이동</span></div>
+                  <div class="sch-accordion" id="nday-2"><div class="sch-time-block">
+                    <div class="sch-time-row"><span class="sch-time">07:00</span><span class="sch-time-content">아침식사</span></div>
+                    <div class="sch-time-row"><span class="sch-time">08:00</span><span class="sch-time-content">다딩 썰보트 교회 방문 (오전)</span></div>
+                    <div class="sch-time-row"><span class="sch-time">12:00</span><span class="sch-time-content">점심식사</span></div>
+                    <div class="sch-time-row"><span class="sch-time">14:00</span><span class="sch-time-content">다딩 썰보트 교회 방문 (오후)</span></div>
+                    <div class="sch-time-row"><span class="sch-time">19:00</span><span class="sch-time-content">저녁식사</span></div>
+                  </div></div></div><span class="sch-chevron" id="nchev-2">∨</span>
               </div>
 
-              <div class="sch-item">
+              <div class="sch-item" onclick="toggleNepalDay(3)">
                 <div class="sch-date">
                   <div class="sch-month">7월</div>
                   <div class="sch-day">14</div>
@@ -554,13 +547,17 @@
                 <div class="sch-content">
                   <div class="sch-title">다딩 너우모레 교회 사역</div>
                   <div class="sch-detail">다딩 → 포카라</div>
-                  <div class="sch-badges">
-                    <span class="pill pill-green">사역</span><span class="pill pill-yellow">이동</span>
-                  </div>
-                </div>
+                  <div class="sch-badges"><span class="pill pill-green">사역</span><span class="pill pill-yellow">이동</span></div>
+                  <div class="sch-accordion" id="nday-3"><div class="sch-time-block">
+                    <div class="sch-time-row"><span class="sch-time">07:00</span><span class="sch-time-content">아침식사</span></div>
+                    <div class="sch-time-row"><span class="sch-time">08:00</span><span class="sch-time-content">다딩 너우모레 교회 방문</span></div>
+                    <div class="sch-time-row"><span class="sch-time">12:00</span><span class="sch-time-content">점심식사</span></div>
+                    <div class="sch-time-row"><span class="sch-time">14:00</span><span class="sch-time-content">포카라로 이동</span></div>
+                    <div class="sch-time-row"><span class="sch-time">19:00</span><span class="sch-time-content">저녁식사</span></div>
+                  </div></div></div><span class="sch-chevron" id="nchev-3">∨</span>
               </div>
 
-              <div class="sch-item">
+              <div class="sch-item" onclick="toggleNepalDay(4)">
                 <div class="sch-date">
                   <div class="sch-month">7월</div>
                   <div class="sch-day">15</div>
@@ -570,13 +567,17 @@
                 <div class="sch-content">
                   <div class="sch-title">오스트리안 베이스 캠프 트레킹</div>
                   <div class="sch-detail">포카라 · 예배</div>
-                  <div class="sch-badges">
-                    <span class="pill pill-purple">예배</span>
-                  </div>
-                </div>
+                  <div class="sch-badges"><span class="pill pill-purple">예배</span></div>
+                  <div class="sch-accordion" id="nday-4"><div class="sch-time-block">
+                    <div class="sch-time-row"><span class="sch-time">07:00</span><span class="sch-time-content">아침식사</span></div>
+                    <div class="sch-time-row"><span class="sch-time">08:00</span><span class="sch-time-content">오스트리안 베이스 캠프 트레킹</span></div>
+                    <div class="sch-time-row"><span class="sch-time">12:00</span><span class="sch-time-content">점심식사</span></div>
+                    <div class="sch-time-row"><span class="sch-time">14:00</span><span class="sch-time-content">베이스 캠프 · 예배</span></div>
+                    <div class="sch-time-row"><span class="sch-time">19:00</span><span class="sch-time-content">저녁식사</span></div>
+                  </div></div></div><span class="sch-chevron" id="nchev-4">∨</span>
               </div>
 
-              <div class="sch-item">
+              <div class="sch-item" onclick="toggleNepalDay(5)">
                 <div class="sch-date">
                   <div class="sch-month">7월</div>
                   <div class="sch-day">16</div>
@@ -586,10 +587,12 @@
                 <div class="sch-content">
                   <div class="sch-title">포카라 → 카트만두</div>
                   <div class="sch-detail">이동일</div>
-                  <div class="sch-badges">
-                    <span class="pill pill-yellow">이동</span>
-                  </div>
-                </div>
+                  <div class="sch-badges"><span class="pill pill-yellow">이동</span></div>
+                  <div class="sch-accordion" id="nday-5"><div class="sch-time-block">
+                    <div class="sch-time-row"><span class="sch-time">07:00</span><span class="sch-time-content">아침식사</span></div>
+                    <div class="sch-time-row"><span class="sch-time">08:00</span><span class="sch-time-content">포카라 → 카트만두 이동</span></div>
+                    <div class="sch-time-row"><span class="sch-time">19:00</span><span class="sch-time-content">저녁식사</span></div>
+                  </div></div></div><span class="sch-chevron" id="nchev-5">∨</span>
               </div>
 
               <div class="sch-item">
@@ -602,9 +605,7 @@
                 <div class="sch-content">
                   <div class="sch-title">카트만두 사역</div>
                   <div class="sch-detail">인터씨드 사역 · 쇼핑</div>
-                  <div class="sch-badges">
-                    <span class="pill pill-green">사역</span>
-                  </div>
+                  <div class="sch-badges"><span class="pill pill-green">사역</span></div>
                 </div>
               </div>
 
@@ -618,11 +619,10 @@
                 <div class="sch-content">
                   <div class="sch-title">한국 출발</div>
                   <div class="sch-detail">귀국</div>
-                  <div class="sch-badges">
-                    <span class="pill pill-yellow">이동</span>
-                  </div>
+                  <div class="sch-badges"><span class="pill pill-yellow">이동</span></div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>

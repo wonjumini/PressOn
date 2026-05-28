@@ -1326,6 +1326,62 @@ main {
   margin-top: 7px;
   flex-wrap: wrap;
 }
+.sch-item {
+  align-items: flex-start;
+}
+.sch-chevron {
+  font-size: 12px;
+  color: var(--t4);
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  display: block;
+  line-height: 1;
+}
+.sch-chevron.open {
+  transform: rotate(180deg);
+}
+.sch-accordion {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.sch-accordion.open {
+  max-height: 400px;
+}
+.sch-time-block {
+  background: var(--bg2);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-top: 10px;
+}
+.sch-time-row {
+  display: flex;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 0.5px solid var(--bd);
+  align-items: flex-start;
+}
+.sch-time-row:first-child {
+  padding-top: 0;
+}
+.sch-time-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.sch-time {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--pri);
+  min-width: 38px;
+  padding-top: 1px;
+  flex-shrink: 0;
+}
+.sch-time-content {
+  font-size: 13px;
+  color: var(--t1);
+  line-height: 1.5;
+}
 
 /* 네팔 미확정 */
 .nepal-notice {
