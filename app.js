@@ -464,7 +464,7 @@ function parsePlan(json) {
     const rows = json?.table?.rows ?? [];
     const plans = [];
     const teamOrder = [
-      "중보기도팀",
+      "인터씨드팀",
       "하스피팀",
       "어린이사역팀",
       "문화사역팀",
@@ -846,7 +846,7 @@ function renderPlan(result) {
 
   // 팀이 없으면 기본 6개 팀 표시
   const teamOrder = [
-    "중보기도팀",
+    "인터씨드팀",
     "하스피팀",
     "어린이사역팀",
     "문화사역팀",
@@ -868,7 +868,7 @@ function renderPlan(result) {
   });
 
   const teamIcons = {
-    중보기도팀: "🙏",
+    인터씨드팀: "🙏",
     하스피팀: "🤝",
     어린이사역팀: "🌈",
     문화사역팀: "🎭",
