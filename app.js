@@ -1329,9 +1329,7 @@ function scrollToScripture() {
 
 /* ═══ Reveal Observer (홈 콘텐츠 진입 애니메이션) ═══ */
 function initRevealObserver() {
-  const targets = document.querySelectorAll(
-    "#page-home .reveal-container .wrap, #page-home .reveal-container .section"
-  );
+  const targets = document.querySelectorAll("#page-home .reveal-item");
   if (!targets.length) return;
 
   const observer = new IntersectionObserver(
@@ -1339,12 +1337,12 @@ function initRevealObserver() {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("revealed");
-          observer.unobserve(entry.target); // 한번 나타나면 해제
+          observer.unobserve(entry.target);
         }
       });
     },
     {
-      threshold: 0.08, // 8% 진입하면 트리거
+      threshold: 0.08,
       rootMargin: "0px 0px -40px 0px",
     }
   );

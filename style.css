@@ -388,17 +388,15 @@ main {
 
 /* ═══ REVEAL (홈 콘텐츠 진입 애니메이션) ══════════ */
 .reveal-container {
-  overflow: hidden;
+  overflow: visible;
 }
-.reveal-container .wrap,
-.reveal-container .section {
+.reveal-item {
   opacity: 0;
   transform: translateY(48px);
   transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.reveal-container .wrap.revealed,
-.reveal-container .section.revealed {
+.reveal-item.revealed {
   opacity: 1;
   transform: translateY(0);
 }
@@ -522,11 +520,10 @@ main {
 /* 약속의 말씀 큰 카드 */
 .scripture-hero-section {
   background: #ffffff;
-  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 60px 32px;
+  padding: 48px 32px 52px;
   text-align: center;
   position: relative;
 }
