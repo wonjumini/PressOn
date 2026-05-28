@@ -286,17 +286,16 @@ main {
   padding: 20px;
   margin-bottom: 10px;
   border: 1px solid var(--bd);
+  box-shadow: none;
   transition:
     transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
     border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
   overflow: hidden;
 }
 .card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
-  border-color: var(--bds);
+  border-color: var(--pri);
 }
 .card:active {
   transform: scale(0.99);
@@ -467,11 +466,11 @@ main {
 .hero-title {
   position: relative;
   z-index: 1;
-  font-size: 40px;
+  font-size: 52px;
   font-weight: 900;
   color: var(--t1);
-  letter-spacing: -2px;
-  line-height: 1.15;
+  letter-spacing: -2.5px;
+  line-height: 1.1;
   margin-bottom: 20px;
 }
 .hero-gradient {
@@ -538,6 +537,51 @@ main {
     transform: translateX(-50%) translateY(8px);
     opacity: 1;
   }
+}
+
+/* ═══ PRESS ON 시그니처 GLOW ══════════════════════ */
+.pressOn-glow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 32px;
+  border-radius: 100px;
+  background: linear-gradient(135deg, #6366f1, #818cf8);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: pressOnPulse 2.5s infinite;
+}
+.pressOn-glow:active {
+  transform: scale(0.97);
+}
+@keyframes pressOnPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(99,102,241,0.45); }
+  60%  { box-shadow: 0 0 0 12px rgba(99,102,241,0); }
+  100% { box-shadow: 0 0 0 0 rgba(99,102,241,0); }
+}
+
+/* hero-badge glow */
+.hero-badge {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  background: rgba(99,102,241,0.1);
+  color: var(--pri);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 100px;
+  letter-spacing: 0.8px;
+  margin-bottom: 32px;
+  border: 1px solid rgba(99,102,241,0.2);
 }
 
 /* 약속의 말씀 큰 카드 */
