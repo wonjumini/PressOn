@@ -1447,6 +1447,68 @@ main {
   overflow-x: auto;
   padding: 4px;
 }
+.org-team-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.org-team-top {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0;
+}
+.org-team-badge {
+  background: #1a2236;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  padding: 14px 28px;
+  border-radius: 16px;
+  letter-spacing: -0.3px;
+}
+.org-team-conn {
+  width: 1px;
+  height: 20px;
+  background: var(--bd);
+}
+.org-team-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+.org-team-card {
+  border-radius: 14px;
+  padding: 14px 12px;
+  border: 1.5px solid;
+  text-align: center;
+}
+.org-team-card-title {
+  font-size: 14px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.org-team-card-desc {
+  font-size: 11px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+.org-team-blue {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  color: #1e40af;
+}
+.org-team-green {
+  background: #f0fdf4;
+  border-color: #22c55e;
+  color: #166534;
+}
+.org-team-orange {
+  background: #fff7ed;
+  border-color: #f97316;
+  color: #9a3412;
+}
 .org-chart {
   display: flex;
   flex-direction: column;

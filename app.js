@@ -710,7 +710,27 @@ function renderTeam(result) {
   // 조직도 — C 스타일 3레벨 (디렉터 → 부디렉터 → 전체팀장/회계/서기)
   const orgHtml = `
     <div class="section-label">조직도</div>
-    <div class="card" style="padding:20px 16px">
+    <div class="org-team-intro">
+      <div class="org-team-top">
+        <div class="org-team-badge">네팔 단기선교팀</div>
+      </div>
+      <div class="org-team-conn"></div>
+      <div class="org-team-cards">
+        <div class="org-team-card org-team-blue">
+          <div class="org-team-card-title">생활조</div>
+          <div class="org-team-card-desc">선교팀 안의 셀</div>
+        </div>
+        <div class="org-team-card org-team-green">
+          <div class="org-team-card-title">JOB</div>
+          <div class="org-team-card-desc">팀 안에서 담당하는 역할</div>
+        </div>
+        <div class="org-team-card org-team-orange">
+          <div class="org-team-card-title">사역팀</div>
+          <div class="org-team-card-desc">선교지에서 감당할 사역을 함께 준비하는 팀</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="padding:20px 16px; margin-top: 16px;">
       <div class="org-chart">
         <div class="org-row">
           <div class="org-node dir">${escHtml(parseName(org.director).name)}<small>디렉터</small></div>
