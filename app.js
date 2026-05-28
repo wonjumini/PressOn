@@ -727,7 +727,7 @@ function renderTeam(result) {
           </div>
           <div class="org-team-card org-team-orange">
             <div class="org-team-card-title">사역팀</div>
-            <div class="org-team-card-desc">선교지에서 감당할 사역을 함께 준비하는 팀</div>
+            <div class="org-team-card-desc">사역을 함께 준비하는 팀</div>
           </div>
         </div>
       </div>
