@@ -437,20 +437,27 @@ const ATTENDANCE_DATES = [
   { idx: 25, label: "7/5", day: "주" },
 ];
 
+// 팀원 28명 명단 (시트 순서, 가나다순)
+const MEMBER_NAMES = [
+  "고경혜", "김수빈", "김예은", "김유찬", "김윤하",
+  "김주찬", "김준희", "김향", "노해인", "박예진",
+  "박조한", "박지명", "박희원", "송무늬", "신성민",
+  "양예원", "양은정", "양한솔", "유지훈", "이시훈",
+  "이호준", "정예림", "정은혜", "정지윤", "조민희",
+  "조상운", "조희래", "홍예찬",
+];
+
 function parseAttendance(json) {
   try {
     const rows = json?.table?.rows ?? [];
-    const members = [];
+    // 시트에서 받은 데이터를 이름으로 매핑
+    const sheetData = {};
 
     for (const row of rows) {
       const num = safeStr(row, 0);
       const name = safeStr(row, 1);
-      const gender = safeStr(row, 2);
-
-      // 헤더 행 스킵 (번호가 숫자가 아니거나 이름이 "이름/날짜")
       if (!name || name === "이름/날짜" || name === "이름") continue;
       if (!num || isNaN(parseInt(num))) continue;
-      // 합계/공식모임 같은 메타 행 스킵
       if (name === "합계" || name === "공식모임") continue;
 
       // 각 날짜 체크박스 컬럼을 정확한 인덱스로 직접 읽기
@@ -458,22 +465,32 @@ function parseAttendance(json) {
         const cells = row.c || [];
         const cell = cells[d.idx];
         if (!cell) return 0;
-        // gviz checkbox: {v: true/false, f: "TRUE"/"FALSE"}
-        // boolean true 또는 "TRUE" 문자열 모두 처리
         const v = cell.v;
         if (v === true) return 1;
         if (typeof v === "string" && v.toUpperCase() === "TRUE") return 1;
         return 0;
       });
 
-      members.push({ name, gender, att });
+      sheetData[name] = att;
     }
+
+    // 28명 명단 기준으로 항상 뼈대 생성 (시트 데이터 없으면 전부 0)
+    const members = MEMBER_NAMES.map((name) => ({
+      name,
+      att: sheetData[name] || ATTENDANCE_DATES.map(() => 0),
+    }));
 
     const dates = ATTENDANCE_DATES.map((d) => d.label);
     return { dates, members };
   } catch (e) {
     console.error("att parse error", e);
-    return { dates: [], members: [] };
+    // 에러 시에도 뼈대는 보여줌
+    const members = MEMBER_NAMES.map((name) => ({
+      name,
+      att: ATTENDANCE_DATES.map(() => 0),
+    }));
+    const dates = ATTENDANCE_DATES.map((d) => d.label);
+    return { dates, members };
   }
 }
 
@@ -1077,17 +1094,16 @@ function renderAttendance(result) {
   const el = document.getElementById("att-content");
   if (!el) return;
 
-  if (!result.ok) {
-    el.innerHTML = `<div class="error-state"><p class="error-msg">출석 데이터를 불러오지 못했습니다</p><button class="retry-btn" onclick="loadAttendance()">다시 시도</button></div>`;
-    return;
-  }
-
-  const { dates, members } = parseAttendance(result.data);
-
-  if (members.length === 0) {
-    el.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">아직 출석 데이터가 없어요</div></div>`;
-    return;
-  }
+  // fetch 실패해도 뼈대는 보여줌
+  const { dates, members } = result.ok
+    ? parseAttendance(result.data)
+    : {
+        dates: ATTENDANCE_DATES.map((d) => d.label),
+        members: MEMBER_NAMES.map((name) => ({
+          name,
+          att: ATTENDANCE_DATES.map(() => 0),
+        })),
+      };
 
   // 통계
   let totalAtt = 0,
