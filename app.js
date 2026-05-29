@@ -726,15 +726,14 @@ function renderSchedule(result) {
   const regularHtml = `
     <div class="regular-meeting-card">
       <div class="regular-meeting-row">
-        <span class="regular-meeting-label">주일</span>
-        <span class="regular-meeting-val">5/31 – 6/28 매주 오후 5:50 – 22:00</span>
-      </div>
-      <div class="regular-meeting-row">
         <span class="regular-meeting-label">토요일</span>
         <span class="regular-meeting-val">5/31 – 7/4 매주 오전 11:00 – 오후 6:00</span>
       </div>
+      <div class="regular-meeting-row">
+        <span class="regular-meeting-label">주일</span>
+        <span class="regular-meeting-val">5/31 – 6/28 매주 오후 5:50 – 오후 10:00</span>
+      </div>
     </div>
-    <div class="section-label" style="margin-top: 24px;">특별 일정</div>
   `;
 
   if (!result.ok) {
