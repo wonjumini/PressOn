@@ -139,34 +139,24 @@ body {
   top: 100%;
   left: 0;
   right: 0;
-  background: #fff;
+  background: #ffffff;
   z-index: 99;
+  max-height: 0;
+  overflow: hidden;
   opacity: 0;
-  transform: translate3d(0, -12px, 0) scaleY(0.96);
-  -webkit-transform: translate3d(0, -12px, 0) scaleY(0.96);
-  transform-origin: top center;
-  -webkit-transform-origin: top center;
-  pointer-events: none;
-  border-bottom: 1px solid transparent;
-  will-change: transform, opacity;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transition:
-    opacity 0.35s ease,
-    -webkit-transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.25s ease;
   transition:
-    opacity 0.35s ease,
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.25s ease;
+    max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.3s ease;
+  border-bottom: 0px solid var(--bd);
 }
 .nav-menu.open {
+  max-height: 600px;
   opacity: 1;
-  transform: translate3d(0, 0, 0) scaleY(1);
-  -webkit-transform: translate3d(0, 0, 0) scaleY(1);
-  pointer-events: auto;
-  border-bottom-color: var(--bd);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+  border-bottom-width: 1px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition:
+    max-height 1s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.4s ease;
 }
 .nav-menu-list {
   padding: 6px 0 10px;
