@@ -144,7 +144,7 @@ body {
   z-index: 99;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: max-height 1.3s cubic-bezier(0.22, 1, 0.36, 1);
   border-bottom: 0px solid var(--bd);
 }
 .nav-menu.open {
@@ -457,7 +457,7 @@ main {
   overflow: visible;
   background: linear-gradient(180deg, #ffffff 0%, #e8f0fb 25%, #c8ddf5 70%, #b8d0f0 100%);
 
-  min-height: 90svh;
+  min-height: 95svh;
 
   display: flex;
   flex-direction: column;
