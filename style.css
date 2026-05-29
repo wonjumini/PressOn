@@ -2548,8 +2548,8 @@ main {
 .regular-meeting-card {
   background: var(--bg2);
   border-radius: 12px;
-  padding: 16px 18px 25px;
-  margin-bottom: 4px;
+  padding: 16px 18px;
+  margin-bottom: 10px;
 }
 .regular-meeting-row {
   display: flex;
@@ -2576,10 +2576,4 @@ main {
   color: var(--t1);
   line-height: 1.5;
   letter-spacing: -0.2px;
-}
-
-/* ═══ JOB 리더 이름 강조 ═══════════════════════════ */
-.job-leader-name {
-  color: var(--pri);
-  font-weight: 700;
 }
