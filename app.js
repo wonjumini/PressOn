@@ -135,8 +135,10 @@ function clearCache(sheetName) {
 }
 
 async function fetchSheet(sheetName) {
-  const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
-  const res = await fetch(url);
+  // cache-busting: 매번 다른 URL로 요청해서 Google CDN 캐시 우회
+  const ts = Date.now();
+  const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}&_=${ts}`;
+  const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const text = await res.text();
   const match = text.match(
