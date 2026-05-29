@@ -368,6 +368,7 @@
           <div class="section">
             <span class="eyebrow">Value</span>
             <h3 class="card-section-title">우리 팀의 가치</h3>
+            <p class="tap-hint">탭하세요 ›</p>
             <div class="card" style="margin-top: 10px">
               <div class="value-row" onclick="openNepal('N')">
                 <div class="value-letter-box">N</div>
@@ -494,7 +495,7 @@
                   <div class="sch-accordion" id="nday-0"><div class="sch-time-block">
                     <div class="sch-time-row"><span class="sch-time">19:00</span><span class="sch-time-content">네팔 도착</span></div>
                     <div class="sch-time-row"><span class="sch-time">20:00</span><span class="sch-time-content">저녁식사 · OT</span></div>
-                  </div></div></div><span class="sch-chevron" id="nchev-0">∨</span>
+                  </div></div></div><span class="sch-chevron" id="nchev-0">▼</span>
               </div>
 
               <div class="sch-item" onclick="toggleNepalDay(1)">
@@ -514,7 +515,7 @@
                     <div class="sch-time-row"><span class="sch-time">12:00</span><span class="sch-time-content">점심식사</span></div>
                     <div class="sch-time-row"><span class="sch-time">14:00</span><span class="sch-time-content">조이하우스 어린이 사역<br>(두 팀으로 나눠서)</span></div>
                     <div class="sch-time-row"><span class="sch-time">19:00</span><span class="sch-time-content">저녁식사</span></div>
-                  </div></div></div><span class="sch-chevron" id="nchev-1">∨</span>
+                  </div></div></div><span class="sch-chevron" id="nchev-1">▼</span>
               </div>
 
               <div class="sch-item" onclick="toggleNepalDay(2)">
@@ -534,7 +535,7 @@
                     <div class="sch-time-row"><span class="sch-time">12:00</span><span class="sch-time-content">점심식사</span></div>
                     <div class="sch-time-row"><span class="sch-time">14:00</span><span class="sch-time-content">다딩 썰보트 교회 방문 (오후)</span></div>
                     <div class="sch-time-row"><span class="sch-time">19:00</span><span class="sch-time-content">저녁식사</span></div>
-                  </div></div></div><span class="sch-chevron" id="nchev-2">∨</span>
+                  </div></div></div><span class="sch-chevron" id="nchev-2">▼</span>
               </div>
 
               <div class="sch-item" onclick="toggleNepalDay(3)">
@@ -554,7 +555,7 @@
                     <div class="sch-time-row"><span class="sch-time">12:00</span><span class="sch-time-content">점심식사</span></div>
                     <div class="sch-time-row"><span class="sch-time">14:00</span><span class="sch-time-content">포카라로 이동</span></div>
                     <div class="sch-time-row"><span class="sch-time">19:00</span><span class="sch-time-content">저녁식사</span></div>
-                  </div></div></div><span class="sch-chevron" id="nchev-3">∨</span>
+                  </div></div></div><span class="sch-chevron" id="nchev-3">▼</span>
               </div>
 
               <div class="sch-item" onclick="toggleNepalDay(4)">
@@ -574,7 +575,7 @@
                     <div class="sch-time-row"><span class="sch-time">12:00</span><span class="sch-time-content">점심식사</span></div>
                     <div class="sch-time-row"><span class="sch-time">14:00</span><span class="sch-time-content">베이스 캠프 · 예배</span></div>
                     <div class="sch-time-row"><span class="sch-time">19:00</span><span class="sch-time-content">저녁식사</span></div>
-                  </div></div></div><span class="sch-chevron" id="nchev-4">∨</span>
+                  </div></div></div><span class="sch-chevron" id="nchev-4">▼</span>
               </div>
 
               <div class="sch-item" onclick="toggleNepalDay(5)">
@@ -592,7 +593,7 @@
                     <div class="sch-time-row"><span class="sch-time">07:00</span><span class="sch-time-content">아침식사</span></div>
                     <div class="sch-time-row"><span class="sch-time">08:00</span><span class="sch-time-content">포카라 → 카트만두 이동</span></div>
                     <div class="sch-time-row"><span class="sch-time">19:00</span><span class="sch-time-content">저녁식사</span></div>
-                  </div></div></div><span class="sch-chevron" id="nchev-5">∨</span>
+                  </div></div></div><span class="sch-chevron" id="nchev-5">▼</span>
               </div>
 
               <div class="sch-item">
@@ -649,6 +650,7 @@
         <div class="wrap">
           <p class="page-title">사역계획</p>
           <div id="plan-list">
+            <p class="loading-text">불러오는 중...</p>
             <div
               class="skeleton-block"
               style="height: 64px; margin-bottom: 8px"
@@ -680,6 +682,7 @@
             </div>
           </div>
           <div id="att-content">
+            <p class="loading-text">불러오는 중...</p>
             <div class="skeleton-block" style="height: 300px"></div>
           </div>
         </div>
@@ -690,22 +693,18 @@
           <p class="page-title">선교 이야기</p>
 
           <div class="section-label">네팔 선교 영상</div>
-          <div class="story-video-wrap">
-            <iframe
-              src="https://www.youtube.com/embed/Go3qHZosLuY"
-              title="네팔 선교 영상"
-              frameborder="0"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            >
-            </iframe>
+          <div class="story-video-wrap" id="video-placeholder" onclick="loadVideo()">
+            <img src="https://img.youtube.com/vi/Go3qHZosLuY/hqdefault.jpg"
+                 alt="네팔 선교 영상 썸네일"
+                 class="video-thumb"
+                 loading="lazy" />
+            <div class="video-play-btn">
+              <svg width="68" height="48" viewBox="0 0 68 48">
+                <path d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z"
+                      fill="#f00"/>
+                <polygon points="45,24 27,14 27,34" fill="#fff"/>
+              </svg>
+            </div>
           </div>
 
           <div class="section">
@@ -972,6 +971,10 @@
           </div>
         </div>
       </section>
+
+      <footer class="press-on-footer">
+        — Press On —
+      </footer>
     </main>
 
     <button

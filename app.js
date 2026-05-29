@@ -718,63 +718,55 @@ function renderHomeNotice(result) {
 
 function renderSchedule(result) {
   const listEl = document.getElementById("schedule-list");
-  const afterEl = document.getElementById("after-list");
-  const afterSec = document.getElementById("after-section");
   if (!listEl) return;
 
-  if (!result.ok) {
-    listEl.innerHTML = `<div class="error-state"><p class="error-msg">일정을 불러오지 못했습니다</p><button class="retry-btn" onclick="loadSchedule()">다시 시도</button></div>`;
-    return;
-  }
+  // 정기 모임 안내 + 특별 일정 하드코딩
+  const regularHtml = `
+    <div class="regular-meeting-card">
+      <div class="regular-meeting-row">
+        <span class="regular-meeting-label">주일</span>
+        <span class="regular-meeting-val">5/31 – 6/28 매주 오후 5:50 – 22:00</span>
+      </div>
+      <div class="regular-meeting-row">
+        <span class="regular-meeting-label">토요일</span>
+        <span class="regular-meeting-val">5/31 – 7/4 매주 오전 11:00 – 오후 6:00</span>
+      </div>
+    </div>
+    <div class="section-label" style="margin-top: 24px;">특별 일정</div>
+  `;
 
-  const { items, afterItems } = parseSchedule(result.data);
+  // 특별 일정 데이터
+  const specialItems = [
+    { date: "2026-06-13", day: "토", title: "인왕산 등산", detail: "팀 비전 다지기" },
+    { date: "2026-06-27", day: "토", title: "세미리허설", detail: "전체회식" },
+    { date: "2026-07-04", day: "토", title: "최종리허설", detail: "짐패킹 1차 · 새벽기도회 특송 섬김" },
+    { date: "2026-07-05", day: "주", title: "짐패킹 2차", detail: "출발 준비" },
+  ];
+
   const today = kstNow();
   today.setHours(0, 0, 0, 0);
 
-  if (items.length === 0) {
-    listEl.innerHTML = `<div class="empty-state"><div class="empty-icon">📅</div><div class="empty-title">일정이 없습니다</div><div class="empty-desc">아직 작성된 일정이 없어요</div></div>`;
-    return;
-  }
-
-  const pillMap = {
-    team: "pill-blue",
-    school: "pill-purple",
-    special: "pill-green",
-    after: "pill-red",
-  };
-  const labelMap = {
-    team: "팀모임",
-    school: "선교학교",
-    special: "파송예배",
-    after: "에프터",
-  };
-
-  function itemHtml(item) {
-    const d = fmtDate(item.date);
-    const itemDate = new Date(item.date);
-    itemDate.setHours(0, 0, 0, 0);
-    const isPast = itemDate < today;
+  const itemsHtml = specialItems.map((item) => {
+    const d = new Date(item.date);
+    const isPast = d < today;
+    const mo = d.getMonth() + 1 + "월";
+    const day = d.getDate();
     return `
       <div class="sch-item${isPast ? " past" : ""}">
         <div class="sch-date">
-          <div class="sch-month">${d.mo}</div>
-          <div class="sch-day">${d.day}</div>
-          <div class="sch-wd">${d.wd}</div>
+          <div class="sch-month">${mo}</div>
+          <div class="sch-day">${day}</div>
+          <div class="sch-wd">${item.day}</div>
         </div>
         <div class="sch-divider"></div>
         <div class="sch-content">
           <div class="sch-title">${escHtml(item.title)}</div>
-          ${item.detail ? `<div class="sch-detail">${escHtml(item.detail)}</div>` : ""}
-          <div class="sch-badges">
-            <span class="pill ${pillMap[item.type] || "pill-gray"}">${labelMap[item.type] || item.type}</span>
-          </div>
+          <div class="sch-detail">${escHtml(item.detail)}</div>
         </div>
       </div>`;
-  }
+  }).join("");
 
-  const sorted = [...items].sort((a, b) => new Date(a.date) - new Date(b.date));
-  const allItems = [...sorted, ...afterItems.sort((a, b) => new Date(a.date) - new Date(b.date))];
-  listEl.innerHTML = allItems.map(itemHtml).join("");
+  listEl.innerHTML = regularHtml + itemsHtml;
   listEl.classList.add("fade-in");
 }
 
@@ -1255,8 +1247,8 @@ async function loadSchedule() {
 }
 
 async function loadTeam() {
-  const result = await fetchSheetSafe(SHEETS.org);
-  renderTeam(result);
+  // 조직도는 하드코딩이라 fetch 없이 바로 렌더
+  renderTeam({ ok: true, data: null, offline: false });
 }
 
 async function loadPlan() {
@@ -1690,6 +1682,17 @@ init();
 /* ═══════════════════════════════════════════════
    16. 스크롤 유도 버튼 액션
 ═══════════════════════════════════════════════ */
+function loadVideo() {
+  const wrap = document.getElementById("video-placeholder");
+  if (!wrap) return;
+  wrap.innerHTML = `<iframe
+    src="https://www.youtube.com/embed/Go3qHZosLuY?autoplay=1"
+    title="네팔 선교 영상"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen></iframe>`;
+}
+
 function scrollToScripture() {
   const targetSection = document.getElementById("scripture-section");
   if (targetSection) {
