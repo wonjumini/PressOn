@@ -718,38 +718,39 @@ function renderHomeNotice(result) {
 
 function renderSchedule(result) {
   const listEl = document.getElementById("schedule-list");
-  const afterEl = document.getElementById("after-list");
-  const afterSec = document.getElementById("after-section");
   if (!listEl) return;
 
   // 상단 정기 모임 안내 카드 (항상 표시)
   const regularHtml = `
     <div class="regular-meeting-card">
       <div class="regular-meeting-row">
-        <span class="regular-meeting-label">주일</span>
-        <span class="regular-meeting-val">5/31 – 6/28 매주 오후 5:50 – 22:00</span>
+        <span class="regular-meeting-label">토요일</span>
+        <span class="regular-meeting-val">5/30 – 7/4 매주 오전 11:00 – 오후 6:00</span>
       </div>
       <div class="regular-meeting-row">
-        <span class="regular-meeting-label">토요일</span>
-        <span class="regular-meeting-val">5/31 – 7/4 매주 오전 11:00 – 오후 6:00</span>
+        <span class="regular-meeting-label">주일</span>
+        <span class="regular-meeting-val">5/31 – 6/28 매주 오후 5:50 – 오후 10:00</span>
       </div>
     </div>
-    <div class="section-label" style="margin-top: 24px;">특별 일정</div>
   `;
 
-  if (!result.ok) {
-    listEl.innerHTML = regularHtml + `<div class="error-state"><p class="error-msg">일정을 불러오지 못했습니다</p><button class="retry-btn" onclick="loadSchedule()">다시 시도</button></div>`;
-    return;
-  }
-
-  const { items, afterItems } = parseSchedule(result.data);
-  const today = kstNow();
-  today.setHours(0, 0, 0, 0);
-
-  if (items.length === 0 && afterItems.length === 0) {
-    listEl.innerHTML = regularHtml + `<div class="empty-state"><div class="empty-icon">📅</div><div class="empty-title">일정이 없습니다</div><div class="empty-desc">아직 작성된 일정이 없어요</div></div>`;
-    return;
-  }
+  // 일정 데이터 하드코딩
+  const items = [
+    { date: "2026-05-30", day: "토", title: "팀모임1 (환영)", detail: "", place: "비전5", badges: ["team"] },
+    { date: "2026-05-31", day: "주", title: "선교학교1 + 팀모임2 (시작)", detail: "여름단기선교의 중요성", place: "채움1", badges: ["school", "team"] },
+    { date: "2026-06-06", day: "토", title: "팀모임3 (구상)", detail: "", place: "", badges: ["team"] },
+    { date: "2026-06-07", day: "주", title: "선교학교2 + 팀모임4 (실행)", detail: "단기선교 준비", place: "다움2", badges: ["school", "team"] },
+    { date: "2026-06-13", day: "토", title: "팀모임5 (등산)", detail: "인왕산 등산", place: "", badges: ["team"] },
+    { date: "2026-06-14", day: "주", title: "선교학교3 + 팀모임6 (연습)", detail: "JOB", place: "채움3, 미팅룸3/4", badges: ["school", "team"] },
+    { date: "2026-06-20", day: "토", title: "팀모임7 (최상화)", detail: "", place: "", badges: ["team"] },
+    { date: "2026-06-21", day: "주", title: "선교학교4 + 팀모임8 (디테일)", detail: "영적인 일", place: "채움2, 미팅룸14", badges: ["school", "team"] },
+    { date: "2026-06-27", day: "토", title: "팀모임9 (세미리허설)", detail: "전체회식", place: "비전5", badges: ["team"] },
+    { date: "2026-06-28", day: "주", title: "선교학교5 + 팀모임10 (보완) + 파송예배", detail: "하나 됨", place: "비전5", badges: ["school", "team", "special"] },
+    { date: "2026-07-04", day: "토", title: "팀모임11 (최종리허설)", detail: "새벽예배특송 · 짐패킹 1차", place: "채움2, 미팅룸14", badges: ["team"] },
+    { date: "2026-07-05", day: "주", title: "팀모임12 + 짐패킹 2차", detail: "", place: "다움2", badges: ["team"] },
+    { date: "2026-08-02", day: "주", title: "전체에프터", detail: "", place: "", badges: ["after"] },
+    { date: "2026-08-16", day: "주", title: "보고예배", detail: "", place: "", badges: ["after"] },
+  ];
 
   const pillMap = {
     team: "pill-blue",
@@ -764,32 +765,44 @@ function renderSchedule(result) {
     after: "에프터",
   };
 
-  function itemHtml(item) {
-    const d = fmtDate(item.date);
-    const itemDate = new Date(item.date);
-    itemDate.setHours(0, 0, 0, 0);
-    const isPast = itemDate < today;
+  const today = kstNow();
+  today.setHours(0, 0, 0, 0);
+
+  const itemsHtml = items.map((item) => {
+    const d = new Date(item.date);
+    const isPast = d < today;
+    const mo = d.getMonth() + 1 + "월";
+    const day = d.getDate();
+
+    // 설명: detail + 장소 합치기
+    const detailParts = [];
+    if (item.detail) detailParts.push(escHtml(item.detail));
+    if (item.place) detailParts.push(`<span class="sch-place">📍 ${escHtml(item.place)}</span>`);
+    const detailHtml = detailParts.length > 0
+      ? `<div class="sch-detail">${detailParts.join(" · ")}</div>`
+      : "";
+
+    const badgesHtml = item.badges
+      .map((b) => `<span class="pill ${pillMap[b] || "pill-gray"}">${labelMap[b] || b}</span>`)
+      .join("");
+
     return `
       <div class="sch-item${isPast ? " past" : ""}">
         <div class="sch-date">
-          <div class="sch-month">${d.mo}</div>
-          <div class="sch-day">${d.day}</div>
-          <div class="sch-wd">${d.wd}</div>
+          <div class="sch-month">${mo}</div>
+          <div class="sch-day">${day}</div>
+          <div class="sch-wd">${item.day}</div>
         </div>
         <div class="sch-divider"></div>
         <div class="sch-content">
           <div class="sch-title">${escHtml(item.title)}</div>
-          ${item.detail ? `<div class="sch-detail">${escHtml(item.detail)}</div>` : ""}
-          <div class="sch-badges">
-            <span class="pill ${pillMap[item.type] || "pill-gray"}">${labelMap[item.type] || item.type}</span>
-          </div>
+          ${detailHtml}
+          <div class="sch-badges">${badgesHtml}</div>
         </div>
       </div>`;
-  }
+  }).join("");
 
-  const sorted = [...items].sort((a, b) => new Date(a.date) - new Date(b.date));
-  const allItems = [...sorted, ...afterItems.sort((a, b) => new Date(a.date) - new Date(b.date))];
-  listEl.innerHTML = regularHtml + allItems.map(itemHtml).join("");
+  listEl.innerHTML = regularHtml + itemsHtml;
   listEl.classList.add("fade-in");
 }
 
@@ -1272,8 +1285,8 @@ async function loadHome() {
 }
 
 async function loadSchedule() {
-  const result = await fetchSheetSafe(SHEETS.schedule);
-  renderSchedule(result);
+  // 일정은 하드코딩 - fetch 없이 바로 렌더
+  renderSchedule({ ok: true, data: null, offline: false });
 }
 
 async function loadTeam() {
