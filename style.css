@@ -144,7 +144,7 @@ body {
   z-index: 99;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 1.3s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: max-height 1.0s cubic-bezier(0.22, 1, 0.36, 1);
   border-bottom: 0px solid var(--bd);
 }
 .nav-menu.open {
