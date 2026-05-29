@@ -2577,3 +2577,9 @@ main {
   line-height: 1.5;
   letter-spacing: -0.2px;
 }
+
+/* ═══ JOB 리더 이름 강조 ═══════════════════════════ */
+.job-leader-name {
+  color: var(--pri);
+  font-weight: 700;
+}

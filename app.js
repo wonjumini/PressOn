@@ -718,9 +718,11 @@ function renderHomeNotice(result) {
 
 function renderSchedule(result) {
   const listEl = document.getElementById("schedule-list");
+  const afterEl = document.getElementById("after-list");
+  const afterSec = document.getElementById("after-section");
   if (!listEl) return;
 
-  // 정기 모임 안내 + 특별 일정 하드코딩
+  // 상단 정기 모임 안내 카드 (항상 표시)
   const regularHtml = `
     <div class="regular-meeting-card">
       <div class="regular-meeting-row">
@@ -735,38 +737,59 @@ function renderSchedule(result) {
     <div class="section-label" style="margin-top: 24px;">특별 일정</div>
   `;
 
-  // 특별 일정 데이터
-  const specialItems = [
-    { date: "2026-06-13", day: "토", title: "인왕산 등산", detail: "팀 비전 다지기" },
-    { date: "2026-06-27", day: "토", title: "세미리허설", detail: "전체회식" },
-    { date: "2026-07-04", day: "토", title: "최종리허설", detail: "짐패킹 1차 · 새벽기도회 특송 섬김" },
-    { date: "2026-07-05", day: "주", title: "짐패킹 2차", detail: "출발 준비" },
-  ];
+  if (!result.ok) {
+    listEl.innerHTML = regularHtml + `<div class="error-state"><p class="error-msg">일정을 불러오지 못했습니다</p><button class="retry-btn" onclick="loadSchedule()">다시 시도</button></div>`;
+    return;
+  }
 
+  const { items, afterItems } = parseSchedule(result.data);
   const today = kstNow();
   today.setHours(0, 0, 0, 0);
 
-  const itemsHtml = specialItems.map((item) => {
-    const d = new Date(item.date);
-    const isPast = d < today;
-    const mo = d.getMonth() + 1 + "월";
-    const day = d.getDate();
+  if (items.length === 0 && afterItems.length === 0) {
+    listEl.innerHTML = regularHtml + `<div class="empty-state"><div class="empty-icon">📅</div><div class="empty-title">일정이 없습니다</div><div class="empty-desc">아직 작성된 일정이 없어요</div></div>`;
+    return;
+  }
+
+  const pillMap = {
+    team: "pill-blue",
+    school: "pill-purple",
+    special: "pill-green",
+    after: "pill-red",
+  };
+  const labelMap = {
+    team: "팀모임",
+    school: "선교학교",
+    special: "파송예배",
+    after: "에프터",
+  };
+
+  function itemHtml(item) {
+    const d = fmtDate(item.date);
+    const itemDate = new Date(item.date);
+    itemDate.setHours(0, 0, 0, 0);
+    const isPast = itemDate < today;
     return `
       <div class="sch-item${isPast ? " past" : ""}">
         <div class="sch-date">
-          <div class="sch-month">${mo}</div>
-          <div class="sch-day">${day}</div>
-          <div class="sch-wd">${item.day}</div>
+          <div class="sch-month">${d.mo}</div>
+          <div class="sch-day">${d.day}</div>
+          <div class="sch-wd">${d.wd}</div>
         </div>
         <div class="sch-divider"></div>
         <div class="sch-content">
           <div class="sch-title">${escHtml(item.title)}</div>
-          <div class="sch-detail">${escHtml(item.detail)}</div>
+          ${item.detail ? `<div class="sch-detail">${escHtml(item.detail)}</div>` : ""}
+          <div class="sch-badges">
+            <span class="pill ${pillMap[item.type] || "pill-gray"}">${labelMap[item.type] || item.type}</span>
+          </div>
         </div>
       </div>`;
-  }).join("");
+  }
 
-  listEl.innerHTML = regularHtml + itemsHtml;
+  const sorted = [...items].sort((a, b) => new Date(a.date) - new Date(b.date));
+  const allItems = [...sorted, ...afterItems.sort((a, b) => new Date(a.date) - new Date(b.date))];
+  listEl.innerHTML = regularHtml + allItems.map(itemHtml).join("");
   listEl.classList.add("fade-in");
 }
 
@@ -895,7 +918,7 @@ function renderTeam(result) {
     </div>`
       : "";
 
-  // JOB — 이름 옆 또래 표시
+  // JOB — 첫 번째 멤버가 리더 (이름 인디고 컬러)
   const jobHtml =
     org.jobs.length > 0
       ? `
@@ -910,7 +933,14 @@ function renderTeam(result) {
               <div class="job-icon-box" style="background:${meta.bg}">${meta.icon}</div>
               <div>
                 <div class="job-title">${escHtml(j.title)}</div>
-                <div class="job-members">${j.members.map((m) => escHtml(parseName(m).name)).join(" · ")}</div>
+                <div class="job-members">${j.members
+                  .map((m, i) => {
+                    const name = escHtml(parseName(m).name);
+                    return i === 0
+                      ? `<span class="job-leader-name">${name}</span>`
+                      : name;
+                  })
+                  .join(" · ")}</div>
               </div>
             </div>`;
           })
@@ -1242,8 +1272,8 @@ async function loadHome() {
 }
 
 async function loadSchedule() {
-  // 일정은 하드코딩 - dummy ok result로 바로 렌더
-  renderSchedule({ ok: true, data: null, offline: false });
+  const result = await fetchSheetSafe(SHEETS.schedule);
+  renderSchedule(result);
 }
 
 async function loadTeam() {
