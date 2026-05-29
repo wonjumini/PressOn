@@ -2259,3 +2259,271 @@ main {
   background: var(--pri);
   color: #fff;
 }
+
+/* ═══ 공지 카드 ═══════════════════════════════════ */
+.notice-card {
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 16px 18px;
+  margin-bottom: 10px;
+  border: 1px solid var(--bd);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.notice-card:active { transform: scale(0.99); }
+.notice-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.notice-date {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--pri);
+  background: var(--pri-lt);
+  padding: 3px 10px;
+  border-radius: 100px;
+  letter-spacing: -0.2px;
+}
+.notice-channel {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--t3);
+  background: var(--bg2);
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+.notice-content {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--t1);
+  line-height: 1.6;
+  white-space: pre-line;
+  word-break: keep-all;
+}
+.notice-memo {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--bd);
+  font-size: 12px;
+  color: var(--t3);
+  line-height: 1.5;
+}
+
+/* ═══ 짐 - 공통 ═══════════════════════════════════ */
+.lug-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 6px 0;
+}
+.lug-row + .lug-row { border-top: 0.5px solid var(--bd); }
+.lug-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--t4);
+  letter-spacing: 0.2px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+.lug-val {
+  font-size: 13px;
+  color: var(--t1);
+  text-align: right;
+  line-height: 1.5;
+  word-break: keep-all;
+}
+.lug-empty {
+  color: var(--t4);
+  font-weight: 500;
+}
+
+/* ═══ 짐 - 개인 짐 카드 ════════════════════════════ */
+.lug-person-card {
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  border: 1px solid var(--bd);
+}
+.lug-person-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--bd);
+  flex-wrap: wrap;
+}
+.lug-person-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--pri);
+  background: var(--pri-lt);
+  padding: 3px 8px;
+  border-radius: 100px;
+  min-width: 26px;
+  text-align: center;
+}
+.lug-person-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--t1);
+  letter-spacing: -0.3px;
+}
+.lug-person-note {
+  font-size: 11px;
+  color: var(--t3);
+  background: var(--bg2);
+  padding: 2px 8px;
+  border-radius: 100px;
+}
+
+/* ═══ 짐 - 팀별 짐 카드 ════════════════════════════ */
+.lug-team-card {
+  padding: 0 !important;
+  overflow: hidden;
+  margin-bottom: 12px;
+  border-width: 1px !important;
+}
+.lug-team-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+}
+.lug-team-icon { font-size: 16px; }
+.lug-team-name {
+  font-size: 14px;
+  font-weight: 800;
+  flex: 1;
+  letter-spacing: -0.3px;
+}
+.lug-team-count {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--t3);
+  background: rgba(255,255,255,0.7);
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+.lug-team-items {
+  padding: 8px 16px 14px;
+  background: var(--surface);
+}
+.lug-item-row {
+  padding: 10px 0;
+  border-bottom: 0.5px solid var(--bd);
+}
+.lug-item-row:last-child { border-bottom: none; }
+.lug-item-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--t1);
+  letter-spacing: -0.2px;
+  display: block;
+  margin-bottom: 4px;
+}
+.lug-item-meta {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.lug-item-qty {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--pri);
+  background: var(--pri-lt);
+  padding: 2px 8px;
+  border-radius: 100px;
+}
+.lug-item-weight {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--t3);
+  background: var(--bg2);
+  padding: 2px 8px;
+  border-radius: 100px;
+}
+.lug-item-memo {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--t3);
+  line-height: 1.5;
+}
+
+/* ═══ 짐 - 캐리어 수량 ═══════════════════════════════ */
+.lug-carrier-card {
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+.lug-carrier-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--t3);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.lug-carrier-list { display: grid; gap: 6px; }
+.lug-carrier-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--bg2);
+  border-radius: 10px;
+}
+.lug-carrier-team {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--t1);
+}
+.lug-carrier-count {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--pri);
+}
+
+/* ═══ 짐 - 물품대여 카드 ═══════════════════════════ */
+.lug-rental-card {
+  padding: 14px 16px;
+  margin-bottom: 8px;
+}
+.lug-rental-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.lug-rental-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--pri);
+  background: var(--pri-lt);
+  padding: 3px 8px;
+  border-radius: 100px;
+  min-width: 26px;
+  text-align: center;
+}
+.lug-rental-item {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--t1);
+  letter-spacing: -0.3px;
+  flex: 1;
+}
+.lug-rental-qty {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--pri);
+  background: var(--pri-lt);
+  padding: 2px 10px;
+  border-radius: 100px;
+}
+.lug-rental-body {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--bd);
+}

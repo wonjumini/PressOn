@@ -16,12 +16,14 @@ const SHEETS = {
   org: "🤝 조직도 ㅣ 💼 JOB ㅣ 👫 생활조",
   plan: "📝 팀별사역계획",
   notice: "🎤 공지",
+  luggageTeam: "👍각 팀 별도 탭",
+  luggageRental: "🎹물품대여현황",
 };
 
 const CONFIG = {
   prayer: { enabled: false },
-  luggage: { enabled: false },
-  notice: { enabled: false },
+  luggage: { enabled: true },
+  notice: { enabled: true },
   checklist: { enabled: false },
 };
 
@@ -536,6 +538,100 @@ function parseNotice(json) {
   }
 }
 
+// 공지 시트 전체 파싱 (날짜 / 순번 / 채널 / 내용 / 비고)
+function parseNoticeAll(json) {
+  try {
+    const rows = json?.table?.rows ?? [];
+    const items = [];
+    for (const row of rows) {
+      const date = safeStr(row, 1);
+      const num = safeStr(row, 2);
+      const channel = safeStr(row, 3);
+      const content = safeStr(row, 4);
+      const memo = safeStr(row, 5);
+      // 헤더 행 스킵
+      if (date === "날짜" || !content) continue;
+      items.push({ date, num, channel, content, memo });
+    }
+    // 최신순 (역순)
+    return items.reverse();
+  } catch (e) {
+    console.error("notice parse error", e);
+    return [];
+  }
+}
+
+// 짐 - 팀별 짐 시트 파싱
+// 왼쪽 영역(A-G): 개인별 짐 (구분/이름/특이사항/위탁수화물/기내수화물)
+// 오른쪽 영역(H-M): 사역팀 짐 (사역팀/물품명/수량/예상무게/비고)
+// 아래쪽: 캐리어 수량 (사역팀별)
+function parseLuggageTeam(json) {
+  try {
+    const rows = json?.table?.rows ?? [];
+    const personal = []; // {num, name, note, checked, carryOn}
+    const teamItems = []; // {team, item, qty, weight, memo}
+    const carriers = []; // {team, count}
+
+    let isCarrierSection = false;
+
+    for (const row of rows) {
+      // 왼쪽 영역 - 개인별 짐
+      const num = safeStr(row, 0);
+      const name = safeStr(row, 1);
+      const note = safeStr(row, 2);
+      const checked = safeStr(row, 3);
+      const carryOn = safeStr(row, 5);
+
+      // 캐리어 수량 섹션 시작 감지 ("사역팀" + "캐리어 수량")
+      if (name === "사역팀" && note === "캐리어 수량") {
+        isCarrierSection = true;
+      } else if (isCarrierSection && name && name !== "사역팀") {
+        carriers.push({ team: name, count: note || "-" });
+      } else if (num && name && name !== "이름" && !isCarrierSection) {
+        personal.push({ num, name, note, checked, carryOn });
+      }
+
+      // 오른쪽 영역 - 사역팀별 짐 (H~M열)
+      const tNum = safeStr(row, 7);
+      const team = safeStr(row, 8);
+      const item = safeStr(row, 9);
+      const qty = safeStr(row, 10);
+      const weight = safeStr(row, 11);
+      const memo = safeStr(row, 12);
+
+      // 헤더 스킵, 빈 행 스킵
+      if (team === "사역팀" || (!team && !item)) continue;
+      if (item) teamItems.push({ team, item, qty, weight, memo });
+    }
+
+    return { personal, teamItems, carriers };
+  } catch (e) {
+    console.error("luggage team parse error", e);
+    return { personal: [], teamItems: [], carriers: [] };
+  }
+}
+
+// 짐 - 물품대여현황 시트 파싱
+function parseLuggageRental(json) {
+  try {
+    const rows = json?.table?.rows ?? [];
+    const items = [];
+    for (const row of rows) {
+      const num = safeStr(row, 0);
+      const item = safeStr(row, 1);
+      const qty = safeStr(row, 2);
+      const owner = safeStr(row, 3);
+      const memo = safeStr(row, 4);
+      if (!item) continue;
+      items.push({ num, item, qty, owner, memo });
+    }
+    return items;
+  } catch (e) {
+    console.error("luggage rental parse error", e);
+    return [];
+  }
+}
+
 /* ═══════════════════════════════════════════════
    5. 렌더러
 ═══════════════════════════════════════════════ */
@@ -965,6 +1061,185 @@ function renderAttendance(result) {
   el.classList.add("fade-in");
 }
 
+
+/* ═══════════════════════════════════════════════
+   5-1. 공지 / 짐 렌더러
+═══════════════════════════════════════════════ */
+function renderNotice(result) {
+  const el = document.getElementById("notice-list");
+  if (!el) return;
+
+  if (!result.ok) {
+    el.innerHTML = `<div class="error-state"><p class="error-msg">공지사항을 불러오지 못했습니다</p><button class="retry-btn" onclick="loadNotice()">다시 시도</button></div>`;
+    return;
+  }
+
+  const items = parseNoticeAll(result.data);
+
+  if (items.length === 0) {
+    el.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">📢</div>
+        <p class="empty-title">아직 공지가 없어요</p>
+        <p class="empty-desc">새로운 공지가 올라오면<br/>여기에 표시됩니다</p>
+      </div>`;
+    return;
+  }
+
+  el.innerHTML = items
+    .map((n) => `
+      <div class="notice-card">
+        <div class="notice-meta">
+          ${n.date ? `<span class="notice-date">${escHtml(n.date)}</span>` : ""}
+          ${n.channel ? `<span class="notice-channel">${escHtml(n.channel)}</span>` : ""}
+        </div>
+        <div class="notice-content">${escHtml(n.content)}</div>
+        ${n.memo ? `<div class="notice-memo">${escHtml(n.memo)}</div>` : ""}
+      </div>
+    `)
+    .join("");
+}
+
+function renderLuggage(teamResult, rentalResult) {
+  // 팀별 짐
+  const teamData = teamResult.ok ? parseLuggageTeam(teamResult.data) : { personal: [], teamItems: [], carriers: [] };
+  const rentalData = rentalResult.ok ? parseLuggageRental(rentalResult.data) : [];
+
+  // 1) 개인 짐
+  const personalEl = document.getElementById("lug-personal-list");
+  if (personalEl) {
+    if (!teamResult.ok) {
+      personalEl.innerHTML = `<div class="error-state"><p class="error-msg">개인 짐 목록을 불러오지 못했습니다</p><button class="retry-btn" onclick="loadLuggage()">다시 시도</button></div>`;
+    } else if (teamData.personal.length === 0) {
+      personalEl.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">🎒</div>
+          <p class="empty-title">아직 개인 짐 정보가 없어요</p>
+          <p class="empty-desc">각자 짐 정보가 입력되면<br/>여기에 표시됩니다</p>
+        </div>`;
+    } else {
+      personalEl.innerHTML = teamData.personal
+        .map((p) => `
+          <div class="lug-person-card">
+            <div class="lug-person-head">
+              <span class="lug-person-num">${escHtml(p.num)}</span>
+              <span class="lug-person-name">${escHtml(p.name)}</span>
+              ${p.note ? `<span class="lug-person-note">${escHtml(p.note)}</span>` : ""}
+            </div>
+            <div class="lug-person-body">
+              <div class="lug-row">
+                <span class="lug-label">위탁수화물</span>
+                <span class="lug-val">${p.checked ? escHtml(p.checked) : "<span class='lug-empty'>—</span>"}</span>
+              </div>
+              <div class="lug-row">
+                <span class="lug-label">기내수화물</span>
+                <span class="lug-val">${p.carryOn ? escHtml(p.carryOn) : "<span class='lug-empty'>—</span>"}</span>
+              </div>
+            </div>
+          </div>
+        `)
+        .join("");
+    }
+  }
+
+  // 2) 팀별 짐
+  const teamEl = document.getElementById("lug-team-list");
+  if (teamEl) {
+    if (!teamResult.ok) {
+      teamEl.innerHTML = `<div class="error-state"><p class="error-msg">팀별 짐 목록을 불러오지 못했습니다</p><button class="retry-btn" onclick="loadLuggage()">다시 시도</button></div>`;
+    } else {
+      // 사역팀별로 그룹화
+      const grouped = {};
+      teamData.teamItems.forEach((it) => {
+        const team = it.team || "기타";
+        if (!grouped[team]) grouped[team] = [];
+        grouped[team].push(it);
+      });
+
+      // 캐리어 수량 카드
+      const carrierHtml = teamData.carriers.length > 0
+        ? `
+        <div class="card lug-carrier-card">
+          <div class="lug-carrier-title">캐리어 수량</div>
+          <div class="lug-carrier-list">
+            ${teamData.carriers.map((c) => `
+              <div class="lug-carrier-row">
+                <span class="lug-carrier-team">${escHtml(c.team)}</span>
+                <span class="lug-carrier-count">${escHtml(c.count)}</span>
+              </div>
+            `).join("")}
+          </div>
+        </div>` : "";
+
+      const teamGroupsHtml = Object.keys(grouped).length === 0
+        ? `
+        <div class="empty-state">
+          <div class="empty-icon">📦</div>
+          <p class="empty-title">아직 팀별 짐 정보가 없어요</p>
+          <p class="empty-desc">사역팀별 짐 목록이 입력되면<br/>여기에 표시됩니다</p>
+        </div>`
+        : Object.entries(grouped).map(([team, items]) => {
+            const meta = TEAM_META[team] || { icon: "📦", color: "var(--t2)", bg: "var(--bg2)" };
+            return `
+            <div class="card lug-team-card" style="border-color: ${meta.color}">
+              <div class="lug-team-head" style="background: ${meta.bg}">
+                <span class="lug-team-icon">${meta.icon}</span>
+                <span class="lug-team-name" style="color: ${meta.color}">${escHtml(team)}</span>
+                <span class="lug-team-count">${items.length}개</span>
+              </div>
+              <div class="lug-team-items">
+                ${items.map((it) => `
+                  <div class="lug-item-row">
+                    <span class="lug-item-name">${escHtml(it.item)}</span>
+                    <div class="lug-item-meta">
+                      ${it.qty ? `<span class="lug-item-qty">${escHtml(it.qty)}</span>` : ""}
+                      ${it.weight ? `<span class="lug-item-weight">${escHtml(it.weight)}</span>` : ""}
+                    </div>
+                    ${it.memo ? `<div class="lug-item-memo">${escHtml(it.memo)}</div>` : ""}
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+          `;
+          }).join("");
+
+      teamEl.innerHTML = carrierHtml + teamGroupsHtml;
+    }
+  }
+
+  // 3) 물품대여현황
+  const rentalEl = document.getElementById("lug-rental-list");
+  if (rentalEl) {
+    if (!rentalResult.ok) {
+      rentalEl.innerHTML = `<div class="error-state"><p class="error-msg">물품대여 정보를 불러오지 못했습니다</p><button class="retry-btn" onclick="loadLuggage()">다시 시도</button></div>`;
+    } else if (rentalData.length === 0) {
+      rentalEl.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">🎹</div>
+          <p class="empty-title">아직 대여 물품이 없어요</p>
+          <p class="empty-desc">대여 물품이 등록되면<br/>여기에 표시됩니다</p>
+        </div>`;
+    } else {
+      rentalEl.innerHTML = rentalData
+        .map((it) => `
+          <div class="card lug-rental-card">
+            <div class="lug-rental-head">
+              <span class="lug-rental-num">${escHtml(it.num)}</span>
+              <span class="lug-rental-item">${escHtml(it.item)}</span>
+              ${it.qty ? `<span class="lug-rental-qty">${escHtml(it.qty)}</span>` : ""}
+            </div>
+            ${it.owner || it.memo ? `
+              <div class="lug-rental-body">
+                ${it.owner ? `<div class="lug-row"><span class="lug-label">책임자</span><span class="lug-val">${escHtml(it.owner)}</span></div>` : ""}
+                ${it.memo ? `<div class="lug-row"><span class="lug-label">비고</span><span class="lug-val">${escHtml(it.memo)}</span></div>` : ""}
+              </div>` : ""}
+          </div>
+        `)
+        .join("");
+    }
+  }
+}
+
 /* ═══════════════════════════════════════════════
    6. 로드 함수
 ═══════════════════════════════════════════════ */
@@ -992,6 +1267,19 @@ async function loadPlan() {
 async function loadAttendance() {
   const result = await fetchSheetSafe(SHEETS.attendance);
   renderAttendance(result);
+}
+
+async function loadNotice() {
+  const result = await fetchSheetSafe(SHEETS.notice);
+  renderNotice(result);
+}
+
+async function loadLuggage() {
+  const [teamResult, rentalResult] = await Promise.all([
+    fetchSheetSafe(SHEETS.luggageTeam),
+    fetchSheetSafe(SHEETS.luggageRental),
+  ]);
+  renderLuggage(teamResult, rentalResult);
 }
 
 /* ═══════════════════════════════════════════════
@@ -1283,9 +1571,11 @@ function showPage(id) {
     if (id === "schedule") loadSchedule();
     if (id === "team") loadTeam();
   }
-  // 출석/사역계획은 30초 캐시 전략
+  // 출석/사역계획/짐/공지는 30초 캐시 전략
   if (id === "plan") loadIfStale("plan", loadPlan);
   if (id === "attendance") loadIfStale("attendance", loadAttendance);
+  if (id === "notice") loadIfStale("notice", loadNotice);
+  if (id === "luggage") loadIfStale("luggage", loadLuggage);
 }
 
 document.querySelectorAll(".drawer-item").forEach((btn) => {
@@ -1293,16 +1583,31 @@ document.querySelectorAll(".drawer-item").forEach((btn) => {
 });
 
 // 서브탭 (일정)
-document.querySelectorAll(".sub-tab-btn").forEach((btn) => {
+document.querySelectorAll("#page-schedule .sub-tab-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     document
-      .querySelectorAll(".sub-tab-btn")
+      .querySelectorAll("#page-schedule .sub-tab-btn")
       .forEach((b) => b.classList.remove("active"));
     document
-      .querySelectorAll(".sub-page")
+      .querySelectorAll("#page-schedule .sub-page")
       .forEach((p) => p.classList.remove("active"));
     btn.classList.add("active");
     const sub = document.getElementById("sub-" + btn.dataset.sub);
+    if (sub) sub.classList.add("active");
+  });
+});
+
+// 서브탭 (짐)
+document.querySelectorAll("#page-luggage .sub-tab-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document
+      .querySelectorAll("#page-luggage .sub-tab-btn")
+      .forEach((b) => b.classList.remove("active"));
+    document
+      .querySelectorAll("#page-luggage .sub-page")
+      .forEach((p) => p.classList.remove("active"));
+    btn.classList.add("active");
+    const sub = document.getElementById("lug-" + btn.dataset.luggageSub);
     if (sub) sub.classList.add("active");
   });
 });
@@ -1319,6 +1624,8 @@ async function refreshAll() {
   if (activeId === "team") await loadTeam();
   if (activeId === "plan") await loadPlan();
   if (activeId === "attendance") await loadAttendance();
+  if (activeId === "notice") await loadNotice();
+  if (activeId === "luggage") await loadLuggage();
 }
 
 /* ═══════════════════════════════════════════════

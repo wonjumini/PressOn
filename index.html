@@ -928,20 +928,48 @@
       </section>
 
       <section class="page" id="page-luggage">
-        <div class="coming-soon">
-          <div class="cs-icon">🎒</div>
-          <div class="cs-title">짐 목록 / 물품대여현황</div>
-          <div class="cs-desc">팀별 짐 리스트가<br />곧 올라올 예정입니다</div>
-          <span class="pill pill-gray">준비 중</span>
+        <div class="wrap">
+          <p class="page-title">짐 목록</p>
+          <div class="sub-tabs">
+            <button class="sub-tab-btn active" data-luggage-sub="personal">개인 짐</button>
+            <button class="sub-tab-btn" data-luggage-sub="team">팀별 짐</button>
+            <button class="sub-tab-btn" data-luggage-sub="rental">물품대여</button>
+          </div>
+
+          <div class="sub-page active" id="lug-personal">
+            <div id="lug-personal-list">
+              <div class="skeleton-block" style="height: 60px; margin-bottom: 8px"></div>
+              <div class="skeleton-block" style="height: 60px; margin-bottom: 8px"></div>
+              <div class="skeleton-block" style="height: 60px"></div>
+            </div>
+          </div>
+
+          <div class="sub-page" id="lug-team">
+            <div id="lug-team-list">
+              <div class="skeleton-block" style="height: 60px; margin-bottom: 8px"></div>
+              <div class="skeleton-block" style="height: 60px; margin-bottom: 8px"></div>
+              <div class="skeleton-block" style="height: 60px"></div>
+            </div>
+          </div>
+
+          <div class="sub-page" id="lug-rental">
+            <div id="lug-rental-list">
+              <div class="skeleton-block" style="height: 60px; margin-bottom: 8px"></div>
+              <div class="skeleton-block" style="height: 60px; margin-bottom: 8px"></div>
+              <div class="skeleton-block" style="height: 60px"></div>
+            </div>
+          </div>
         </div>
       </section>
 
       <section class="page" id="page-notice">
-        <div class="coming-soon">
-          <div class="cs-icon">📢</div>
-          <div class="cs-title">공지사항</div>
-          <div class="cs-desc">공지사항이 곧 올라올 예정입니다</div>
-          <span class="pill pill-gray">준비 중</span>
+        <div class="wrap">
+          <p class="page-title">공지사항</p>
+          <div id="notice-list">
+            <div class="skeleton-block" style="height: 80px; margin-bottom: 8px"></div>
+            <div class="skeleton-block" style="height: 80px; margin-bottom: 8px"></div>
+            <div class="skeleton-block" style="height: 80px"></div>
+          </div>
         </div>
       </section>
     </main>
