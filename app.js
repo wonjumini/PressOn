@@ -418,44 +418,58 @@ function parseOrg(json) {
   }
 }
 
+// 출석 시트 구조 (확정):
+// A=번호, B=이름, C=성별
+// D=1차 체크, E=비고1, F=2차 체크, G=비고2, ...
+// 체크박스 컬럼 인덱스: 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25
+const ATTENDANCE_DATES = [
+  { idx: 3, label: "5/30", day: "토" },
+  { idx: 5, label: "5/31", day: "주" },
+  { idx: 7, label: "6/6", day: "토" },
+  { idx: 9, label: "6/7", day: "주" },
+  { idx: 11, label: "6/13", day: "토" },
+  { idx: 13, label: "6/14", day: "주" },
+  { idx: 15, label: "6/20", day: "토" },
+  { idx: 17, label: "6/21", day: "주" },
+  { idx: 19, label: "6/27", day: "토" },
+  { idx: 21, label: "6/28", day: "주" },
+  { idx: 23, label: "7/4", day: "토" },
+  { idx: 25, label: "7/5", day: "주" },
+];
+
 function parseAttendance(json) {
   try {
     const rows = json?.table?.rows ?? [];
     const members = [];
-    let dates = [];
-    let headerParsed = false;
 
     for (const row of rows) {
+      const num = safeStr(row, 0);
       const name = safeStr(row, 1);
       const gender = safeStr(row, 2);
 
-      // 헤더 행 (이름/날짜) 찾기
-      if (name === "이름/날짜" || name === "이름") {
-        dates = [];
-        for (let i = 3; i < (row.c?.length ?? 0); i += 2) {
-          const d = safeStr(row, i);
-          if (d && d !== "비고" && d !== "합계" && d !== "공식모임 12번")
-            dates.push(d);
-        }
-        headerParsed = true;
-        continue;
-      }
-
-      if (!name || !headerParsed) continue;
+      // 헤더 행 스킵 (번호가 숫자가 아니거나 이름이 "이름/날짜")
+      if (!name || name === "이름/날짜" || name === "이름") continue;
+      if (!num || isNaN(parseInt(num))) continue;
+      // 합계/공식모임 같은 메타 행 스킵
       if (name === "합계" || name === "공식모임") continue;
 
-      const att = [];
-      for (let i = 3; i < (row.c?.length ?? 0); i += 2) {
-        const v = safeStr(row, i);
-        if (v === "" && att.length >= dates.length) break;
-        if (i === 3 + dates.length * 2) break;
-        if ((i - 3) % 2 === 0) {
-          att.push(String(v).toLowerCase() === "true" ? 1 : 0);
-        }
-      }
-      if (name && att.length > 0) members.push({ name, gender, att });
+      // 각 날짜 체크박스 컬럼을 정확한 인덱스로 직접 읽기
+      const att = ATTENDANCE_DATES.map((d) => {
+        const cells = row.c || [];
+        const cell = cells[d.idx];
+        if (!cell) return 0;
+        // gviz checkbox: {v: true/false, f: "TRUE"/"FALSE"}
+        // boolean true 또는 "TRUE" 문자열 모두 처리
+        const v = cell.v;
+        if (v === true) return 1;
+        if (typeof v === "string" && v.toUpperCase() === "TRUE") return 1;
+        return 0;
+      });
+
+      members.push({ name, gender, att });
     }
 
+    const dates = ATTENDANCE_DATES.map((d) => d.label);
     return { dates, members };
   } catch (e) {
     console.error("att parse error", e);
@@ -463,28 +477,50 @@ function parseAttendance(json) {
   }
 }
 
+// 사역계획 시트 구조 (확정):
+// B열 = key (목적/1) 목표/2) 목표/3) 목표/1) 실행과제/.../우천시계획/팀명)
+// C열 = value
+// 첫 번째 팀(중보기도팀=인터씨드팀)은 row에 팀명이 없고 헤더 라벨에 박혀있음
+// → 시트 시작 시점부터 기본 팀명을 "중보기도팀"으로 시작
+const PLAN_TEAM_ORDER = [
+  "중보기도팀", // = 인터씨드팀 (웹 표시)
+  "하스피팀",
+  "어린이사역팀",
+  "문화사역팀",
+  "빅아이디어팀",
+  "예배팀",
+];
+
+// 시트 팀명 → 웹 팀명 매핑
+const PLAN_TEAM_NAME_MAP = {
+  중보기도팀: "인터씨드팀",
+};
+
 function parsePlan(json) {
   try {
     const rows = json?.table?.rows ?? [];
     const plans = [];
-    const teamOrder = [
-      "인터씨드팀",
-      "하스피팀",
-      "어린이사역팀",
-      "문화사역팀",
-      "빅아이디어팀",
-      "예배팀",
-    ];
 
-    let current = null;
+    // 첫 번째 팀은 시트 헤더에 박혀있으므로 자동으로 시작
+    let current = {
+      name: PLAN_TEAM_NAME_MAP[PLAN_TEAM_ORDER[0]] || PLAN_TEAM_ORDER[0],
+      purpose: "",
+      goals: [],
+      tasks: [],
+      rain: "",
+      writing: false,
+    };
+    plans.push(current);
+
     for (const row of rows) {
       const key = safeStr(row, 1);
+      const value = safeStr(row, 2);
       if (!key) continue;
 
-      // 팀명 행
-      if (teamOrder.includes(key)) {
+      // 팀명 행 발견 → 새 팀 시작
+      if (PLAN_TEAM_ORDER.includes(key)) {
         current = {
-          name: key,
+          name: PLAN_TEAM_NAME_MAP[key] || key,
           purpose: "",
           goals: [],
           tasks: [],
@@ -496,26 +532,28 @@ function parsePlan(json) {
       }
       if (!current) continue;
 
-      if (key.includes("목적")) {
-        current.purpose = safeStr(row, 2);
-      } else if (key.includes("목표")) {
-        const v = safeStr(row, 2);
-        if (v) current.goals.push(v);
-      } else if (key.includes("실행과제")) {
-        const v = safeStr(row, 2);
-        if (v) current.tasks.push(v);
-      } else if (key.includes("우천")) {
-        current.rain = safeStr(row, 2);
+      // 정확한 매칭으로 파싱 (includes 대신)
+      if (key === "목적") {
+        current.purpose = value;
+      } else if (/^[1-9]\)\s*목표$/.test(key)) {
+        if (value) current.goals.push(value);
+      } else if (/^[1-9]\)\s*실행과제$/.test(key)) {
+        if (value) current.tasks.push(value);
+      } else if (key === "우천시계획" || key === "우천 시 계획") {
+        current.rain = value;
       }
     }
 
     // 빈 계획 → 작성 중 표시
     plans.forEach((p) => {
-      if (!p.purpose && p.goals.length === 0) p.writing = true;
+      if (!p.purpose && p.goals.length === 0 && p.tasks.length === 0) {
+        p.writing = true;
+      }
     });
 
     return plans;
   } catch (e) {
+    console.error("plan parse error", e);
     return [];
   }
 }
