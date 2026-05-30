@@ -780,11 +780,11 @@ function renderSchedule(result) {
     <div class="regular-meeting-card">
       <div class="regular-meeting-row">
         <span class="regular-meeting-label">토요일</span>
-        <span class="regular-meeting-val">5/30 – 7/4 11:00 – 18:00</span>
+        <span class="regular-meeting-val">11:00 – 18:00</span>
       </div>
       <div class="regular-meeting-row">
         <span class="regular-meeting-label">주일</span>
-        <span class="regular-meeting-val">5/31 – 7/5 17:50 – 22:00</span>
+        <span class="regular-meeting-val">17:50 – 22:00</span>
       </div>
     </div>
   `;
