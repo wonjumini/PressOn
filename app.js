@@ -695,7 +695,7 @@ function renderHomeScripture() {
   if (!el) return;
   el.innerHTML = `
     <p class="scripture-text">푯대를 향하여 그리스도 예수 안에서 하나님이 위에서 부르신 부름의 상을 위하여 달려가노라</p>
-    <p class="scripture-ref">— 빌립보서 3:14</p>`;
+    <p class="scripture-ref"> 빌립보서 3:14</p>`;
   el.classList.add("fade-in");
 }
 
