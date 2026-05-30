@@ -784,7 +784,7 @@ function renderSchedule(result) {
       </div>
       <div class="regular-meeting-row">
         <span class="regular-meeting-label">주일</span>
-        <span class="regular-meeting-val">5/31 – 6/28 17:50 – 22:00</span>
+        <span class="regular-meeting-val">5/31 – 7/5 17:50 – 22:00</span>
       </div>
     </div>
   `;
