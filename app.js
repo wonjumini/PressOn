@@ -549,7 +549,7 @@ function parsePlan(json) {
       }
       if (!current) continue;
 
-      // 정확한 매칭으로 파싱 (includes 대신)
+      // 정확한 매칭으로 파싱
       if (key === "목적") {
         current.purpose = value;
       } else if (/^[1-9]\)\s*목표$/.test(key)) {
@@ -792,17 +792,17 @@ function renderSchedule(result) {
   // 일정 데이터 하드코딩
   const items = [
     { date: "2026-05-30", day: "토", title: "팀모임1 (환영)", detail: "", place: "비전5", badges: ["team"] },
-    { date: "2026-05-31", day: "주", title: "선교학교1 + 팀모임2 (시작)", detail: "여름단기선교의 중요성", place: "채움1", badges: ["school", "team"] },
+    { date: "2026-05-31", day: "주", title: "선교학교1 / 팀모임2 (시작)", detail: "여름단기선교의 중요성", place: "채움1", badges: ["school", "team"] },
     { date: "2026-06-06", day: "토", title: "팀모임3 (구상)", detail: "", place: "", badges: ["team"] },
-    { date: "2026-06-07", day: "주", title: "선교학교2 + 팀모임4 (실행)", detail: "단기선교 준비", place: "다움2", badges: ["school", "team"] },
+    { date: "2026-06-07", day: "주", title: "선교학교2 / 팀모임4 (실행)", detail: "단기선교 준비", place: "다움2", badges: ["school", "team"] },
     { date: "2026-06-13", day: "토", title: "팀모임5 (등산)", detail: "인왕산 등산", place: "", badges: ["team"] },
-    { date: "2026-06-14", day: "주", title: "선교학교3 + 팀모임6 (연습)", detail: "JOB", place: "채움3, 미팅룸3/4", badges: ["school", "team"] },
+    { date: "2026-06-14", day: "주", title: "선교학교3 / 팀모임6 (연습)", detail: "JOB", place: "채움3, 미팅룸3/4", badges: ["school", "team"] },
     { date: "2026-06-20", day: "토", title: "팀모임7 (최상화)", detail: "", place: "", badges: ["team"] },
-    { date: "2026-06-21", day: "주", title: "선교학교4 + 팀모임8 (디테일)", detail: "영적인 일", place: "채움2, 미팅룸14", badges: ["school", "team"] },
+    { date: "2026-06-21", day: "주", title: "선교학교4 / 팀모임8 (디테일)", detail: "영적인 일", place: "채움2, 미팅룸14", badges: ["school", "team"] },
     { date: "2026-06-27", day: "토", title: "팀모임9 (세미리허설)", detail: "전체회식", place: "비전5", badges: ["team"] },
-    { date: "2026-06-28", day: "주", title: "선교학교5 + 팀모임10 (보완) + 파송예배", detail: "하나 됨", place: "비전5", badges: ["school", "team", "special"] },
+    { date: "2026-06-28", day: "주", title: "선교학교5 / 팀모임10 (보완) / 파송예배", detail: "하나 됨", place: "비전5", badges: ["school", "team", "special"] },
     { date: "2026-07-04", day: "토", title: "팀모임11 (최종리허설)", detail: "새벽예배특송 · 짐패킹 1차", place: "채움2, 미팅룸14", badges: ["team"] },
-    { date: "2026-07-05", day: "주", title: "팀모임12 + 짐패킹 2차", detail: "", place: "다움2", badges: ["team"] },
+    { date: "2026-07-05", day: "주", title: "팀모임12", detail: "짐패킹 2차", place: "다움2", badges: ["team"] },
     { date: "2026-08-02", day: "주", title: "전체에프터", detail: "", place: "", badges: ["after"] },
     { date: "2026-08-16", day: "주", title: "보고예배", detail: "", place: "", badges: ["after"] },
   ];
@@ -829,12 +829,12 @@ function renderSchedule(result) {
     const mo = d.getMonth() + 1 + "월";
     const day = d.getDate();
 
-    // 설명: detail + 장소 합치기
+    // 설명: detail + 장소 합치기 (구분점 없이 공백으로)
     const detailParts = [];
     if (item.detail) detailParts.push(escHtml(item.detail));
     if (item.place) detailParts.push(`<span class="sch-place">📍 ${escHtml(item.place)}</span>`);
     const detailHtml = detailParts.length > 0
-      ? `<div class="sch-detail">${detailParts.join(" · ")}</div>`
+      ? `<div class="sch-detail">${detailParts.join(" ")}</div>`
       : "";
 
     const badgesHtml = item.badges
@@ -1122,28 +1122,36 @@ function renderAttendance(result) {
   if (rateEl) rateEl.textContent = rate + "%";
   if (countEl) countEl.textContent = dates.length;
 
-  // 테이블: 날짜 세로 / 이름 가로
+  // 테이블: 세로 = 팀원 / 가로 = 날짜
+  const headCells = dates
+    .map((date, di) => {
+      const d = ATTENDANCE_DATES[di];
+      return `<th class="att-date-th"><span class="att-date-d">${escHtml(date)}</span><span class="att-date-wd">${d.day}</span></th>`;
+    })
+    .join("");
   const thead = `<thead><tr>
-    <th>날짜 / 이름</th>
-    ${members.map((m) => `<th>${escHtml(m.name)}</th>`).join("")}
+    <th class="att-name-th">이름</th>
+    ${headCells}
+    <th class="att-sum-th">합계</th>
   </tr></thead>`;
 
-  const tbody = `<tbody>${dates
-    .map(
-      (date, di) => `
-    <tr>
-      <td>${escHtml(date)}</td>
-      ${members
-        .map((m) => {
-          const v = m.att[di];
-          if (v === undefined) return "<td>—</td>";
-          return v === 1
-            ? '<td><span class="att-o">O</span></td>'
-            : '<td><span class="att-x">✕</span></td>';
-        })
-        .join("")}
-    </tr>`,
-    )
+  const tbody = `<tbody>${members
+    .map((m) => {
+      const count = m.att.reduce((a, b) => a + b, 0);
+      const cells = m.att
+        .map((v) =>
+          v === 1
+            ? '<td class="att-cell"><span class="att-o"></span></td>'
+            : '<td class="att-cell"><span class="att-x"></span></td>',
+        )
+        .join("");
+      return `
+      <tr>
+        <td class="att-name">${escHtml(m.name)}</td>
+        ${cells}
+        <td class="att-sum">${count}</td>
+      </tr>`;
+    })
     .join("")}</tbody>`;
 
   el.innerHTML = `<div class="att-table-outer"><table class="att-table">${thead}${tbody}</table></div>`;
@@ -1633,6 +1641,31 @@ function loadIfStale(id, loadFn) {
     lastFetched[id] = now;
     loadFn();
   }
+}
+
+// 강제 새로고침 (캐시 무시하고 즉시 fetch)
+const refreshLoaders = {
+  attendance: loadAttendance,
+  plan: loadPlan,
+  notice: loadNotice,
+  luggage: loadLuggage,
+};
+
+async function refreshData(id) {
+  const btn = document.querySelector(`#${id}-refresh-text`)?.closest(".refresh-btn");
+  const icon = btn?.querySelector(".refresh-icon");
+  if (icon) icon.classList.add("spinning");
+
+  lastFetched[id] = Date.now();
+  const loadFn = refreshLoaders[id];
+  if (loadFn) await loadFn();
+
+  const textEl = document.getElementById(`${id}-refresh-text`);
+  if (textEl) textEl.textContent = "방금 업데이트됨";
+
+  setTimeout(() => {
+    if (icon) icon.classList.remove("spinning");
+  }, 600);
 }
 
 function showPage(id) {

@@ -1920,40 +1920,60 @@ main {
   border-radius: var(--r);
   background: var(--surface);
   border: 1px solid var(--bd);
+  -webkit-overflow-scrolling: touch;
 }
 .att-table {
   width: 100%;
   border-collapse: collapse;
 }
 .att-table th {
-  background: var(--t1);
+  background: #1a2236;
   color: white;
   font-size: 11px;
   font-weight: 700;
-  padding: 10px 8px;
+  padding: 10px 6px;
   text-align: center;
   white-space: nowrap;
   position: sticky;
   top: 0;
 }
-.att-table th:first-child {
-  text-align: left;
-  padding-left: 14px;
-  min-width: 80px;
+.att-name-th {
+  text-align: left !important;
+  padding-left: 14px !important;
+  min-width: 64px;
   position: sticky;
   left: 0;
   z-index: 3;
-  background: var(--t1);
+  background: #1a2236 !important;
+}
+.att-date-th {
+  min-width: 38px;
+}
+.att-date-d {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+}
+.att-date-wd {
+  display: block;
+  font-size: 9px;
+  opacity: 0.6;
+  margin-top: 1px;
+}
+.att-sum-th {
+  min-width: 40px;
 }
 .att-table td {
-  font-size: 13px;
-  padding: 9px 8px;
+  padding: 8px 6px;
   text-align: center;
-  border-bottom: 1px solid var(--bd);
+  border-bottom: 0.5px solid var(--bd);
 }
-.att-table td:first-child {
-  text-align: left;
-  padding-left: 14px;
+.att-table tr:last-child td {
+  border-bottom: none;
+}
+.att-name {
+  text-align: left !important;
+  padding-left: 14px !important;
   font-weight: 600;
   color: var(--t1);
   position: sticky;
@@ -1962,31 +1982,29 @@ main {
   border-right: 1px solid var(--bd);
   z-index: 1;
   white-space: nowrap;
-  font-size: 12px;
+  font-size: 13px;
+}
+.att-cell {
+  width: 38px;
+}
+.att-o,
+.att-x {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
 }
 .att-o {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 6px;
-  background: var(--green-bg);
-  color: var(--green);
-  font-size: 11px;
-  font-weight: 800;
+  background: var(--pri);
 }
 .att-x {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 6px;
-  background: var(--red-bg);
-  color: var(--red);
-  font-size: 11px;
+  background: var(--bd);
+}
+.att-sum {
+  font-size: 13px;
   font-weight: 800;
+  color: var(--pri);
+  background: var(--pri-lt);
 }
 
 /* ═══ STORY ═════════════════════════════════════ */
@@ -2589,4 +2607,45 @@ main {
   color: var(--t4);
   font-size: 11px;
   white-space: nowrap;
+  margin-left: 4px;
+}
+
+/* ═══ 새로고침 버튼 (푸터, 눈에 띄지 않게) ═══════════ */
+.refresh-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+.refresh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 12px;
+  font-family: var(--font);
+  color: var(--t4);
+  font-size: 12px;
+  border-radius: 100px;
+  transition: background 0.3s ease, color 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.refresh-btn:active {
+  background: var(--bg2);
+}
+.refresh-icon {
+  font-size: 13px;
+  display: inline-block;
+  line-height: 1;
+}
+.refresh-icon.spinning {
+  animation: refresh-spin 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes refresh-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.refresh-text {
+  letter-spacing: -0.2px;
 }
