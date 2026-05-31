@@ -775,20 +775,6 @@ function renderSchedule(result) {
   const listEl = document.getElementById("schedule-list");
   if (!listEl) return;
 
-  // 상단 정기 모임 안내 카드 (항상 표시)
-  const regularHtml = `
-    <div class="regular-meeting-card">
-      <div class="regular-meeting-row">
-        <span class="regular-meeting-label">토요일</span>
-        <span class="regular-meeting-val">11:00 – 18:00</span>
-      </div>
-      <div class="regular-meeting-row">
-        <span class="regular-meeting-label">주일</span>
-        <span class="regular-meeting-val">17:50 – 22:00</span>
-      </div>
-    </div>
-  `;
-
   // 일정 데이터 하드코딩
   const items = [
     { date: "2026-05-30", day: "토", title: "팀모임1 (환영)", detail: "", place: "비전5", badges: ["team"] },
@@ -857,7 +843,7 @@ function renderSchedule(result) {
       </div>`;
   }).join("");
 
-  listEl.innerHTML = regularHtml + itemsHtml;
+  listEl.innerHTML = itemsHtml;
   listEl.classList.add("fade-in");
 }
 
@@ -1105,15 +1091,31 @@ function renderAttendance(result) {
         })),
       };
 
-  // 통계
-  let totalAtt = 0,
-    totalPossible = 0;
-  members.forEach((m) => {
-    totalAtt += m.att.reduce((a, b) => a + b, 0);
-    totalPossible += m.att.length;
+  // 지난 모임 수 계산 (오늘 기준으로 이미 지난 모임만)
+  const today = kstNow();
+  today.setHours(0, 0, 0, 0);
+  const MEETING_FULL_DATES = [
+    "2026-05-30", "2026-05-31", "2026-06-06", "2026-06-07",
+    "2026-06-13", "2026-06-14", "2026-06-20", "2026-06-21",
+    "2026-06-27", "2026-06-28", "2026-07-04", "2026-07-05",
+  ];
+  let pastCount = 0;
+  MEETING_FULL_DATES.forEach((d) => {
+    const dt = new Date(d);
+    dt.setHours(0, 0, 0, 0);
+    if (dt <= today) pastCount++;
   });
-  const rate =
-    totalPossible > 0 ? Math.round((totalAtt / totalPossible) * 100) : 0;
+
+  // 통계: 평균 출석률 = 지난 모임 기준
+  let totalAtt = 0;
+  members.forEach((m) => {
+    // 지난 모임까지만 합산
+    for (let i = 0; i < pastCount; i++) {
+      totalAtt += m.att[i] || 0;
+    }
+  });
+  const possiblePast = members.length * pastCount;
+  const rate = possiblePast > 0 ? Math.round((totalAtt / possiblePast) * 100) : 0;
 
   const totalEl = document.getElementById("att-total");
   const rateEl = document.getElementById("att-rate");
@@ -1122,40 +1124,63 @@ function renderAttendance(result) {
   if (rateEl) rateEl.textContent = rate + "%";
   if (countEl) countEl.textContent = dates.length;
 
-  // 테이블: 세로 = 팀원 / 가로 = 날짜
-  const headCells = dates
-    .map((date, di) => {
-      const d = ATTENDANCE_DATES[di];
-      return `<th class="att-date-th"><span class="att-date-d">${escHtml(date)}</span><span class="att-date-wd">${d.day}</span></th>`;
+  // B안: 팀원별 요약 카드 + 펼치기
+  const cards = members
+    .map((m, idx) => {
+      const count = m.att.reduce((a, b) => a + b, 0);
+      // 개인 출석률은 지난 모임 기준
+      let personalAtt = 0;
+      for (let i = 0; i < pastCount; i++) personalAtt += m.att[i] || 0;
+      const personalRate = pastCount > 0 ? Math.round((personalAtt / pastCount) * 100) : 0;
+
+      // 펼쳐지는 날짜별 점
+      const dots = m.att
+        .map((v, di) => {
+          const d = ATTENDANCE_DATES[di];
+          return `
+          <div class="att-dot-item">
+            <span class="att-dot ${v === 1 ? "on" : "off"}"></span>
+            <span class="att-dot-date">${escHtml(d.label)}</span>
+          </div>`;
+        })
+        .join("");
+
+      return `
+      <div class="att-member-card" onclick="toggleAttMember(${idx})">
+        <div class="att-member-head">
+          <span class="att-member-name">${escHtml(m.name)}</span>
+          <div class="att-member-right">
+            <div class="att-bar-track">
+              <div class="att-bar-fill" style="width:${personalRate}%"></div>
+            </div>
+            <span class="att-member-count">${count}<span class="att-member-total">/12</span></span>
+            <span class="att-member-chevron" id="att-chev-${idx}">▼</span>
+          </div>
+        </div>
+        <div class="att-member-detail" id="att-detail-${idx}">
+          <div class="att-dot-grid">${dots}</div>
+        </div>
+      </div>`;
     })
     .join("");
-  const thead = `<thead><tr>
-    <th class="att-name-th">이름</th>
-    ${headCells}
-    <th class="att-sum-th">합계</th>
-  </tr></thead>`;
 
-  const tbody = `<tbody>${members
-    .map((m) => {
-      const count = m.att.reduce((a, b) => a + b, 0);
-      const cells = m.att
-        .map((v) =>
-          v === 1
-            ? '<td class="att-cell"><span class="att-o"></span></td>'
-            : '<td class="att-cell"><span class="att-x"></span></td>',
-        )
-        .join("");
-      return `
-      <tr>
-        <td class="att-name">${escHtml(m.name)}</td>
-        ${cells}
-        <td class="att-sum">${count}</td>
-      </tr>`;
-    })
-    .join("")}</tbody>`;
-
-  el.innerHTML = `<div class="att-table-outer"><table class="att-table">${thead}${tbody}</table></div>`;
+  el.innerHTML = `<div class="att-member-list">${cards}</div>`;
   el.classList.add("fade-in");
+}
+
+// 출석 팀원 카드 펼치기/접기
+function toggleAttMember(idx) {
+  const detail = document.getElementById(`att-detail-${idx}`);
+  const chev = document.getElementById(`att-chev-${idx}`);
+  if (!detail) return;
+  const isOpen = detail.classList.contains("open");
+  if (isOpen) {
+    detail.classList.remove("open");
+    if (chev) chev.classList.remove("open");
+  } else {
+    detail.classList.add("open");
+    if (chev) chev.classList.add("open");
+  }
 }
 
 
@@ -1682,8 +1707,12 @@ function showPage(id) {
   window.scrollTo({ top: 0, behavior: "smooth" });
   closeMenu();
 
-  // URL hash에 현재 탭 저장
-  history.replaceState(null, "", "#" + id);
+  // URL hash 처리: 홈은 hash 없이 깔끔하게, 다른 탭은 hash 유지
+  if (id === "home") {
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+  } else {
+    history.replaceState(null, "", "#" + id);
+  }
 
   // 홈 진입 시 히어로 초기화
   if (id === "home") initPressOn();

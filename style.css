@@ -1317,8 +1317,7 @@ main {
   transform: scale(0.99);
 }
 .sch-item.past {
-  opacity: 0.4;
-  filter: grayscale(0.5);
+  opacity: 0.65;
 }
 .sch-date {
   min-width: 36px;
@@ -2648,4 +2647,118 @@ main {
 }
 .refresh-text {
   letter-spacing: -0.2px;
+}
+
+/* ═══ 출석 팀원 카드 (B안: 요약+펼치기) ═══════════════ */
+.att-member-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.att-member-card {
+  background: var(--surface);
+  border: 1px solid var(--bd);
+  border-radius: var(--r);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.att-member-card:active {
+  background: var(--bg2);
+}
+.att-member-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.att-member-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--t1);
+  letter-spacing: -0.3px;
+  flex-shrink: 0;
+  min-width: 52px;
+}
+.att-member-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  justify-content: flex-end;
+}
+.att-bar-track {
+  flex: 1;
+  max-width: 120px;
+  height: 6px;
+  background: var(--bg2);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.att-bar-fill {
+  height: 100%;
+  background: var(--pri);
+  border-radius: 100px;
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.att-member-count {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--pri);
+  flex-shrink: 0;
+  min-width: 38px;
+  text-align: right;
+}
+.att-member-total {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--t4);
+}
+.att-member-chevron {
+  font-size: 11px;
+  color: var(--t4);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  flex-shrink: 0;
+}
+.att-member-chevron.open {
+  transform: rotate(180deg);
+}
+.att-member-detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.att-member-detail.open {
+  max-height: 200px;
+}
+.att-dot-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px 8px;
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1px solid var(--bd);
+}
+.att-dot-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.att-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.att-dot.on {
+  background: var(--pri);
+}
+.att-dot.off {
+  background: var(--bd);
+}
+.att-dot-date {
+  font-size: 10px;
+  color: var(--t4);
+  font-weight: 500;
 }
