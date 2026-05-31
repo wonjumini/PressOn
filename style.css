@@ -2762,3 +2762,107 @@ main {
   color: var(--t4);
   font-weight: 500;
 }
+
+/* ═══ 사역팀 상세 사역 아코디언 ═══════════════════════ */
+.team-hd {
+  position: relative;
+}
+.team-chevron {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--t4);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  flex-shrink: 0;
+}
+.team-chevron.open {
+  transform: rotate(180deg);
+}
+.team-detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.team-detail.open {
+  max-height: 2000px;
+}
+.team-detail-sec {
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1px solid var(--bd);
+}
+.team-detail-sec:first-child {
+  border-top: none;
+  margin-top: 4px;
+}
+.team-detail-label {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--t2);
+  margin-bottom: 10px;
+  letter-spacing: -0.2px;
+}
+.team-detail-ul {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.team-detail-ul li {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--t2);
+  padding-left: 14px;
+  position: relative;
+  word-break: keep-all;
+}
+.team-detail-ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--pri);
+}
+
+/* ═══ JOB 역할 설명 아코디언 ══════════════════════════ */
+.job-item.job-clickable {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.job-content-wrap {
+  flex: 1;
+}
+.job-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.job-chevron {
+  font-size: 10px;
+  color: var(--t4);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  flex-shrink: 0;
+}
+.job-chevron.open {
+  transform: rotate(180deg);
+}
+.job-detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.job-detail.open {
+  max-height: 400px;
+}
+.job-detail-text {
+  margin: 10px 0 2px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--t2);
+  word-break: keep-all;
+}

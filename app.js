@@ -46,6 +46,92 @@ const JOB_ICON = {
   타임키퍼: { icon: "⏰", bg: "var(--bg)" },
 };
 
+// 사역팀별 상세 사역 내용 (선교 모임 / 현지 선교)
+const TEAM_DETAIL = {
+  인터씨드팀: {
+    meeting: [
+      "모임 시 현지어 공부 진행",
+      "영성 관리 시스템 구축 — 매일 아침 7시 묵상 · 정오 리마인드 · 저녁 9시 기도 제목 공유로 이어지는 일일 영성 루틴을 시스템화하여 팀원들의 참여를 유도한다.",
+      "익명 기도 소통망 운영 — '기도의 우체통(오픈채팅)'을 개설하여 심리적 부담 없이 내적 고민을 나눌 수 있는 안전한 소통 창구를 마련한다.",
+      "현지 인문/종교 리서치 — 네팔 주요 인터씨드 장소의 배경 지식을 분석하여, 기도의 명확한 방향성을 제시하는 가이드 문서를 제작한다.",
+      "영적 몰입도 강화 — '릴레이 금식기도' 일정을 기획 및 실행한다.",
+      "예배 중보기도 인도 — 팀장이 예배 시 기도회를 인도한다.",
+    ],
+    field: [
+      "현장 기도회 리딩 — 돌발 변수가 많은 현지 사역지 및 사원 방문 시, 선제적으로 준비된 기도 제목을 선포하고 팀의 영적 포커스를 유지시킨다.",
+    ],
+  },
+  하스피팀: {
+    meeting: [
+      "생일자 축하",
+      "밀도 있는 환대 프로세스 — 매 모임 전 공간의 분위기를 바꾸는 '웰컴 존'을 운영(디자인&데코, 팀빌딩과 협업)하고, 네팔 현지식(달밧) 사전 체험을 통해 현지 적응력을 테스트한다.",
+      "스낵바 키트화 운영",
+      "모임 중 점심 식사 및 간식 구매",
+      "개인화된 컨디션 케어 키트 — 팀원 개개인의 체질(알러지, 기타 건강 사항도 함께 체크 → 구글폼으로 종합)을 고려하여 멀미약, 모기기피제, 비타민, 마른반찬, 소스 등이 포함된 맞춤형 지퍼백 꾸러미를 조달 및 패킹한다.",
+    ],
+    field: [
+      "선교사님 격려 사역 준비",
+      "에너지 공급 컨트롤 타워 — 현지 식사만으로 부족한 영양을 계산하여, 적재적소에 한국 부식과 간식을 배급함으로써 팀원들의 번아웃을 방지한다.",
+      "격려 사역 현장 총괄 — 기획된 세족식과 애찬식을 진행하며, 팀원들의 깊은 정서적 교감을 끌어낸다.",
+    ],
+  },
+  어린이사역팀: {
+    meeting: [
+      "모듈형 사역 프로그램 설계 — 찬양, 풍선아트, 페이스페인팅, 복음팔찌 제작 등 각 세션의 도안 및 매뉴얼을 확립하고, 누구든 빈자리를 대체할 수 있도록 '크로스 트레이닝(Cross-training)'을 실시한다.",
+      "복음팔찌 스토리텔링 체화 — 선교사님이 제공한 영문 대본을 번역하여, 전 팀원이 영어나 네팔어로 핵심 메시지를 5분 이내에 프레젠테이션할 수 있도록 훈련시킨다.",
+      "물자 및 리소스 산출 — 예상 인원의 2배수(약 60명)를 감당할 수 있는 물품(풍선 600개, 포토프린터 인화지, 한국 과자 등)의 소분 및 패킹을 완료한다.",
+    ],
+    field: [
+      "모듈별 부스 운영 및 변수 통제 — 1부(찬양/복음팔찌)와 2부(액티비티)를 유기적으로 전환하며, 대기 시간이 발생하는 어린이들을 위한 플랜 B(비눗방울 놀이 등)를 즉각 가동한다.",
+    ],
+  },
+  문화사역팀: {
+    meeting: [
+      "퍼포먼스 디테일 최적화 — K-POP 태권무(파이팅해야지)의 동선, 약속 대련, 격파 순서를 짜임새 있게 구성하고 무반주 상황까지 대비하여 연습한다.",
+      "스킷 드라마 메시지 시각화 — 'Everything' 스킷의 난해한 개념(창조, 죄악 등)을 직관적으로 전달하기 위해 중보기도팀과 협력하여 대형 부직포, 가면 등의 입체적 소품을 제작한다.",
+    ],
+    field: [
+      "현장 맞춤형 스테이징 — 흙바닥, 좁은 공간 등 통제 불가능한 현장 컨디션을 빠르게 파악하여 퍼포먼스 동선을 즉석에서 재조정한다.",
+      "전천후 사역 지원 — 본 팀의 공연이 종료된 후에는 즉각적으로 어린이 사역 부스나 체육대회 스태프로 전환하여 조직의 유연성을 극대화한다.",
+    ],
+  },
+  빅아이디어팀: {
+    meeting: [
+      "열사병 대책 강구",
+      "포카라 트래킹에 관한 전반적인 사항 리서치 및 아이디어 실행",
+      "마스터 매뉴얼(책자) 편찬 — 사역 일정, 조직도, 네팔어 회화, 찬양 악보 등 분산된 정보를 규합하여 한눈에 볼 수 있는 '현장 지침서'를 디자인 및 인쇄한다.",
+      "청장년 운동회 기획 및 시뮬레이션 — 언어 장벽을 넘어설 수 있는 직관적인 게임(미션 계주, 코끼리코 등)을 선별하고, 팀 빌딩을 위한 반다나 및 시상 용품을 세팅한다.",
+      "조직 리스크 및 환경 관리 — 항공 수하물 규정, 현지 우천 대비용 공용 우비 조달 등 발생 가능한 환경적 리스크를 사전에 차단한다.",
+      "물갈이 이슈 등 건강에 관한 보완 대책 강구",
+    ],
+    field: [
+      "동선 및 군중 통제(Crowd Control) — 어린이 사역 시 발생할 수 있는 혼잡을 막기 위해 노끈과 스탬프 등을 활용해 안전한 이동 동선을 확보한다.",
+      "운동회 현장 지휘 — 꺼랄교회 청장년 운동회 시 메인 진행과 점수 집계를 총괄하여 전체적인 축제 분위기를 리드한다.",
+    ],
+  },
+  예배팀: {
+    meeting: [
+      "예배 환경 세팅 — 매주 모임의 찬양을 인도하며, 사전에 악기(기타, 카혼 등)와 음향 장비의 세팅을 완비한다.",
+      "현지어 특송 디렉팅 — '던야받 예수' 등 현지인들과 교감할 수 있는 네팔어 찬양을 발굴하고 전 팀원이 암기할 수 있도록 교육한다.",
+    ],
+    field: [
+      "이동 및 현장 어쿠스틱 예배 인도 — 버스 이동 시간이나 마이크가 없는 열악한 현지 사역지에서 어쿠스틱 악기를 활용해 예배의 흐름을 끊김 없이 이어간다.",
+    ],
+  },
+};
+
+// JOB별 역할 설명
+const JOB_DETAIL = {
+  팀빌딩: "선교팀원들의 친교를 담당한다. 매주 선교팀 안에서 깊은 교제가 일어날 수 있도록 프로그램을 계획하고 진행한다.",
+  "디자인&데코": "현지에서의 숙소환경, 센터환경, 선교팀의 외적인 분위기를 담당한다. 디렉터가 요구하는 사항을 디자인으로 연출한다.",
+  촬영: "선교팀의 모든 일정을 사진으로 기록한다. 선교 관련 정보를 사진과 영상으로 촬영 및 편집한다.",
+  웍듀티: "모임장소, 숙소 및 사역현장을 정리하고 청소를 담당하는 역할로서, 청소를 구상하고 팀원들에게 분배하여 청소를 진행하는 역할이다.",
+  의료: "선교기간 동안 의료를 담당한다. 위급사항 시 보고를 생략하고 선조치 후보고를 취한다.",
+  의료지원: "선교기간 동안 의료를 담당한다. 위급사항 시 보고를 생략하고 선조치 후보고를 취한다.",
+  라스트키퍼: "팀이 이동을 할 때 마지막까지 남아서 빠진 인원은 없는지, 놓고가는 물건은 없는지 챙기며 사역 또는 장소 이동의 매듭을 지어주는 역할이다.",
+  타임키퍼: "선교 중 기상·취침, 각종 모임 시간의 안내와 집합을 담당하는 역할이다. 흩어졌다가 다시 모이거나 시간을 지켜 움직여야 할 때 시간을 공지하고 알림 역할을 한다.",
+};
+
 /* ═══════════════════════════════════════════════
    2. 유틸리티
 ═══════════════════════════════════════════════ */
@@ -918,24 +1004,44 @@ function renderTeam(result) {
       </div>
     </div>`;
 
-  // 사역팀 — 팀장 포함 x명 제거, 이름 옆 또래 표시
+  // 사역팀 — 팀장 포함, 클릭 시 상세 사역 펼침
   const teamsHtml =
     org.teams.length > 0
       ? `
     <div class="section" style="margin-top: 36px;">
       <div class="section-label">사역팀</div>
       ${org.teams
-        .map((t) => {
+        .map((t, ti) => {
           const meta = TEAM_META[t.name] || {
             icon: "⭐",
             color: "var(--blue)",
             bg: "var(--blue-bg)",
           };
+          const detail = TEAM_DETAIL[t.name];
+          const detailHtml = detail
+            ? `
+            <div class="team-detail" id="team-detail-${ti}">
+              ${detail.meeting && detail.meeting.length > 0 ? `
+                <div class="team-detail-sec">
+                  <div class="team-detail-label">📋 선교 모임</div>
+                  <ul class="team-detail-ul">
+                    ${detail.meeting.map((m) => `<li>${escHtml(m)}</li>`).join("")}
+                  </ul>
+                </div>` : ""}
+              ${detail.field && detail.field.length > 0 ? `
+                <div class="team-detail-sec">
+                  <div class="team-detail-label">✈️ 현지 선교</div>
+                  <ul class="team-detail-ul">
+                    ${detail.field.map((f) => `<li>${escHtml(f)}</li>`).join("")}
+                  </ul>
+                </div>` : ""}
+            </div>` : "";
           return `
           <div class="team-card">
-            <div class="team-hd">
+            <div class="team-hd" ${detail ? `onclick="toggleTeamDetail(${ti})" style="cursor:pointer"` : ""}>
               <div class="team-icon" style="background:${meta.bg};color:${meta.color}">${meta.icon}</div>
               <div class="team-name">${escHtml(t.name)}</div>
+              ${detail ? `<span class="team-chevron" id="team-chev-${ti}">▼</span>` : ""}
             </div>
             <div class="team-bd">
               <div class="chips">
@@ -943,6 +1049,7 @@ function renderTeam(result) {
                 ${t.members.map((m) => `<span class="chip">${escHtml(parseName(m).name)}</span>`).join("")}
               </div>
             </div>
+            ${detailHtml}
           </div>`;
         })
         .join("")}
@@ -972,7 +1079,7 @@ function renderTeam(result) {
     </div>`
       : "";
 
-  // JOB — 첫 번째 멤버가 리더 (이름 인디고 컬러)
+  // JOB — 첫 번째 멤버가 리더 (이름 인디고 컬러), 클릭 시 역할 설명 펼침
   const jobHtml =
     org.jobs.length > 0
       ? `
@@ -980,13 +1087,17 @@ function renderTeam(result) {
       <div class="section-label">JOB</div>
       <div class="card">
         ${org.jobs
-          .map((j) => {
+          .map((j, ji) => {
             const meta = JOB_ICON[j.title] || { icon: "⭐", bg: "var(--bg)" };
+            const desc = JOB_DETAIL[j.title];
             return `
-            <div class="job-item">
+            <div class="job-item ${desc ? "job-clickable" : ""}" ${desc ? `onclick="toggleJobDetail(${ji})"` : ""}>
               <div class="job-icon-box" style="background:${meta.bg}">${meta.icon}</div>
-              <div>
-                <div class="job-title">${escHtml(j.title)}</div>
+              <div class="job-content-wrap">
+                <div class="job-title-row">
+                  <div class="job-title">${escHtml(j.title)}</div>
+                  ${desc ? `<span class="job-chevron" id="job-chev-${ji}">▼</span>` : ""}
+                </div>
                 <div class="job-members">${j.members
                   .map((m, i) => {
                     const name = escHtml(parseName(m).name);
@@ -995,6 +1106,7 @@ function renderTeam(result) {
                       : name;
                   })
                   .join(" · ")}</div>
+                ${desc ? `<div class="job-detail" id="job-detail-${ji}"><p class="job-detail-text">${escHtml(desc)}</p></div>` : ""}
               </div>
             </div>`;
           })
@@ -1005,6 +1117,36 @@ function renderTeam(result) {
 
   el.innerHTML = orgHtml + teamsHtml + lgHtml + jobHtml;
   el.classList.add("fade-in");
+}
+
+// 사역팀 상세 펼치기/접기
+function toggleTeamDetail(idx) {
+  const detail = document.getElementById(`team-detail-${idx}`);
+  const chev = document.getElementById(`team-chev-${idx}`);
+  if (!detail) return;
+  const isOpen = detail.classList.contains("open");
+  if (isOpen) {
+    detail.classList.remove("open");
+    if (chev) chev.classList.remove("open");
+  } else {
+    detail.classList.add("open");
+    if (chev) chev.classList.add("open");
+  }
+}
+
+// JOB 역할 설명 펼치기/접기
+function toggleJobDetail(idx) {
+  const detail = document.getElementById(`job-detail-${idx}`);
+  const chev = document.getElementById(`job-chev-${idx}`);
+  if (!detail) return;
+  const isOpen = detail.classList.contains("open");
+  if (isOpen) {
+    detail.classList.remove("open");
+    if (chev) chev.classList.remove("open");
+  } else {
+    detail.classList.add("open");
+    if (chev) chev.classList.add("open");
+  }
 }
 
 function renderPlan(result) {
