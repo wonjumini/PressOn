@@ -21,7 +21,6 @@ const SHEETS = {
 };
 
 const CONFIG = {
-  prayer: { enabled: false },
   luggage: { enabled: true },
   notice: { enabled: true },
   checklist: { enabled: false },
@@ -1021,6 +1020,7 @@ function renderTeam(result) {
           const detailHtml = detail
             ? `
             <div class="team-detail" id="team-detail-${ti}">
+              <div class="team-detail-inner">
               ${detail.meeting && detail.meeting.length > 0 ? `
                 <div class="team-detail-sec">
                   <div class="team-detail-label">📋 선교 모임</div>
@@ -1035,6 +1035,7 @@ function renderTeam(result) {
                     ${detail.field.map((f) => `<li>${escHtml(f)}</li>`).join("")}
                   </ul>
                 </div>` : ""}
+              </div>
             </div>` : "";
           return `
           <div class="team-card">
@@ -1198,10 +1199,10 @@ function renderPlan(result) {
       const body = p.writing
         ? `<div class="plan-bd" id="plan-bd-${idx}" style="padding:20px;text-align:center"><span class="writing-pill">✏️ 작성 중</span></div>`
         : `<div class="plan-bd" id="plan-bd-${idx}">
-          ${p.purpose ? `<div class="plan-sec"><div class="plan-sec-label">목적</div><p class="plan-text">${escHtml(p.purpose)}</p></div>` : ""}
-          ${p.goals.length > 0 ? `<div class="plan-sec"><div class="plan-sec-label">목표</div><ul class="plan-ul">${p.goals.map((g) => `<li>${escHtml(g)}</li>`).join("")}</ul></div>` : ""}
-          ${p.tasks.length > 0 ? `<div class="plan-sec"><div class="plan-sec-label">실행과제</div><ul class="plan-ul">${p.tasks.map((t) => `<li>${escHtml(t)}</li>`).join("")}</ul></div>` : ""}
-          ${p.rain ? `<div class="plan-sec"><div class="plan-sec-label">우천시 계획</div><div class="plan-rain">☔ ${escHtml(p.rain)}</div></div>` : ""}
+          ${p.purpose ? `<div class="plan-sec"><div class="plan-sec-label">🎯 목적</div><p class="plan-purpose">${escHtml(p.purpose)}</p></div>` : ""}
+          ${p.goals.length > 0 ? `<div class="plan-sec"><div class="plan-sec-label">📌 목표</div><ul class="plan-ul">${p.goals.map((g) => `<li>${escHtml(g)}</li>`).join("")}</ul></div>` : ""}
+          ${p.tasks.length > 0 ? `<div class="plan-sec"><div class="plan-sec-label">✅ 실행과제</div><ul class="plan-ul">${p.tasks.map((t) => `<li>${escHtml(t)}</li>`).join("")}</ul></div>` : ""}
+          ${p.rain ? `<div class="plan-sec"><div class="plan-sec-label">☔ 우천시 계획</div><div class="plan-rain">${escHtml(p.rain)}</div></div>` : ""}
         </div>`;
       return `
       <div class="plan-card">
@@ -1270,10 +1271,6 @@ function renderAttendance(result) {
   const cards = members
     .map((m, idx) => {
       const count = m.att.reduce((a, b) => a + b, 0);
-      // 개인 출석률은 지난 모임 기준
-      let personalAtt = 0;
-      for (let i = 0; i < pastCount; i++) personalAtt += m.att[i] || 0;
-      const personalRate = pastCount > 0 ? Math.round((personalAtt / pastCount) * 100) : 0;
 
       // 펼쳐지는 날짜별 점
       const dots = m.att
@@ -1292,10 +1289,7 @@ function renderAttendance(result) {
         <div class="att-member-head">
           <span class="att-member-name">${escHtml(m.name)}</span>
           <div class="att-member-right">
-            <div class="att-bar-track">
-              <div class="att-bar-fill" style="width:${personalRate}%"></div>
-            </div>
-            <span class="att-member-count">${count}<span class="att-member-total">/12</span></span>
+            <span class="att-member-count">${count}<span class="att-member-total">/${dates.length}</span></span>
             <span class="att-member-chevron" id="att-chev-${idx}">▼</span>
           </div>
         </div>
@@ -1972,7 +1966,7 @@ async function init() {
 
   // 초기 로드 시 hash 있으면 해당 탭으로 이동
   const hash = location.hash.replace("#", "");
-  const validPages = ["home", "overview", "schedule", "team", "plan", "attendance", "story", "prayer", "luggage", "notice"];
+  const validPages = ["home", "overview", "schedule", "team", "plan", "attendance", "story", "luggage", "notice"];
   if (hash && validPages.includes(hash)) {
     showPage(hash);
   }

@@ -1742,7 +1742,7 @@ main {
 
 .job-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 14px;
   padding: 14px 0;
   border-bottom: 1px solid var(--bd);
@@ -1828,17 +1828,20 @@ main {
   margin-top: 16px;
 }
 .plan-sec-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--t4);
-  margin-bottom: 8px;
-}
-.plan-text {
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
   color: var(--t2);
+  margin-bottom: 10px;
+}
+.plan-purpose {
+  font-size: 14px;
+  color: var(--t1);
   line-height: 1.7;
+  background: var(--pri-lt);
+  border-radius: 10px;
+  padding: 12px 14px;
+  word-break: keep-all;
 }
 .plan-ul {
   list-style: none;
@@ -2678,42 +2681,31 @@ main {
   font-weight: 700;
   color: var(--t1);
   letter-spacing: -0.3px;
-  flex-shrink: 0;
-  min-width: 52px;
 }
 .att-member-right {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex: 1;
-  justify-content: flex-end;
-}
-.att-bar-track {
-  flex: 1;
-  max-width: 120px;
-  height: 6px;
-  background: var(--bg2);
-  border-radius: 100px;
-  overflow: hidden;
-}
-.att-bar-fill {
-  height: 100%;
-  background: var(--pri);
-  border-radius: 100px;
-  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .att-member-count {
   font-size: 14px;
   font-weight: 800;
   color: var(--pri);
-  flex-shrink: 0;
-  min-width: 38px;
-  text-align: right;
 }
 .att-member-total {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--t4);
+}
+.att-dot-summary {
+  text-align: center;
+  font-size: 12px;
+  color: var(--t3);
+  margin-top: 14px;
+}
+.att-dot-summary strong {
+  color: var(--pri);
+  font-weight: 800;
 }
 .att-member-chevron {
   font-size: 11px;
@@ -2785,6 +2777,9 @@ main {
 .team-detail.open {
   max-height: 2000px;
 }
+.team-detail-inner {
+  padding: 0 16px 18px;
+}
 .team-detail-sec {
   padding-top: 14px;
   margin-top: 14px;
@@ -2835,6 +2830,7 @@ main {
 }
 .job-content-wrap {
   flex: 1;
+  padding-top: 2px;
 }
 .job-title-row {
   display: flex;
