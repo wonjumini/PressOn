@@ -1808,6 +1808,23 @@ function toggleStory(idx) {
   if (arrow) arrow.classList.toggle("open", !isOpen);
 }
 
+// 기도편지 원문 이미지 모달
+function openLetterImg(src) {
+  const modal = document.getElementById("letter-modal");
+  const img = document.getElementById("letter-modal-img");
+  if (!modal || !img) return;
+  img.src = src;
+  modal.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeLetterImg() {
+  const modal = document.getElementById("letter-modal");
+  if (!modal) return;
+  modal.classList.remove("open");
+  document.body.style.overflow = "";
+}
+
 /* ═══════════════════════════════════════════════
    11. 메뉴 (헤더 확장형)
 ═══════════════════════════════════════════════ */
