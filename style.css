@@ -2862,3 +2862,38 @@ main {
   color: var(--t2);
   word-break: keep-all;
 }
+
+/* ═══ 홈 다음 모임 카드 (지금 네팔 하단) ═══════════════ */
+.next-meeting-card {
+  background: var(--bg2);
+  border-radius: var(--r);
+  padding: 16px 18px;
+  margin-top: 8px;
+}
+.next-meeting-label {
+  font-size: 11px;
+  color: var(--t3);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.next-meeting-date {
+  font-size: 12px;
+  color: var(--pri);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.next-meeting-title {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: var(--t1);
+  margin-bottom: 5px;
+  word-break: keep-all;
+}
+.next-meeting-place {
+  font-size: 12px;
+  color: var(--t4);
+}
+.next-meeting-place:empty {
+  display: none;
+}

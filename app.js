@@ -532,6 +532,24 @@ const MEMBER_NAMES = [
   "조상운", "조희래", "홍예찬",
 ];
 
+// 전체 일정 데이터 (일정 탭 + 홈 다음 모임 카드 공통 사용)
+const SCHEDULE_ITEMS = [
+  { date: "2026-05-30", day: "토", title: "팀모임1 (환영)", detail: "", place: "비전5", badges: ["team"] },
+  { date: "2026-05-31", day: "주", title: "선교학교1 / 팀모임2 (시작)", detail: "여름단기선교의 중요성", place: "채움1", badges: ["school", "team"] },
+  { date: "2026-06-06", day: "토", title: "팀모임3 (구상)", detail: "", place: "", badges: ["team"] },
+  { date: "2026-06-07", day: "주", title: "선교학교2 / 팀모임4 (실행)", detail: "단기선교 준비", place: "다움2", badges: ["school", "team"] },
+  { date: "2026-06-13", day: "토", title: "팀모임5 (등산)", detail: "인왕산 등산", place: "", badges: ["team"] },
+  { date: "2026-06-14", day: "주", title: "선교학교3 / 팀모임6 (연습)", detail: "JOB", place: "채움3, 미팅룸3/4", badges: ["school", "team"] },
+  { date: "2026-06-20", day: "토", title: "팀모임7 (최상화)", detail: "", place: "", badges: ["team"] },
+  { date: "2026-06-21", day: "주", title: "선교학교4 / 팀모임8 (디테일)", detail: "영적인 일", place: "채움2, 미팅룸14", badges: ["school", "team"] },
+  { date: "2026-06-27", day: "토", title: "팀모임9 (세미리허설)", detail: "전체회식", place: "비전5", badges: ["team"] },
+  { date: "2026-06-28", day: "주", title: "선교학교5 / 팀모임10 (보완) / 파송예배", detail: "하나 됨", place: "비전5", badges: ["school", "team", "special"] },
+  { date: "2026-07-04", day: "토", title: "팀모임11 (최종리허설)", detail: "새벽예배특송 · 짐패킹 1차", place: "채움2, 미팅룸14", badges: ["team"] },
+  { date: "2026-07-05", day: "주", title: "팀모임12", detail: "짐패킹 2차", place: "다움2", badges: ["team"] },
+  { date: "2026-08-02", day: "주", title: "전체에프터", detail: "", place: "", badges: ["after"] },
+  { date: "2026-08-16", day: "주", title: "보고예배", detail: "", place: "", badges: ["after"] },
+];
+
 function parseAttendance(json) {
   try {
     const rows = json?.table?.rows ?? [];
@@ -860,23 +878,8 @@ function renderSchedule(result) {
   const listEl = document.getElementById("schedule-list");
   if (!listEl) return;
 
-  // 일정 데이터 하드코딩
-  const items = [
-    { date: "2026-05-30", day: "토", title: "팀모임1 (환영)", detail: "", place: "비전5", badges: ["team"] },
-    { date: "2026-05-31", day: "주", title: "선교학교1 / 팀모임2 (시작)", detail: "여름단기선교의 중요성", place: "채움1", badges: ["school", "team"] },
-    { date: "2026-06-06", day: "토", title: "팀모임3 (구상)", detail: "", place: "", badges: ["team"] },
-    { date: "2026-06-07", day: "주", title: "선교학교2 / 팀모임4 (실행)", detail: "단기선교 준비", place: "다움2", badges: ["school", "team"] },
-    { date: "2026-06-13", day: "토", title: "팀모임5 (등산)", detail: "인왕산 등산", place: "", badges: ["team"] },
-    { date: "2026-06-14", day: "주", title: "선교학교3 / 팀모임6 (연습)", detail: "JOB", place: "채움3, 미팅룸3/4", badges: ["school", "team"] },
-    { date: "2026-06-20", day: "토", title: "팀모임7 (최상화)", detail: "", place: "", badges: ["team"] },
-    { date: "2026-06-21", day: "주", title: "선교학교4 / 팀모임8 (디테일)", detail: "영적인 일", place: "채움2, 미팅룸14", badges: ["school", "team"] },
-    { date: "2026-06-27", day: "토", title: "팀모임9 (세미리허설)", detail: "전체회식", place: "비전5", badges: ["team"] },
-    { date: "2026-06-28", day: "주", title: "선교학교5 / 팀모임10 (보완) / 파송예배", detail: "하나 됨", place: "비전5", badges: ["school", "team", "special"] },
-    { date: "2026-07-04", day: "토", title: "팀모임11 (최종리허설)", detail: "새벽예배특송 · 짐패킹 1차", place: "채움2, 미팅룸14", badges: ["team"] },
-    { date: "2026-07-05", day: "주", title: "팀모임12", detail: "짐패킹 2차", place: "다움2", badges: ["team"] },
-    { date: "2026-08-02", day: "주", title: "전체에프터", detail: "", place: "", badges: ["after"] },
-    { date: "2026-08-16", day: "주", title: "보고예배", detail: "", place: "", badges: ["after"] },
-  ];
+  // 일정 데이터 (전역 SCHEDULE_ITEMS 사용)
+  const items = SCHEDULE_ITEMS;
 
   const pillMap = {
     team: "pill-blue",
@@ -1503,8 +1506,45 @@ function renderLuggage(teamResult, rentalResult) {
 ═══════════════════════════════════════════════ */
 async function loadHome() {
   renderHomeScripture();
+  renderNextMeeting();
   const noticeResult = await fetchSheetSafe(SHEETS.notice);
   renderHomeNotice(noticeResult);
+}
+
+// 홈 - 다음 모임 카드 (오늘 기준 가장 가까운 미래 일정)
+function renderNextMeeting() {
+  const dateEl = document.getElementById("next-meeting-date");
+  const titleEl = document.getElementById("next-meeting-title");
+  const placeEl = document.getElementById("next-meeting-place");
+  const cardEl = document.getElementById("next-meeting-card");
+  if (!dateEl || !titleEl || !cardEl) return;
+
+  const today = kstNow();
+  today.setHours(0, 0, 0, 0);
+
+  // 오늘 포함 이후의 가장 가까운 일정 찾기
+  const next = SCHEDULE_ITEMS.find((item) => {
+    const d = new Date(item.date);
+    d.setHours(0, 0, 0, 0);
+    return d >= today;
+  });
+
+  if (!next) {
+    // 모든 일정 종료
+    dateEl.textContent = "";
+    titleEl.textContent = "모든 일정이 마무리되었어요";
+    if (placeEl) placeEl.textContent = "";
+    return;
+  }
+
+  const d = new Date(next.date);
+  const mo = d.getMonth() + 1;
+  const day = d.getDate();
+  dateEl.textContent = `${mo}/${day} (${next.day})`;
+  titleEl.textContent = next.title;
+  if (placeEl) {
+    placeEl.innerHTML = next.place ? `📍 ${escHtml(next.place)}` : "";
+  }
 }
 
 async function loadSchedule() {
