@@ -750,12 +750,13 @@ function parseLuggageTeam(json) {
     let isCarrierSection = false;
 
     for (const row of rows) {
-      // 왼쪽 영역 - 개인별 짐
+      // ── 왼쪽 영역: 개인별 짐 ──
+      // [0]구분(순번) [1]이름 [2]특이사항 [3]위탁수화물 [4]기내수화물
       const num = safeStr(row, 0);
       const name = safeStr(row, 1);
       const note = safeStr(row, 2);
-      const checked = safeStr(row, 3);
-      const carryOn = safeStr(row, 5);
+      const checked = safeStr(row, 3); // 위탁수화물
+      const carryOn = safeStr(row, 4); // 기내수화물
 
       // 캐리어 수량 섹션 시작 감지 ("사역팀" + "캐리어 수량")
       if (name === "사역팀" && note === "캐리어 수량") {
@@ -766,13 +767,13 @@ function parseLuggageTeam(json) {
         personal.push({ num, name, note, checked, carryOn });
       }
 
-      // 오른쪽 영역 - 사역팀별 짐 (H~M열)
-      const tNum = safeStr(row, 7);
-      const team = safeStr(row, 8);
-      const item = safeStr(row, 9);
-      const qty = safeStr(row, 10);
-      const weight = safeStr(row, 11);
-      const memo = safeStr(row, 12);
+      // ── 오른쪽 영역: 사역팀별 짐 ──
+      // [6]순번 [7]사역팀 [8]물품명 [9]수량 [10]예상무게 [11]비고
+      const team = safeStr(row, 7);
+      const item = safeStr(row, 8);
+      const qty = safeStr(row, 9);
+      const weight = safeStr(row, 10);
+      const memo = safeStr(row, 11);
 
       // 헤더 스킵, 빈 행 스킵
       if (team === "사역팀" || (!team && !item)) continue;
@@ -798,6 +799,8 @@ function parseLuggageRental(json) {
       const owner = safeStr(row, 3);
       const memo = safeStr(row, 4);
       if (!item) continue;
+      // 헤더/제목 줄 스킵
+      if (item === "대여물품명" || item === "대여물품현황") continue;
       items.push({ num, item, qty, owner, memo });
     }
     return items;
