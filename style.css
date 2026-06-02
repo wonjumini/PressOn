@@ -2444,7 +2444,7 @@ main {
 /* ═══ 짐 - 캐리어 수량 ═══════════════════════════════ */
 .lug-carrier-card {
   padding: 14px 16px;
-  margin-bottom: 14px;
+  margin-bottom: 0;
 }
 .lug-carrier-title {
   font-size: 12px;

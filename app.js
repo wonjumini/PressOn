@@ -1487,7 +1487,7 @@ function renderLuggage(teamResult, rentalResult) {
           `;
           }).join("");
 
-      teamEl.innerHTML = carrierHtml + teamGroupsHtml;
+      teamEl.innerHTML = teamGroupsHtml + carrierHtml;
     }
   }
 
