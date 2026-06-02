@@ -200,6 +200,14 @@ body {
   border-radius: 12px;
   padding: 4px;
 }
+.sub-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+  background: var(--bg2);
+  border-radius: 12px;
+  padding: 4px;
+}
 .sub-tab-btn {
   flex: 1;
   padding: 9px 12px;
