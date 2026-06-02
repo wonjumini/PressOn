@@ -1443,13 +1443,16 @@ function renderLuggage(teamResult, rentalResult) {
         grouped[team].push(it);
       });
 
-      // 캐리어 수량 카드
-      const carrierHtml = teamData.carriers.length > 0
+      // 캐리어 수량 카드 (실제 수량이 입력된 팀이 하나라도 있을 때만 표시)
+      const filledCarriers = teamData.carriers.filter(
+        (c) => c.count && c.count !== "-"
+      );
+      const carrierHtml = filledCarriers.length > 0
         ? `
         <div class="card lug-carrier-card">
           <div class="lug-carrier-title">🧳 캐리어 수량</div>
           <div class="lug-carrier-list">
-            ${teamData.carriers.map((c) => `
+            ${filledCarriers.map((c) => `
               <div class="lug-carrier-row">
                 <span class="lug-carrier-team">${escHtml(c.team)}</span>
                 <span class="lug-carrier-count">${escHtml(c.count)}</span>
