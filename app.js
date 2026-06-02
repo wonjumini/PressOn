@@ -225,14 +225,21 @@ async function fetchSheet(sheetName) {
   // cache-busting: 매번 다른 URL로 요청해서 Google CDN 캐시 우회
   const ts = Date.now();
   const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}&_=${ts}`;
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const text = await res.text();
-  const match = text.match(
-    /google\.visualization\.Query\.setResponse\(([\s\S]*)\)/,
-  );
-  if (!match) throw new Error("파싱 실패");
-  return JSON.parse(match[1]);
+  // 10초 타임아웃 (네팔 현지 느린 네트워크 대비 - 무한 로딩 방지)
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
+  try {
+    const res = await fetch(url, { cache: "no-store", signal: controller.signal });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const text = await res.text();
+    const match = text.match(
+      /google\.visualization\.Query\.setResponse\(([\s\S]*)\)/,
+    );
+    if (!match) throw new Error("파싱 실패");
+    return JSON.parse(match[1]);
+  } finally {
+    clearTimeout(timeoutId);
+  }
 }
 
 async function fetchSheetSafe(sheetName) {
@@ -966,7 +973,7 @@ function renderTeam(result) {
   if (!el) return;
 
   if (!result.ok) {
-    el.innerHTML = `<div class="error-state"><p class="error-msg">팀 정보를 불러오지 못했습니다</p><button class="retry-btn" onclick="loadTeam()">다시 시도</button></div>`;
+    el.innerHTML = `<div class="error-state"><p class="error-msg">팀 정보를 불러오지 못했습니다</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadTeam()">다시 시도</button></div>`;
     return;
   }
 
@@ -1145,6 +1152,7 @@ function toggleTeamDetail(idx) {
   } else {
     detail.classList.add("open");
     if (chev) chev.classList.add("open");
+    scrollCardIntoView(detail.closest(".team-card"));
   }
 }
 
@@ -1160,6 +1168,7 @@ function toggleJobDetail(idx) {
   } else {
     detail.classList.add("open");
     if (chev) chev.classList.add("open");
+    scrollCardIntoView(detail.closest(".job-item"));
   }
 }
 
@@ -1168,7 +1177,7 @@ function renderPlan(result) {
   if (!el) return;
 
   if (!result.ok) {
-    el.innerHTML = `<div class="error-state"><p class="error-msg">사역계획을 불러오지 못했습니다</p><button class="retry-btn" onclick="loadPlan()">다시 시도</button></div>`;
+    el.innerHTML = `<div class="error-state"><p class="error-msg">사역계획을 불러오지 못했습니다</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadPlan()">다시 시도</button></div>`;
     return;
   }
 
@@ -1345,7 +1354,7 @@ function renderNotice(result) {
   if (!el) return;
 
   if (!result.ok) {
-    el.innerHTML = `<div class="error-state"><p class="error-msg">공지사항을 불러오지 못했습니다</p><button class="retry-btn" onclick="loadNotice()">다시 시도</button></div>`;
+    el.innerHTML = `<div class="error-state"><p class="error-msg">공지사항을 불러오지 못했습니다</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadNotice()">다시 시도</button></div>`;
     return;
   }
 
@@ -1384,7 +1393,7 @@ function renderLuggage(teamResult, rentalResult) {
   const personalEl = document.getElementById("lug-personal-list");
   if (personalEl) {
     if (!teamResult.ok) {
-      personalEl.innerHTML = `<div class="error-state"><p class="error-msg">개인 짐 목록을 불러오지 못했습니다</p><button class="retry-btn" onclick="loadLuggage()">다시 시도</button></div>`;
+      personalEl.innerHTML = `<div class="error-state"><p class="error-msg">개인 짐 목록을 불러오지 못했습니다</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadLuggage()">다시 시도</button></div>`;
     } else if (teamData.personal.length === 0) {
       personalEl.innerHTML = `
         <div class="empty-state">
@@ -1421,7 +1430,7 @@ function renderLuggage(teamResult, rentalResult) {
   const teamEl = document.getElementById("lug-team-list");
   if (teamEl) {
     if (!teamResult.ok) {
-      teamEl.innerHTML = `<div class="error-state"><p class="error-msg">팀별 짐 목록을 불러오지 못했습니다</p><button class="retry-btn" onclick="loadLuggage()">다시 시도</button></div>`;
+      teamEl.innerHTML = `<div class="error-state"><p class="error-msg">팀별 짐 목록을 불러오지 못했습니다</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadLuggage()">다시 시도</button></div>`;
     } else {
       // 사역팀별로 그룹화
       const grouped = {};
@@ -1486,7 +1495,7 @@ function renderLuggage(teamResult, rentalResult) {
   const rentalEl = document.getElementById("lug-rental-list");
   if (rentalEl) {
     if (!rentalResult.ok) {
-      rentalEl.innerHTML = `<div class="error-state"><p class="error-msg">물품대여 정보를 불러오지 못했습니다</p><button class="retry-btn" onclick="loadLuggage()">다시 시도</button></div>`;
+      rentalEl.innerHTML = `<div class="error-state"><p class="error-msg">물품대여 정보를 불러오지 못했습니다</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadLuggage()">다시 시도</button></div>`;
     } else if (rentalData.length === 0) {
       rentalEl.innerHTML = `
         <div class="empty-state">
@@ -1521,6 +1530,8 @@ function renderLuggage(teamResult, rentalResult) {
 async function loadHome() {
   renderHomeScripture();
   renderNextMeeting();
+  loadLiveDday();
+  loadWeather();
   const noticeResult = await fetchSheetSafe(SHEETS.notice);
   renderHomeNotice(noticeResult);
 }
@@ -1811,6 +1822,7 @@ function togglePlan(idx) {
   const isOpen = bd.classList.contains("open");
   bd.classList.toggle("open", !isOpen);
   if (arrow) arrow.classList.toggle("open", !isOpen);
+  if (!isOpen) scrollCardIntoView(bd.closest(".plan-card"));
 }
 
 function toggleStory(idx) {
@@ -1820,6 +1832,22 @@ function toggleStory(idx) {
   const isOpen = bd.classList.contains("open");
   bd.classList.toggle("open", !isOpen);
   if (arrow) arrow.classList.toggle("open", !isOpen);
+  if (!isOpen) scrollCardIntoView(bd.closest(".story-card"));
+}
+
+// 아코디언 펼칠 때 카드 헤더가 화면 상단 근처에 오도록 스크롤
+function scrollCardIntoView(card) {
+  if (!card) return;
+  // 펼침 애니메이션(트랜지션)이 시작된 뒤 위치 계산
+  setTimeout(() => {
+    const rect = card.getBoundingClientRect();
+    const navH = 56; // 상단바 높이
+    // 카드 상단이 화면 위쪽(상단바 아래 16px)보다 위/아래로 많이 벗어났으면 조정
+    if (rect.top < navH || rect.top > window.innerHeight * 0.5) {
+      const y = window.scrollY + rect.top - navH - 12;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  }, 60);
 }
 
 // 기도편지 원문 이미지 모달
@@ -1827,7 +1855,11 @@ function openLetterImg(src) {
   const modal = document.getElementById("letter-modal");
   const img = document.getElementById("letter-modal-img");
   const save = document.getElementById("letter-modal-save");
+  const errEl = document.getElementById("letter-modal-error");
   if (!modal || !img) return;
+  // 에러 상태 초기화
+  img.style.display = "";
+  if (errEl) errEl.style.display = "none";
   img.src = src;
   if (save) {
     save.href = src;
@@ -1860,14 +1892,32 @@ function openMenu() {
   document.getElementById("navMenu").classList.add("open");
   document.getElementById("hamburgerBtn").classList.add("open");
   document.getElementById("contentDim").classList.add("on");
+  // 뒤로가기로 메뉴 닫기 위해 history 상태 추가
+  history.pushState({ menu: true }, "");
 }
 
-function closeMenu() {
+// UI만 닫기 (history 건드리지 않음)
+function closeMenuSilent() {
   menuOpen = false;
   document.getElementById("navMenu").classList.remove("open");
   document.getElementById("hamburgerBtn").classList.remove("open");
   document.getElementById("contentDim").classList.remove("on");
 }
+
+function closeMenu() {
+  if (!menuOpen) return;
+  // pushState로 추가한 상태가 있으면 뒤로가기로 정리 (popstate가 UI 닫음)
+  if (history.state && history.state.menu) {
+    history.back();
+  } else {
+    closeMenuSilent();
+  }
+}
+
+// 뒤로가기 버튼: 메뉴 열려있으면 메뉴만 닫기
+window.addEventListener("popstate", () => {
+  if (menuOpen) closeMenuSilent();
+});
 
 const STALE_TIME = 30 * 1000; // 30초
 const lastFetched = {};
@@ -1917,8 +1967,8 @@ function showPage(id) {
   const btn = document.querySelector(`.drawer-item[data-page="${id}"]`);
   if (page) page.classList.add("active");
   if (btn) btn.classList.add("active");
-  window.scrollTo({ top: 0, behavior: "smooth" });
-  closeMenu();
+  window.scrollTo({ top: 0, behavior: "instant" });
+  closeMenuSilent();
 
   // URL hash 처리: 홈은 hash 없이 깔끔하게, 다른 탭은 hash 유지
   if (id === "home") {

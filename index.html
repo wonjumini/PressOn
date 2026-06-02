@@ -476,16 +476,6 @@
             </div>
           </div>
         </div>
-
-        <!-- NEPAL 팝업 오버레이 -->
-        <div class="nepal-overlay" id="nepalOverlay" onclick="closeNepal()">
-          <div class="nepal-popup" onclick="event.stopPropagation()">
-            <div class="nepal-popup-letter" id="ndLetter"></div>
-            <div class="nepal-popup-word" id="ndWord"></div>
-            <div class="nepal-popup-desc" id="ndDesc"></div>
-            <div class="nepal-popup-verse" id="ndVerse"></div>
-          </div>
-        </div>
       </section>
 
 
@@ -682,16 +672,12 @@
         <div class="wrap">
           <p class="page-title">사역계획</p>
           <div id="plan-list">
-            <p class="loading-text">불러오는 중...</p>
-            <div
-              class="skeleton-block"
-              style="height: 64px; margin-bottom: 8px"
-            ></div>
-            <div
-              class="skeleton-block"
-              style="height: 64px; margin-bottom: 8px"
-            ></div>
-            <div class="skeleton-block" style="height: 64px"></div>
+            <div class="skeleton-block" style="height: 56px; margin-bottom: 10px; border-radius: 16px"></div>
+            <div class="skeleton-block" style="height: 56px; margin-bottom: 10px; border-radius: 16px"></div>
+            <div class="skeleton-block" style="height: 56px; margin-bottom: 10px; border-radius: 16px"></div>
+            <div class="skeleton-block" style="height: 56px; margin-bottom: 10px; border-radius: 16px"></div>
+            <div class="skeleton-block" style="height: 56px; margin-bottom: 10px; border-radius: 16px"></div>
+            <div class="skeleton-block" style="height: 56px; border-radius: 16px"></div>
           </div>
           <div class="refresh-footer">
             <button class="refresh-btn" onclick="refreshData('plan')">
@@ -720,8 +706,12 @@
             </div>
           </div>
           <div id="att-content">
-            <p class="loading-text">불러오는 중...</p>
-            <div class="skeleton-block" style="height: 300px"></div>
+            <div class="skeleton-block" style="height: 50px; margin-bottom: 8px; border-radius: 16px"></div>
+            <div class="skeleton-block" style="height: 50px; margin-bottom: 8px; border-radius: 16px"></div>
+            <div class="skeleton-block" style="height: 50px; margin-bottom: 8px; border-radius: 16px"></div>
+            <div class="skeleton-block" style="height: 50px; margin-bottom: 8px; border-radius: 16px"></div>
+            <div class="skeleton-block" style="height: 50px; margin-bottom: 8px; border-radius: 16px"></div>
+            <div class="skeleton-block" style="height: 50px; border-radius: 16px"></div>
           </div>
           <div class="refresh-footer">
             <button class="refresh-btn" onclick="refreshData('attendance')">
@@ -1041,6 +1031,16 @@
       ↑
     </button>
 
+    <!-- NEPAL 팝업 오버레이 (body 직속 - 화면 중앙 고정) -->
+    <div class="nepal-overlay" id="nepalOverlay" onclick="closeNepal()">
+      <div class="nepal-popup" onclick="event.stopPropagation()">
+        <div class="nepal-popup-letter" id="ndLetter"></div>
+        <div class="nepal-popup-word" id="ndWord"></div>
+        <div class="nepal-popup-desc" id="ndDesc"></div>
+        <div class="nepal-popup-verse" id="ndVerse"></div>
+      </div>
+    </div>
+
     <!-- 기도편지 원문 이미지 모달 -->
     <div class="letter-modal" id="letter-modal">
       <div class="letter-modal-bar">
@@ -1048,7 +1048,12 @@
         <button class="letter-modal-close" onclick="closeLetterImg()">✕</button>
       </div>
       <div class="letter-modal-scroll" id="letter-modal-scroll" onclick="if(event.target===this)closeLetterImg()">
-        <img class="letter-modal-img" id="letter-modal-img" src="" alt="기도편지 원문" />
+        <img class="letter-modal-img" id="letter-modal-img" src="" alt="기도편지 원문" onerror="this.style.display='none';document.getElementById('letter-modal-error').style.display='flex';" />
+        <div class="letter-modal-error" id="letter-modal-error">
+          <div class="lme-icon">🖼️</div>
+          <p class="lme-text">이미지를 불러올 수 없어요</p>
+          <p class="lme-sub">네트워크 상태를 확인하거나<br/>잠시 후 다시 시도해 주세요</p>
+        </div>
       </div>
     </div>
 

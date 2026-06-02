@@ -2162,8 +2162,15 @@ main {
 }
 .error-msg {
   font-size: 14px;
+  font-weight: 600;
   color: var(--t2);
-  margin-bottom: 12px;
+  margin-bottom: 4px;
+}
+.error-sub {
+  font-size: 12px;
+  color: var(--t4);
+  margin-bottom: 14px;
+  line-height: 1.5;
 }
 .retry-btn {
   padding: 9px 20px;
@@ -3008,4 +3015,31 @@ main {
 }
 .story-video-wrap:active {
   transform: scale(0.99);
+}
+
+/* ═══ 기도편지 이미지 로드 실패 표시 ═══════════════════ */
+.letter-modal-error {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  padding: 60px 24px;
+  margin: auto;
+}
+.lme-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.7;
+}
+.lme-text {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.lme-sub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
 }
