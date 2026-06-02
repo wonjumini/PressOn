@@ -1860,18 +1860,12 @@ function scrollCardIntoView(card) {
 function openLetterImg(src) {
   const modal = document.getElementById("letter-modal");
   const img = document.getElementById("letter-modal-img");
-  const save = document.getElementById("letter-modal-save");
   const errEl = document.getElementById("letter-modal-error");
   if (!modal || !img) return;
   // 에러 상태 초기화
   img.style.display = "";
   if (errEl) errEl.style.display = "none";
   img.src = src;
-  if (save) {
-    save.href = src;
-    const fname = src.split("/").pop();
-    save.setAttribute("download", fname || "기도편지.png");
-  }
   modal.classList.add("open");
   document.body.style.overflow = "hidden";
 }
