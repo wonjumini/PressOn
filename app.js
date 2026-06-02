@@ -1421,7 +1421,7 @@ function renderLuggage(teamResult, rentalResult) {
       const carrierHtml = teamData.carriers.length > 0
         ? `
         <div class="card lug-carrier-card">
-          <div class="lug-carrier-title">캐리어 수량</div>
+          <div class="lug-carrier-title">🧳 캐리어 수량</div>
           <div class="lug-carrier-list">
             ${teamData.carriers.map((c) => `
               <div class="lug-carrier-row">
@@ -1815,10 +1815,8 @@ function openLetterImg(src) {
   const save = document.getElementById("letter-modal-save");
   if (!modal || !img) return;
   img.src = src;
-  img.classList.remove("zoomed");
   if (save) {
     save.href = src;
-    // 파일명 추출 (letter-68.png 등)
     const fname = src.split("/").pop();
     save.setAttribute("download", fname || "기도편지.png");
   }
@@ -1831,12 +1829,6 @@ function closeLetterImg() {
   if (!modal) return;
   modal.classList.remove("open");
   document.body.style.overflow = "";
-}
-
-// 이미지 탭하면 확대/축소 토글
-function toggleLetterZoom() {
-  const img = document.getElementById("letter-modal-img");
-  if (img) img.classList.toggle("zoomed");
 }
 
 /* ═══════════════════════════════════════════════

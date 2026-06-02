@@ -2434,9 +2434,8 @@ main {
 .lug-carrier-title {
   font-size: 12px;
   font-weight: 800;
-  color: var(--t3);
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  color: var(--t2);
+  letter-spacing: -0.2px;
   margin-bottom: 10px;
 }
 .lug-carrier-list { display: grid; gap: 6px; }
@@ -2975,16 +2974,11 @@ main {
   justify-content: center;
   padding: 0 12px 20px;
   -webkit-overflow-scrolling: touch;
+  touch-action: pinch-zoom;
 }
 .letter-modal-img {
   max-width: 100%;
   height: auto;
   border-radius: 8px;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
-  cursor: zoom-in;
-  transition: max-width 0.3s ease;
-}
-.letter-modal-img.zoomed {
-  max-width: 230%;
-  cursor: zoom-out;
 }
