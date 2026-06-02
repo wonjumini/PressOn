@@ -2675,11 +2675,21 @@ main {
   justify-content: space-between;
   gap: 12px;
 }
+.att-member-left {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
 .att-member-name {
   font-size: 14px;
   font-weight: 700;
   color: var(--t1);
   letter-spacing: -0.3px;
+}
+.att-member-age {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--t4);
 }
 .att-member-right {
   display: flex;

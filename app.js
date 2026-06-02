@@ -532,6 +532,16 @@ const MEMBER_NAMES = [
   "조상운", "조희래", "홍예찬",
 ];
 
+// 팀원별 출생년도 (또래) — 조직도 기준
+const MEMBER_BIRTH = {
+  고경혜: "91", 김수빈: "06", 김예은: "98", 김유찬: "99", 김윤하: "07",
+  김주찬: "94", 김준희: "99", 김향: "99", 노해인: "03", 박예진: "95",
+  박조한: "07", 박지명: "90", 박희원: "02", 송무늬: "98", 신성민: "01",
+  양예원: "03", 양은정: "94", 양한솔: "91", 유지훈: "99", 이시훈: "96",
+  이호준: "93", 정예림: "99", 정은혜: "98", 정지윤: "95", 조민희: "91",
+  조상운: "92", 조희래: "95", 홍예찬: "96",
+};
+
 // 전체 일정 데이터 (일정 탭 + 홈 다음 모임 카드 공통 사용)
 const SCHEDULE_ITEMS = [
   { date: "2026-05-30", day: "토", title: "팀모임1 (환영)", detail: "", place: "비전5", badges: ["team"] },
@@ -1287,10 +1297,14 @@ function renderAttendance(result) {
         })
         .join("");
 
+      const birth = MEMBER_BIRTH[m.name] || "";
       return `
       <div class="att-member-card" onclick="toggleAttMember(${idx})">
         <div class="att-member-head">
-          <span class="att-member-name">${escHtml(m.name)}</span>
+          <div class="att-member-left">
+            <span class="att-member-name">${escHtml(m.name)}</span>
+            ${birth ? `<span class="att-member-age">${escHtml(birth)}또래</span>` : ""}
+          </div>
           <div class="att-member-right">
             <span class="att-member-count">${count}<span class="att-member-total">/${dates.length}</span></span>
             <span class="att-member-chevron" id="att-chev-${idx}">▼</span>
