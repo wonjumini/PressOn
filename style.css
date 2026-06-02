@@ -2992,3 +2992,20 @@ main {
   border-radius: 8px;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
 }
+
+/* ═══ :active 피드백 일관성 보강 ═══════════════════════ */
+.team-hd, .job-item.job-clickable, .sub-tab-btn, .story-video-wrap {
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.team-hd:active {
+  background: var(--bg2);
+}
+.job-item.job-clickable:active {
+  background: var(--bg2);
+}
+.sub-tab-btn:active {
+  transform: scale(0.97);
+}
+.story-video-wrap:active {
+  transform: scale(0.99);
+}
