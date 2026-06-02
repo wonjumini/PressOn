@@ -35,6 +35,28 @@ const TEAM_META = {
   예배팀: { icon: "🎵", color: "#FF6B9D", bg: "#FFF0F7" },
 };
 
+// 시트의 다양한 팀명 표기 → 앱 표준 팀명으로 정규화
+// (중보기도팀→인터씨드팀, 띄어쓰기/약칭 통일)
+function normalizeTeamName(raw) {
+  if (!raw) return raw;
+  const s = String(raw).replace(/\s/g, ""); // 공백 제거
+  const map = {
+    중보기도팀: "인터씨드팀",
+    인터씨드팀: "인터씨드팀",
+    인터시드팀: "인터씨드팀",
+    하스피팀: "하스피팀",
+    어린이사역팀: "어린이사역팀",
+    어린이팀: "어린이사역팀",
+    문화사역팀: "문화사역팀",
+    문화팀: "문화사역팀",
+    빅아이디어팀: "빅아이디어팀",
+    빅아팀: "빅아이디어팀",
+    예배팀: "예배팀",
+    찬양팀: "예배팀",
+  };
+  return map[s] || raw;
+}
+
 const JOB_ICON = {
   팀빌딩: { icon: "🏗️", bg: "var(--blue-bg)" },
   "디자인&데코": { icon: "🎨", bg: "#FFF0F7" },
@@ -762,21 +784,21 @@ function parseLuggageTeam(json) {
       if (name === "사역팀" && note === "캐리어 수량") {
         isCarrierSection = true;
       } else if (isCarrierSection && name && name !== "사역팀") {
-        carriers.push({ team: name, count: note || "-" });
+        carriers.push({ team: normalizeTeamName(name), count: note || "-" });
       } else if (num && name && name !== "이름" && !isCarrierSection) {
         personal.push({ num, name, note, checked, carryOn });
       }
 
       // ── 오른쪽 영역: 사역팀별 짐 ──
       // [6]순번 [7]사역팀 [8]물품명 [9]수량 [10]예상무게 [11]비고
-      const team = safeStr(row, 7);
+      const team = normalizeTeamName(safeStr(row, 7));
       const item = safeStr(row, 8);
       const qty = safeStr(row, 9);
       const weight = safeStr(row, 10);
       const memo = safeStr(row, 11);
 
       // 헤더 스킵, 빈 행 스킵
-      if (team === "사역팀" || (!team && !item)) continue;
+      if (safeStr(row, 7) === "사역팀" || (!team && !item)) continue;
       if (item) teamItems.push({ team, item, qty, weight, memo });
     }
 
