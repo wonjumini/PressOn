@@ -92,11 +92,7 @@ body {
 .nav-top-left {
   display: flex;
   align-items: center;
-  gap: 8px;
   cursor: pointer;
-}
-.nav-top-icon {
-  font-size: 20px;
 }
 .nav-top-title {
   font-size: 17px;
