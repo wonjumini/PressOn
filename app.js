@@ -1908,6 +1908,25 @@ function closeLetterImg() {
 const loaded = new Set();
 let menuOpen = false;
 
+// 배경음악 재생/정지 토글
+function toggleBgm() {
+  const audio = document.getElementById("bgmAudio");
+  const btn = document.getElementById("bgmBtn");
+  if (!audio || !btn) return;
+  if (audio.paused) {
+    audio.volume = 0.4; // 은은하게
+    audio.play().then(() => {
+      btn.classList.add("playing");
+    }).catch(() => {
+      // 재생 실패 시 (네트워크 등) 상태 유지
+      btn.classList.remove("playing");
+    });
+  } else {
+    audio.pause();
+    btn.classList.remove("playing");
+  }
+}
+
 function toggleMenu() {
   menuOpen ? closeMenu() : openMenu();
 }

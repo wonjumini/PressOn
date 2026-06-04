@@ -110,6 +110,38 @@ body {
   gap: 5px;
   padding: 4px;
 }
+.nav-top-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.bgm-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  color: var(--t1);
+  -webkit-tap-highlight-color: transparent;
+}
+.bgm-btn:active {
+  transform: scale(0.92);
+}
+/* 기본: 꺼짐 아이콘 표시, 켜짐 숨김 */
+.bgm-btn .bgm-icon-on {
+  display: none;
+}
+.bgm-btn .bgm-icon-off {
+  display: block;
+}
+/* 재생 중: 켜짐 아이콘 표시 */
+.bgm-btn.playing .bgm-icon-on {
+  display: block;
+}
+.bgm-btn.playing .bgm-icon-off {
+  display: none;
+}
 .hamburger-btn span {
   display: block;
   width: 22px;

@@ -52,15 +52,35 @@
         >
           <span class="nav-top-title">SPRING NEPAL</span>
         </div>
-        <button
-          class="hamburger-btn"
-          id="hamburgerBtn"
-          onclick="toggleMenu()"
-          aria-label="메뉴"
-        >
-          <span></span><span></span><span></span>
-        </button>
+        <div class="nav-top-right">
+          <button
+            class="bgm-btn"
+            id="bgmBtn"
+            onclick="toggleBgm()"
+            aria-label="배경음악"
+          >
+            <svg class="bgm-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+              <path d="M15.5 8.5a5 5 0 010 7"/>
+              <path d="M19 5a9 9 0 010 14"/>
+            </svg>
+            <svg class="bgm-icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+              <line x1="23" y1="9" x2="17" y2="15"/>
+              <line x1="17" y1="9" x2="23" y2="15"/>
+            </svg>
+          </button>
+          <button
+            class="hamburger-btn"
+            id="hamburgerBtn"
+            onclick="toggleMenu()"
+            aria-label="메뉴"
+          >
+            <span></span><span></span><span></span>
+          </button>
+        </div>
       </div>
+      <audio id="bgmAudio" src="audio/bgm.mp3" loop preload="none"></audio>
       <div class="nav-menu" id="navMenu">
         <div class="nav-menu-list">
           <button class="drawer-item" data-page="overview">개요</button>
