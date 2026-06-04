@@ -1083,7 +1083,7 @@ function renderTeam(result) {
               </div>
             </div>` : "";
           return `
-          <div class="team-card">
+          <div class="team-card" style="--team-bar:${meta.color}">
             <div class="team-hd" ${detail ? `onclick="toggleTeamDetail(${ti})" style="cursor:pointer"` : ""}>
               <div class="team-icon" style="background:${meta.bg};color:${meta.color}">${meta.icon}</div>
               <div class="team-name">${escHtml(t.name)}</div>
@@ -1242,7 +1242,8 @@ function renderPlan(result) {
 
   el.innerHTML = finalPlans
     .map((p, idx) => {
-      const icon = teamIcons[p.name] || "⭐";
+      const meta = TEAM_META[p.name] || { icon: "⭐", color: "var(--pri)" };
+      const icon = meta.icon;
       const body = p.writing
         ? `<div class="plan-bd" id="plan-bd-${idx}" style="padding:20px;text-align:center"><span class="writing-pill">✏️ 작성 중</span></div>`
         : `<div class="plan-bd" id="plan-bd-${idx}">
@@ -1252,7 +1253,7 @@ function renderPlan(result) {
           ${p.rain ? `<div class="plan-sec"><div class="plan-sec-label">☔ 우천시 계획</div><div class="plan-rain">${escHtml(p.rain)}</div></div>` : ""}
         </div>`;
       return `
-      <div class="plan-card">
+      <div class="plan-card" style="--team-bar:${meta.color}">
         <div class="plan-hd" onclick="togglePlan(${idx})">
           <span class="plan-icon">${icon}</span>
           <span class="plan-name">${escHtml(p.name)}</span>

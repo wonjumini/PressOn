@@ -1639,22 +1639,7 @@ main {
   left: 0;
   right: 0;
   height: 3px;
-  background: var(--pri);
-}
-.team-card:nth-child(2)::before {
-  background: #1a7f4b;
-}
-.team-card:nth-child(3)::before {
-  background: var(--acc);
-}
-.team-card:nth-child(4)::before {
-  background: #5f3dc4;
-}
-.team-card:nth-child(5)::before {
-  background: #e24b4a;
-}
-.team-card:nth-child(6)::before {
-  background: #d69e2e;
+  background: var(--team-bar, var(--pri));
 }
 .team-hd {
   display: flex;
@@ -1789,6 +1774,16 @@ main {
   margin-bottom: 8px;
   border: 1px solid var(--bd);
   transition: transform 0.2s var(--ease);
+  position: relative;
+}
+.plan-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--team-bar, var(--pri));
 }
 .plan-hd {
   display: flex;
