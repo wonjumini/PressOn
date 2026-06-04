@@ -1083,7 +1083,7 @@ function renderTeam(result) {
               </div>
             </div>` : "";
           return `
-          <div class="team-card" style="--team-bar:${meta.color}">
+          <div class="team-card">
             <div class="team-hd" ${detail ? `onclick="toggleTeamDetail(${ti})" style="cursor:pointer"` : ""}>
               <div class="team-icon" style="background:${meta.bg};color:${meta.color}">${meta.icon}</div>
               <div class="team-name">${escHtml(t.name)}</div>
@@ -1253,9 +1253,9 @@ function renderPlan(result) {
           ${p.rain ? `<div class="plan-sec"><div class="plan-sec-label">☔ 우천시 계획</div><div class="plan-rain">${escHtml(p.rain)}</div></div>` : ""}
         </div>`;
       return `
-      <div class="plan-card" style="--team-bar:${meta.color}">
+      <div class="plan-card">
         <div class="plan-hd" onclick="togglePlan(${idx})">
-          <span class="plan-icon">${icon}</span>
+          <span class="plan-icon" style="background:${meta.bg || "var(--bg2)"};color:${meta.color}">${icon}</span>
           <span class="plan-name">${escHtml(p.name)}</span>
           <span class="plan-arrow" id="plan-arrow-${idx}">▼</span>
         </div>
@@ -1313,7 +1313,9 @@ function renderAttendance(result) {
   const countEl = document.getElementById("att-count");
   if (totalEl) totalEl.textContent = members.length;
   if (rateEl) rateEl.textContent = rate + "%";
-  if (countEl) countEl.textContent = dates.length;
+  // 남은 모임 = 전체 모임 - 지난 모임 (음수 방지)
+  const remaining = Math.max(0, MEETING_FULL_DATES.length - pastCount);
+  if (countEl) countEl.textContent = remaining;
 
   // B안: 팀원별 요약 카드 + 펼치기
   const cards = members
