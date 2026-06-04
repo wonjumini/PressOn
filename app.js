@@ -2148,11 +2148,13 @@ init();
 /* ═══════════════════════════════════════════════
    16. 스크롤 유도 버튼 액션
 ═══════════════════════════════════════════════ */
-function loadVideo() {
-  const wrap = document.getElementById("video-placeholder");
+function loadVideo(videoId, placeholderId) {
+  // 기존 호출 호환: 인자 없으면 첫 영상 기본값
+  const id = videoId || "Go3qHZosLuY";
+  const wrap = document.getElementById(placeholderId || "video-placeholder");
   if (!wrap) return;
   wrap.innerHTML = `<iframe
-    src="https://www.youtube.com/embed/Go3qHZosLuY?autoplay=1"
+    src="https://www.youtube.com/embed/${id}?autoplay=1"
     title="네팔 선교 영상"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
