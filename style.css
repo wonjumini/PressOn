@@ -2974,22 +2974,25 @@ main {
 .letter-modal-close {
   width: 38px;
   height: 38px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
   border: none;
   color: #fff;
-  font-size: 17px;
+  font-size: 22px;
+  line-height: 1;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
 .letter-modal-close:active {
-  background: rgba(255, 255, 255, 0.3);
+  opacity: 0.55;
 }
 .letter-modal-scroll {
   flex: 1;
   overflow: auto;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   padding: 0 12px 20px;
   -webkit-overflow-scrolling: touch;
@@ -2998,6 +3001,7 @@ main {
 .letter-modal-img {
   max-width: 100%;
   height: auto;
+  margin: auto;
   border-radius: 8px;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
 }
