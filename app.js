@@ -1255,7 +1255,7 @@ function renderPlan(result) {
       return `
       <div class="plan-card">
         <div class="plan-hd" onclick="togglePlan(${idx})">
-          <span class="plan-icon" style="background:${meta.bg || "var(--bg2)"};color:${meta.color}">${icon}</span>
+          <span class="plan-icon">${icon}</span>
           <span class="plan-name">${escHtml(p.name)}</span>
           <span class="plan-arrow" id="plan-arrow-${idx}">▼</span>
         </div>
