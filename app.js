@@ -1915,10 +1915,9 @@ function toggleBgm() {
   if (!audio || !btn) return;
   if (audio.paused) {
     audio.volume = 0.4; // 은은하게
-    audio.play().then(() => {
-      btn.classList.add("playing");
-    }).catch(() => {
-      // 재생 실패 시 (네트워크 등) 상태 유지
+    btn.classList.add("playing"); // 탭 즉시 반응 (버퍼링 기다리지 않음)
+    audio.play().catch(() => {
+      // 재생 실패 시 (네트워크 등) 원복
       btn.classList.remove("playing");
     });
   } else {
