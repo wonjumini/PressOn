@@ -575,7 +575,7 @@ const MEMBER_BIRTH = {
 const SCHEDULE_ITEMS = [
   { date: "2026-05-30", day: "토", title: "팀모임1 (환영)", detail: "", place: "비전5", badges: ["team"] },
   { date: "2026-05-31", day: "주", title: "선교학교1 / 팀모임2 (시작)", detail: "여름단기선교의 중요성", place: "비전5", badges: ["school", "team"] },
-  { date: "2026-06-06", day: "토", title: "팀모임3 (구상)", detail: "", place: "다움1", badges: ["team"] },
+  { date: "2026-06-06", day: "토", title: "팀모임3 (구상&결정)", detail: "", place: "다움1", badges: ["team"] },
   { date: "2026-06-07", day: "주", title: "선교학교2 / 팀모임4 (실행)", detail: "단기선교 준비", place: "다움2", badges: ["school", "team"] },
   { date: "2026-06-13", day: "토", title: "팀모임5 (등산)", detail: "인왕산 등산", place: "키움3층", badges: ["team"] },
   { date: "2026-06-14", day: "주", title: "선교학교3 / 팀모임6 (연습)", detail: "JOB", place: "채움3, 미팅룸3/4", badges: ["school", "team"] },

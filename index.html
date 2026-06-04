@@ -36,9 +36,11 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Press On" />
 
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
     />
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -104,7 +106,7 @@
           <div class="hero-bg-circle hero-bg-2"></div>
           <div class="hero-badge">2026 SPRING OUTREACH</div>
           <h1 class="hero-title">
-            푯대를 향하여,<br />
+            푯대를 향하여<br />
             <span class="hero-gradient">Press On!</span>
           </h1>
           <p class="hero-sub">
@@ -143,7 +145,7 @@
               <div class="ov-card stagger-item">
                 <div class="ov-ic">📅</div>
                 <div class="ov-lb">기간</div>
-                <div class="ov-val">6박 8일<br />7.11 – 7.19</div>
+                <div class="ov-val">8박 9일<br />7.11 – 7.19</div>
               </div>
               <div class="ov-card stagger-item">
                 <div class="ov-ic">🏔️</div>
@@ -619,7 +621,7 @@
                   </div></div></div><span class="sch-chevron" id="nchev-5">▼</span>
               </div>
 
-              <div class="sch-item">
+              <div class="sch-item" onclick="toggleNepalDay(6)">
                 <div class="sch-date">
                   <div class="sch-month">7월</div>
                   <div class="sch-day">17</div>
@@ -627,13 +629,19 @@
                 </div>
                 <div class="sch-divider"></div>
                 <div class="sch-content">
-                  <div class="sch-title">카트만두 사역</div>
-                  <div class="sch-detail">인터씨드 사역 · 쇼핑</div>
+                  <div class="sch-title">꺼랄교회 청장년 사역</div>
+                  <div class="sch-detail">파슈파티나트 · 쿠마리 사원</div>
                   <div class="sch-badges"><span class="pill pill-green">사역</span></div>
-                </div>
+                  <div class="sch-accordion" id="nday-6"><div class="sch-time-block">
+                    <div class="sch-time-row"><span class="sch-time">07:00</span><span class="sch-time-content">아침식사</span></div>
+                    <div class="sch-time-row"><span class="sch-time">08:00</span><span class="sch-time-content">파슈파티나트 사원 · 쿠마리 사원</span></div>
+                    <div class="sch-time-row"><span class="sch-time">12:00</span><span class="sch-time-content">점심식사</span></div>
+                    <div class="sch-time-row"><span class="sch-time">14:00</span><span class="sch-time-content">꺼랄 교회 청장년 사역</span></div>
+                    <div class="sch-time-row"><span class="sch-time">19:00</span><span class="sch-time-content">저녁식사</span></div>
+                  </div></div></div><span class="sch-chevron" id="nchev-6">▼</span>
               </div>
 
-              <div class="sch-item">
+              <div class="sch-item" onclick="toggleNepalDay(7)">
                 <div class="sch-date">
                   <div class="sch-month">7월</div>
                   <div class="sch-day">18</div>
@@ -641,10 +649,15 @@
                 </div>
                 <div class="sch-divider"></div>
                 <div class="sch-content">
-                  <div class="sch-title">한국 출발</div>
-                  <div class="sch-detail">귀국</div>
-                  <div class="sch-badges"><span class="pill pill-yellow">이동</span></div>
-                </div>
+                  <div class="sch-title">현지교회 예배 · 귀국</div>
+                  <div class="sch-detail">쇼핑 후 공항으로</div>
+                  <div class="sch-badges"><span class="pill pill-blue">예배</span><span class="pill pill-yellow">이동</span></div>
+                  <div class="sch-accordion" id="nday-7"><div class="sch-time-block">
+                    <div class="sch-time-row"><span class="sch-time">07:00</span><span class="sch-time-content">아침식사</span></div>
+                    <div class="sch-time-row"><span class="sch-time">08:00</span><span class="sch-time-content">현지교회 예배</span></div>
+                    <div class="sch-time-row"><span class="sch-time">12:00</span><span class="sch-time-content">점심식사</span></div>
+                    <div class="sch-time-row"><span class="sch-time">14:00</span><span class="sch-time-content">쇼핑 후 공항으로 (귀국)</span></div>
+                  </div></div></div><span class="sch-chevron" id="nchev-7">▼</span>
               </div>
 
             </div>
