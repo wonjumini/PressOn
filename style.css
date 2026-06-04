@@ -2221,24 +2221,29 @@ main {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: var(--t1);
-  color: white;
-  border: none;
-  font-size: 16px;
+  background: #fff;
+  color: var(--t2);
+  border: 0.5px solid var(--bd);
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
-  display: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--tr);
   z-index: 200;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
 }
 .scroll-top.visible {
-  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
-.scroll-top:hover {
-  background: var(--pri);
-  transform: translateY(-2px);
+.scroll-top:active {
+  transform: scale(0.92);
 }
 
 /* ═══ RESPONSIVE ════════════════════════════════ */
