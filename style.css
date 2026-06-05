@@ -1439,7 +1439,7 @@ main {
   background: var(--bg2);
   border-radius: 10px;
   padding: 10px 12px;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 .sch-time-row {
   display: flex;
