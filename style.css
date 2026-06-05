@@ -1355,6 +1355,16 @@ main {
 .sch-item.past {
   opacity: 0.65;
 }
+.sch-item.sch-acc {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+.sch-acc .sch-item-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 .sch-date {
   min-width: 36px;
   text-align: center;
@@ -3053,6 +3063,11 @@ main {
   display: flex;
 }
 .letter-modal-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -3082,7 +3097,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 12px 20px;
+  padding: 20px 12px;
   -webkit-overflow-scrolling: touch;
   touch-action: pinch-zoom;
 }
