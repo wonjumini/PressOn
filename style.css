@@ -142,6 +142,116 @@ body {
 .bgm-btn.playing .bgm-icon-off {
   display: none;
 }
+.bgm-btn.playing {
+  color: var(--pri);
+}
+/* ─ 주제가 플로팅 미니플레이어 ─ */
+.bgm-panel {
+  position: absolute;
+  top: 54px;
+  right: 14px;
+  width: 212px;
+  background: var(--surface);
+  border: 1px solid var(--bd);
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  box-shadow: 0 8px 24px rgba(25, 31, 40, 0.12);
+  opacity: 0;
+  transform: translateY(-8px) scale(0.97);
+  transition:
+    opacity 0.26s var(--ease),
+    transform 0.26s var(--spring);
+  pointer-events: none;
+  z-index: 102;
+}
+.bgm-panel.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.bgm-pp {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--pri);
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.12s;
+}
+.bgm-pp:active {
+  transform: scale(0.94);
+}
+.bgm-pp .bgm-pp-pause {
+  display: none;
+}
+.bgm-panel.playing .bgm-pp .bgm-pp-play {
+  display: none;
+}
+.bgm-panel.playing .bgm-pp .bgm-pp-pause {
+  display: block;
+}
+.bgm-panel-info {
+  min-width: 0;
+  flex: 1;
+}
+.bgm-panel-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--pri);
+  letter-spacing: 0.2px;
+}
+.bgm-panel-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--t1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bgm-eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 11px;
+}
+.bgm-eq i {
+  width: 2.5px;
+  background: var(--pri);
+  border-radius: 2px;
+  height: 4px;
+}
+.bgm-panel.playing .bgm-eq i {
+  animation: bgmBounce 0.9s ease-in-out infinite;
+}
+.bgm-eq i:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.bgm-eq i:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.bgm-eq i:nth-child(4) {
+  animation-delay: 0.1s;
+}
+@keyframes bgmBounce {
+  0%,
+  100% {
+    height: 4px;
+  }
+  50% {
+    height: 11px;
+  }
+}
 .hamburger-btn span {
   display: block;
   width: 22px;
@@ -1439,7 +1549,7 @@ main {
   background: var(--bg2);
   border-radius: 10px;
   padding: 10px 12px;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 .sch-time-row {
   display: flex;

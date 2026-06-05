@@ -1296,30 +1296,40 @@ function renderAttendance(result) {
         })),
       };
 
-  // 지난 모임 수 계산 (오늘 기준으로 이미 지난 모임만)
-  const today = kstNow();
-  today.setHours(0, 0, 0, 0);
+  // 모임 날짜 (ATTENDANCE_DATES / att 인덱스와 1:1 매칭)
+  const now = kstNow();
   const MEETING_FULL_DATES = [
     "2026-05-30", "2026-05-31", "2026-06-06", "2026-06-07",
     "2026-06-13", "2026-06-14", "2026-06-20", "2026-06-21",
     "2026-06-27", "2026-06-28", "2026-07-04", "2026-07-05",
   ];
-  let pastCount = 0;
-  MEETING_FULL_DATES.forEach((d) => {
-    const dt = new Date(d);
-    dt.setHours(0, 0, 0, 0);
-    if (dt <= today) pastCount++;
-  });
 
-  // 통계: 평균 출석률 = 지난 모임 기준
+  // 남은 모임수: 모임 당일 밤 22:00이 지나야 "끝난 모임"으로 카운트
+  let doneCount = 0;
+  MEETING_FULL_DATES.forEach((d) => {
+    const cutoff = new Date(d);
+    cutoff.setHours(22, 0, 0, 0); // 그날 밤 10시 기준
+    if (now >= cutoff) doneCount++;
+  });
+  const remaining = Math.max(0, MEETING_FULL_DATES.length - doneCount);
+
+  // 출석률: 박지명(디렉터, 결석 없음)이 체크된 마지막 모임까지만 모수에 반영
+  // → 시트에 아직 체크 안 된 미래 모임은 분모에서 제외
+  const director = members.find((m) => m.name === "박지명");
+  let recordedCount = 0;
+  if (director) {
+    for (let i = 0; i < director.att.length; i++) {
+      if (director.att[i] === 1) recordedCount = i + 1;
+    }
+  }
+
   let totalAtt = 0;
   members.forEach((m) => {
-    // 지난 모임까지만 합산
-    for (let i = 0; i < pastCount; i++) {
+    for (let i = 0; i < recordedCount; i++) {
       totalAtt += m.att[i] || 0;
     }
   });
-  const possiblePast = members.length * pastCount;
+  const possiblePast = members.length * recordedCount;
   const rate = possiblePast > 0 ? Math.round((totalAtt / possiblePast) * 100) : 0;
 
   const totalEl = document.getElementById("att-total");
@@ -1327,8 +1337,6 @@ function renderAttendance(result) {
   const countEl = document.getElementById("att-count");
   if (totalEl) totalEl.textContent = members.length;
   if (rateEl) rateEl.textContent = rate + "%";
-  // 남은 모임 = 전체 모임 - 지난 모임 (음수 방지)
-  const remaining = Math.max(0, MEETING_FULL_DATES.length - pastCount);
   if (countEl) countEl.textContent = remaining;
 
   // B안: 팀원별 요약 카드 + 펼치기
@@ -1954,22 +1962,71 @@ const loaded = new Set();
 let menuOpen = false;
 
 // 배경음악 재생/정지 토글
-function toggleBgm() {
+let bgmPanelOpen = false;
+
+// 재생 상태에 맞춰 스피커 아이콘 / 패널 이퀄라이저 / 재생·정지 아이콘 갱신
+function syncBgmUI() {
   const audio = document.getElementById("bgmAudio");
   const btn = document.getElementById("bgmBtn");
-  if (!audio || !btn) return;
-  if (audio.paused) {
-    audio.volume = 0.4; // 은은하게
-    btn.classList.add("playing"); // 탭 즉시 반응 (버퍼링 기다리지 않음)
-    audio.play().catch(() => {
-      // 재생 실패 시 (네트워크 등) 원복
-      btn.classList.remove("playing");
-    });
+  const panel = document.getElementById("bgmPanel");
+  const playing = !!(audio && !audio.paused);
+  if (btn) btn.classList.toggle("playing", playing);
+  if (panel) panel.classList.toggle("playing", playing);
+}
+
+function startBgm() {
+  const audio = document.getElementById("bgmAudio");
+  if (!audio) return;
+  audio.volume = 0.4; // 은은하게
+  syncBgmUI(); // 탭 즉시 반응 (버퍼링 기다리지 않음)
+  audio.play().then(syncBgmUI).catch(syncBgmUI);
+}
+
+// 스피커 아이콘: 패널 열기/닫기 (열 때 정지 상태면 재생 시작)
+function toggleBgmPanel(e) {
+  if (e) e.stopPropagation();
+  const panel = document.getElementById("bgmPanel");
+  if (!panel) return;
+  if (bgmPanelOpen) {
+    closeBgmPanel();
   } else {
-    audio.pause();
-    btn.classList.remove("playing");
+    bgmPanelOpen = true;
+    panel.classList.add("open");
+    const audio = document.getElementById("bgmAudio");
+    if (audio && audio.paused) startBgm();
+    else syncBgmUI();
   }
 }
+
+function closeBgmPanel() {
+  const panel = document.getElementById("bgmPanel");
+  if (panel) panel.classList.remove("open");
+  bgmPanelOpen = false;
+}
+
+// 패널 안 재생/일시정지 버튼 (재생은 멈춰도 패널은 그대로)
+function toggleBgmPlay(e) {
+  if (e) e.stopPropagation();
+  const audio = document.getElementById("bgmAudio");
+  if (!audio) return;
+  if (audio.paused) {
+    audio.volume = 0.4;
+    audio.play().then(syncBgmUI).catch(syncBgmUI);
+  } else {
+    audio.pause();
+  }
+  syncBgmUI();
+}
+
+// 바깥 영역 탭 → 패널 닫기 (재생 상태는 유지)
+document.addEventListener("click", function (e) {
+  if (!bgmPanelOpen) return;
+  const panel = document.getElementById("bgmPanel");
+  const btn = document.getElementById("bgmBtn");
+  if (panel && panel.contains(e.target)) return;
+  if (btn && btn.contains(e.target)) return;
+  closeBgmPanel();
+});
 
 function toggleMenu() {
   menuOpen ? closeMenu() : openMenu();
