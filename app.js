@@ -15,7 +15,7 @@ const SHEETS = {
   attendance: "✅ 출석체크",
   org: "🤝 조직도 ㅣ 💼 JOB ㅣ 👫 생활조",
   plan: "📝 팀별사역계획",
-  notice: "🎤 공지",
+  notice: "🎤 광고",
   luggageTeam: "👍각 팀 별도 탭",
   luggageRental: "🎹물품대여현황",
 };
