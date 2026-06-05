@@ -132,20 +132,20 @@ body {
 .bgm-btn .bgm-icon-on {
   display: block;
 }
-/* ─ 주제가 플로팅 미니플레이어 (알약형) ─ */
+/* ─ 주제가 플로팅 미니플레이어 (카드형) ─ */
 .bgm-panel {
   position: absolute;
   top: 54px;
   right: 14px;
   width: auto;
-  max-width: 248px;
+  max-width: 252px;
   background: var(--surface);
   border: 1px solid var(--bd);
   border-radius: 14px;
-  padding: 12px 14px;
+  padding: 13px 15px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 18px;
   box-shadow: 0 8px 24px rgba(25, 31, 40, 0.12);
   opacity: 0;
   transform: translateY(-8px) scale(0.97);
@@ -162,12 +162,12 @@ body {
 }
 .bgm-pp {
   flex: none;
-  width: 33px;
-  height: 33px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  background: var(--t1);
+  background: none;
   border: none;
-  color: #fff;
+  color: var(--t1);
   display: flex;
   align-items: center;
   justify-content: center;
