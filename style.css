@@ -1716,26 +1716,24 @@ main {
 }
 
 .lg-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 .lg-card {
   background: var(--surface);
-  border-radius: var(--r);
-  padding: 14px;
+  border-radius: 14px;
+  padding: 13px;
   border: 1px solid var(--bd);
-  overflow: hidden;
-}
-.lg-hd {
   display: flex;
   align-items: center;
-  gap: 9px;
-  margin-bottom: 10px;
+  gap: 11px;
+  flex-wrap: wrap;
+  overflow: hidden;
 }
 .lg-icon {
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   border-radius: 11px;
   display: flex;
   align-items: center;
@@ -1743,13 +1741,18 @@ main {
   background: var(--pri-lt);
   color: var(--pri);
   font-weight: 800;
-  font-size: 14px;
+  font-size: 15px;
   flex-shrink: 0;
 }
 .lg-leader {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--pri);
+  flex-shrink: 0;
+}
+.lg-card .chips {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .job-item {
@@ -2247,11 +2250,6 @@ main {
 }
 
 /* ═══ RESPONSIVE ════════════════════════════════ */
-@media (min-width: 500px) {
-  .lg-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
 ::selection {
   background: var(--pri);
   color: #fff;

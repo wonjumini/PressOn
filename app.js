@@ -1113,10 +1113,8 @@ function renderTeam(result) {
           .map(
             (g) => `
           <div class="lg-card">
-            <div class="lg-hd">
-              <div class="lg-icon">${g.num}</div>
-              <div class="lg-leader">${escHtml(parseName(g.leader).name)}</div>
-            </div>
+            <div class="lg-icon">${g.num}</div>
+            <div class="lg-leader">${escHtml(parseName(g.leader).name)}</div>
             <div class="chips">
               ${g.members.map((m) => `<span class="chip">${escHtml(parseName(m).name)}</span>`).join("")}
             </div>
