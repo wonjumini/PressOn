@@ -1444,7 +1444,7 @@ main {
 .sch-time-row {
   display: flex;
   gap: 12px;
-  padding: 6px 0;
+  padding: 10px 0;
   border-bottom: 0.5px solid var(--bd);
   align-items: flex-start;
 }
