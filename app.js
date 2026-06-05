@@ -613,14 +613,25 @@ function parseAttendance(json) {
         return 0;
       });
 
-      sheetData[name] = att;
+      // 비고: 각 체크 컬럼 바로 옆(idx+1)
+      const memos = ATTENDANCE_DATES.map((d) => {
+        const cells = row.c || [];
+        const cell = cells[d.idx + 1];
+        return cell && cell.v != null ? String(cell.v).trim() : "";
+      });
+
+      sheetData[name] = { att, memos };
     }
 
     // 28명 명단 기준으로 항상 뼈대 생성 (시트 데이터 없으면 전부 0)
-    const members = MEMBER_NAMES.map((name) => ({
-      name,
-      att: sheetData[name] || ATTENDANCE_DATES.map(() => 0),
-    }));
+    const members = MEMBER_NAMES.map((name) => {
+      const d = sheetData[name];
+      return {
+        name,
+        att: d?.att || ATTENDANCE_DATES.map(() => 0),
+        memos: d?.memos || ATTENDANCE_DATES.map(() => ""),
+      };
+    });
 
     const dates = ATTENDANCE_DATES.map((d) => d.label);
     return { dates, members };
@@ -630,6 +641,7 @@ function parseAttendance(json) {
     const members = MEMBER_NAMES.map((name) => ({
       name,
       att: ATTENDANCE_DATES.map(() => 0),
+      memos: ATTENDANCE_DATES.map(() => ""),
     }));
     const dates = ATTENDANCE_DATES.map((d) => d.label);
     return { dates, members };
@@ -1337,6 +1349,15 @@ function renderAttendance(result) {
         .join("");
 
       const birth = MEMBER_BIRTH[m.name] || "";
+
+      // 비고 있는 날짜만 목록으로
+      const memoRows = m.att
+        .map((v, di) => ({ date: ATTENDANCE_DATES[di].label, memo: (m.memos && m.memos[di]) || "" }))
+        .filter((x) => x.memo)
+        .map((x) => `<div class="att-memo-row"><b>${escHtml(x.date)}</b> · ${escHtml(x.memo)}</div>`)
+        .join("");
+      const memoBlock = memoRows ? `<div class="att-memo-list">${memoRows}</div>` : "";
+
       return `
       <div class="att-member-card" onclick="toggleAttMember(${idx})">
         <div class="att-member-head">
@@ -1351,12 +1372,18 @@ function renderAttendance(result) {
         </div>
         <div class="att-member-detail" id="att-detail-${idx}">
           <div class="att-dot-grid">${dots}</div>
+          ${memoBlock}
         </div>
       </div>`;
     })
     .join("");
 
-  el.innerHTML = `<div class="att-member-list">${cards}</div>`;
+  el.innerHTML = `
+    <div class="att-legend">
+      <span class="att-legend-item"><span class="att-dot on"></span>출석</span>
+      <span class="att-legend-item"><span class="att-dot off"></span>결석</span>
+    </div>
+    <div class="att-member-list">${cards}</div>`;
   el.classList.add("fade-in");
 }
 

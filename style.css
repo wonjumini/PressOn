@@ -2832,12 +2832,44 @@ main {
   width: 10px;
   height: 10px;
   border-radius: 50%;
+  box-sizing: border-box;
 }
 .att-dot.on {
   background: var(--pri);
 }
 .att-dot.off {
-  background: var(--bd);
+  background: #fff;
+  border: 1.5px solid #c4cbd4;
+}
+.att-legend {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 11px;
+  color: var(--t3);
+}
+.att-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.att-memo-list {
+  margin-top: 12px;
+  padding-top: 11px;
+  border-top: 1px dashed var(--bd);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.att-memo-row {
+  font-size: 12px;
+  color: var(--t3);
+  line-height: 1.5;
+}
+.att-memo-row b {
+  color: var(--pri);
+  font-weight: 600;
 }
 .att-dot-date {
   font-size: 10px;
