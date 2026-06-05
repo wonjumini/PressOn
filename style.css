@@ -1617,6 +1617,22 @@ main {
   font-size: 11px;
   color: var(--t3);
 }
+.sch-flight-layover {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sch-flight-layover .lay-hr {
+  flex: 1;
+  height: 1px;
+  background: #c9ddf7;
+}
+.sch-flight-layover .lay-txt {
+  font-size: 11px;
+  font-weight: 600;
+  color: #4e7bc4;
+  white-space: nowrap;
+}
 
 /* 네팔 미확정 */
 .nepal-notice {
