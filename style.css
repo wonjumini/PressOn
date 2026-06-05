@@ -137,14 +137,14 @@ body {
   position: absolute;
   top: 54px;
   right: 14px;
-  width: 216px;
+  width: 212px;
   background: var(--surface);
   border: 1px solid var(--bd);
-  border-radius: 24px;
-  padding: 9px 10px 9px 16px;
+  border-radius: 14px;
+  padding: 12px 14px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
   box-shadow: 0 8px 24px rgba(25, 31, 40, 0.12);
   opacity: 0;
   transform: translateY(-8px) scale(0.97);
@@ -190,6 +190,9 @@ body {
   flex: 1;
 }
 .bgm-panel-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 10px;
   font-weight: 600;
   color: var(--t3);
