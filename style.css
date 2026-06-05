@@ -128,36 +128,23 @@ body {
 .bgm-btn:active {
   transform: scale(0.92);
 }
-/* 기본: 꺼짐 아이콘 표시, 켜짐 숨김 */
+/* 스피커 아이콘: 재생 여부와 무관하게 항상 검은 파형 고정 */
 .bgm-btn .bgm-icon-on {
-  display: none;
-}
-.bgm-btn .bgm-icon-off {
   display: block;
 }
-/* 재생 중: 켜짐 아이콘 표시 */
-.bgm-btn.playing .bgm-icon-on {
-  display: block;
-}
-.bgm-btn.playing .bgm-icon-off {
-  display: none;
-}
-.bgm-btn.playing {
-  color: var(--pri);
-}
-/* ─ 주제가 플로팅 미니플레이어 ─ */
+/* ─ 주제가 플로팅 미니플레이어 (알약형) ─ */
 .bgm-panel {
   position: absolute;
   top: 54px;
   right: 14px;
-  width: 212px;
+  width: 216px;
   background: var(--surface);
   border: 1px solid var(--bd);
-  border-radius: 14px;
-  padding: 12px 14px;
+  border-radius: 24px;
+  padding: 9px 10px 9px 16px;
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 10px;
   box-shadow: 0 8px 24px rgba(25, 31, 40, 0.12);
   opacity: 0;
   transform: translateY(-8px) scale(0.97);
@@ -174,10 +161,10 @@ body {
 }
 .bgm-pp {
   flex: none;
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  background: var(--pri);
+  background: var(--t1);
   border: none;
   color: #fff;
   display: flex;
@@ -203,12 +190,9 @@ body {
   flex: 1;
 }
 .bgm-panel-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 6px;
   font-size: 10px;
   font-weight: 600;
-  color: var(--pri);
+  color: var(--t3);
   letter-spacing: 0.2px;
 }
 .bgm-panel-title {
@@ -227,7 +211,7 @@ body {
 }
 .bgm-eq i {
   width: 2.5px;
-  background: var(--pri);
+  background: var(--t4);
   border-radius: 2px;
   height: 4px;
 }

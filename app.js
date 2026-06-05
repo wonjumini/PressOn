@@ -1964,25 +1964,15 @@ let menuOpen = false;
 // 배경음악 재생/정지 토글
 let bgmPanelOpen = false;
 
-// 재생 상태에 맞춰 스피커 아이콘 / 패널 이퀄라이저 / 재생·정지 아이콘 갱신
+// 재생 상태에 맞춰 패널 이퀄라이저 / 재생·정지 아이콘 갱신 (스피커 아이콘은 고정)
 function syncBgmUI() {
   const audio = document.getElementById("bgmAudio");
-  const btn = document.getElementById("bgmBtn");
   const panel = document.getElementById("bgmPanel");
   const playing = !!(audio && !audio.paused);
-  if (btn) btn.classList.toggle("playing", playing);
   if (panel) panel.classList.toggle("playing", playing);
 }
 
-function startBgm() {
-  const audio = document.getElementById("bgmAudio");
-  if (!audio) return;
-  audio.volume = 0.4; // 은은하게
-  syncBgmUI(); // 탭 즉시 반응 (버퍼링 기다리지 않음)
-  audio.play().then(syncBgmUI).catch(syncBgmUI);
-}
-
-// 스피커 아이콘: 패널 열기/닫기 (열 때 정지 상태면 재생 시작)
+// 스피커 아이콘: 패널 열기/닫기만 (재생 제어는 패널 안에서만)
 function toggleBgmPanel(e) {
   if (e) e.stopPropagation();
   const panel = document.getElementById("bgmPanel");
@@ -1992,9 +1982,7 @@ function toggleBgmPanel(e) {
   } else {
     bgmPanelOpen = true;
     panel.classList.add("open");
-    const audio = document.getElementById("bgmAudio");
-    if (audio && audio.paused) startBgm();
-    else syncBgmUI();
+    syncBgmUI();
   }
 }
 
