@@ -137,15 +137,15 @@ body {
   position: absolute;
   top: 54px;
   right: 14px;
-  width: auto;
+  width: 232px;
   max-width: 252px;
   background: var(--surface);
   border: 1px solid var(--bd);
   border-radius: 14px;
-  padding: 13px 15px;
+  padding: 11px 16px;
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 13px;
   box-shadow: 0 8px 24px rgba(25, 31, 40, 0.12);
   opacity: 0;
   transform: translateY(-8px) scale(0.97);
@@ -188,6 +188,13 @@ body {
 }
 .bgm-panel-info {
   min-width: 0;
+  flex: 1;
+}
+.bgm-divider {
+  flex: none;
+  width: 1px;
+  align-self: stretch;
+  background: var(--bd);
 }
 .bgm-panel-eyebrow {
   display: flex;
