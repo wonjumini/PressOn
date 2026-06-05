@@ -137,14 +137,15 @@ body {
   position: absolute;
   top: 54px;
   right: 14px;
-  width: 212px;
+  width: auto;
+  max-width: 248px;
   background: var(--surface);
   border: 1px solid var(--bd);
   border-radius: 14px;
   padding: 12px 14px;
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 14px;
   box-shadow: 0 8px 24px rgba(25, 31, 40, 0.12);
   opacity: 0;
   transform: translateY(-8px) scale(0.97);
@@ -161,8 +162,8 @@ body {
 }
 .bgm-pp {
   flex: none;
-  width: 30px;
-  height: 30px;
+  width: 33px;
+  height: 33px;
   border-radius: 50%;
   background: var(--t1);
   border: none;
@@ -187,7 +188,6 @@ body {
 }
 .bgm-panel-info {
   min-width: 0;
-  flex: 1;
 }
 .bgm-panel-eyebrow {
   display: flex;
