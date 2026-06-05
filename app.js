@@ -1113,8 +1113,10 @@ function renderTeam(result) {
           .map(
             (g) => `
           <div class="lg-card">
-            <div class="lg-icon">${g.num}</div>
-            <div class="lg-leader">${escHtml(parseName(g.leader).name)}</div>
+            <div class="lg-hd">
+              <div class="lg-icon">${g.num}</div>
+              <div class="lg-leader">${escHtml(parseName(g.leader).name)}</div>
+            </div>
             <div class="chips">
               ${g.members.map((m) => `<span class="chip">${escHtml(parseName(m).name)}</span>`).join("")}
             </div>
@@ -1399,17 +1401,33 @@ function renderNotice(result) {
   }
 
   el.innerHTML = items
-    .map((n) => `
+    .map((n, i) => `
       <div class="notice-card">
         <div class="notice-meta">
           ${n.date ? `<span class="notice-date">${escHtml(n.date)}</span>` : ""}
           ${n.channel ? `<span class="notice-channel">${escHtml(n.channel)}</span>` : ""}
         </div>
-        <div class="notice-content">${escHtml(n.content)}</div>
+        <div class="notice-content clamp" id="ntc-${i}">${escHtml(n.content)}</div>
+        <button class="notice-more" id="ntm-${i}" onclick="toggleNoticeMore(${i})" hidden>더보기</button>
         ${n.memo ? `<div class="notice-memo">${escHtml(n.memo)}</div>` : ""}
       </div>
     `)
     .join("");
+
+  // 본문이 3줄 넘는 카드만 "더보기" 노출
+  items.forEach((_, i) => {
+    const c = document.getElementById(`ntc-${i}`);
+    const b = document.getElementById(`ntm-${i}`);
+    if (c && b && c.scrollHeight > c.clientHeight + 2) b.hidden = false;
+  });
+}
+
+function toggleNoticeMore(i) {
+  const c = document.getElementById(`ntc-${i}`);
+  const b = document.getElementById(`ntm-${i}`);
+  if (!c || !b) return;
+  const clamped = c.classList.toggle("clamp");
+  b.textContent = clamped ? "더보기" : "접기";
 }
 
 function renderLuggage(teamResult, rentalResult) {

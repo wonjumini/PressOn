@@ -936,7 +936,7 @@ main {
   padding: 16px 20px;
   margin-bottom: 8px;
   border: 1px solid var(--bd);
-  border-left: 3px solid var(--acc);
+  border-left: 3px solid var(--pri);
 }
 .notice-title {
   font-size: 14px;
@@ -1723,13 +1723,15 @@ main {
 .lg-card {
   background: var(--surface);
   border-radius: 14px;
-  padding: 13px;
+  padding: 13px 15px;
   border: 1px solid var(--bd);
+  overflow: hidden;
+}
+.lg-hd {
   display: flex;
   align-items: center;
   gap: 11px;
-  flex-wrap: wrap;
-  overflow: hidden;
+  margin-bottom: 11px;
 }
 .lg-icon {
   width: 38px;
@@ -1748,11 +1750,6 @@ main {
   font-size: 14px;
   font-weight: 700;
   color: var(--pri);
-  flex-shrink: 0;
-}
-.lg-card .chips {
-  flex: 1 1 auto;
-  min-width: 0;
 }
 
 .job-item {
@@ -2296,6 +2293,26 @@ main {
   line-height: 1.6;
   white-space: pre-line;
   word-break: keep-all;
+}
+.notice-content.clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.notice-more {
+  margin-top: 7px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--pri);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.notice-more:active {
+  opacity: 0.6;
 }
 .notice-memo {
   margin-top: 10px;
