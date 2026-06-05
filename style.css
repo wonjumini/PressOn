@@ -1458,6 +1458,51 @@ main {
   color: var(--t1);
   line-height: 1.5;
 }
+.sch-flight {
+  margin-top: 11px;
+  background: var(--pri-lt);
+  border-radius: 10px;
+  padding: 11px 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.sch-flight-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--pri);
+}
+.sch-flight-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2px;
+}
+.sch-flight-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--pri);
+}
+.sch-flight-dur {
+  font-size: 11px;
+  color: var(--t3);
+}
+.sch-flight-route {
+  font-size: 13px;
+  color: var(--t1);
+}
+.sch-flight-route .sch-flight-time {
+  color: var(--pri);
+  font-weight: 700;
+}
+.sch-flight-route .ar {
+  color: var(--t4);
+  margin: 0 2px;
+}
+.sch-flight-day {
+  font-size: 11px;
+  color: var(--t3);
+}
 
 /* 네팔 미확정 */
 .nepal-notice {
