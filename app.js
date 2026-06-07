@@ -1622,38 +1622,53 @@ async function loadHome() {
 
 // 홈 - 다음 모임 카드 (오늘 기준 가장 가까운 미래 일정)
 function renderNextMeeting() {
-  const dateEl = document.getElementById("next-meeting-date");
-  const titleEl = document.getElementById("next-meeting-title");
-  const placeEl = document.getElementById("next-meeting-place");
+  const listEl = document.getElementById("next-meeting-list");
   const cardEl = document.getElementById("next-meeting-card");
-  if (!dateEl || !titleEl || !cardEl) return;
+  if (!listEl || !cardEl) return;
 
-  const today = kstNow();
-  today.setHours(0, 0, 0, 0);
+  const now = kstNow();
 
-  // 오늘 포함 이후의 가장 가까운 일정 찾기
-  const next = SCHEDULE_ITEMS.find((item) => {
-    const d = new Date(item.date);
-    d.setHours(0, 0, 0, 0);
-    return d >= today;
+  // 토 + 주를 한 세트로 묶기 (단독 일정은 1개짜리 세트)
+  const sets = [];
+  for (let i = 0; i < SCHEDULE_ITEMS.length; i++) {
+    const cur = SCHEDULE_ITEMS[i];
+    const nxt = SCHEDULE_ITEMS[i + 1];
+    if (cur.day === "토" && nxt && nxt.day === "주") {
+      sets.push([cur, nxt]);
+      i++; // 주는 토와 함께 소비
+    } else {
+      sets.push([cur]);
+    }
+  }
+
+  // 세트의 마지막 모임(주일) 당일 밤 22시가 지나야 끝난 세트로 봄
+  // → 토요일만 지났을 땐 같은 토/주 세트를 그대로 유지
+  const activeSet = sets.find((set) => {
+    const last = set[set.length - 1];
+    const end = new Date(last.date);
+    end.setHours(22, 0, 0, 0);
+    return now < end;
   });
 
-  if (!next) {
-    // 모든 일정 종료
-    dateEl.textContent = "";
-    titleEl.textContent = "모든 일정이 마무리되었어요";
-    if (placeEl) placeEl.textContent = "";
+  if (!activeSet) {
+    listEl.innerHTML =
+      '<div class="next-meeting-title">모든 일정이 마무리되었어요</div>';
     return;
   }
 
-  const d = new Date(next.date);
-  const mo = d.getMonth() + 1;
-  const day = d.getDate();
-  dateEl.textContent = `${mo}/${day} (${next.day})`;
-  titleEl.textContent = next.title;
-  if (placeEl) {
-    placeEl.innerHTML = next.place ? `📍 ${escHtml(next.place)}` : "";
-  }
+  listEl.innerHTML = activeSet
+    .map((item) => {
+      const d = new Date(item.date);
+      const mo = d.getMonth() + 1;
+      const day = d.getDate();
+      const place = item.place ? `📍 ${escHtml(item.place)}` : "";
+      return `<div class="next-meeting-item">
+        <div class="next-meeting-date">${mo}/${day} (${item.day})</div>
+        <div class="next-meeting-title">${escHtml(item.title)}</div>
+        <div class="next-meeting-place">${place}</div>
+      </div>`;
+    })
+    .join("");
 }
 
 async function loadSchedule() {

@@ -3216,6 +3216,11 @@ main {
 .next-meeting-place:empty {
   display: none;
 }
+.next-meeting-item + .next-meeting-item {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--bd);
+}
 
 /* ═══ 기도편지 원문 이미지 버튼 + 모달 ═══════════════ */
 .letter-img-btn {
