@@ -2097,9 +2097,10 @@ function showPage(id) {
     .querySelectorAll(".drawer-item")
     .forEach((b) => b.classList.remove("active"));
   const page = document.getElementById("page-" + id);
-  const btn = document.querySelector(`.drawer-item[data-page="${id}"]`);
   if (page) page.classList.add("active");
-  if (btn) btn.classList.add("active");
+  document
+    .querySelectorAll(`.drawer-item[data-page="${id}"]`)
+    .forEach((b) => b.classList.add("active"));
   window.scrollTo({ top: 0, behavior: "instant" });
   closeMenuSilent();
 
