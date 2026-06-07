@@ -336,12 +336,17 @@ body {
   .nav-menu {
     display: none;
   }
+  .nav-top {
+    max-width: 1040px;
+    margin: 0 auto;
+  }
   .nav-links {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 4px;
     flex: 1;
-    margin-left: 32px;
+    margin-left: 0;
   }
   .nav-links .nav-link {
     position: relative;
