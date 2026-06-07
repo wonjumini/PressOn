@@ -341,15 +341,16 @@ body {
     align-items: center;
     gap: 4px;
     flex: 1;
-    margin-left: 32px;
+    margin-left: 48px;
   }
   .nav-links .nav-link {
+    position: relative;
     display: inline-block;
     width: auto;
     padding: 9px 14px;
     font-size: 15px;
     font-weight: 500;
-    color: var(--t2);
+    color: var(--t3);
     border-radius: 10px;
     white-space: nowrap;
     transition:
@@ -365,9 +366,19 @@ body {
     transform: scale(0.95);
   }
   .nav-links .nav-link.active {
-    color: var(--pri);
-    background: var(--pri-lt);
+    color: var(--t1);
+    background: transparent;
     font-weight: 700;
+  }
+  .nav-links .nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 4px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--t1);
   }
 }
 
