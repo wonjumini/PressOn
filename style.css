@@ -341,7 +341,7 @@ body {
     align-items: center;
     gap: 4px;
     flex: 1;
-    margin-left: 120px;
+    margin-left: 32px;
   }
   .nav-links .nav-link {
     position: relative;
