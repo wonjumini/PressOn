@@ -470,6 +470,12 @@ main {
   .wrap {
     max-width: 800px;
   }
+  /* 홈 콘텐츠 섹션(선교개요·핵심사역·핵심일정·지금네팔)도
+     다른 페이지와 같은 폭으로. hero·scripture는 바깥이라 풀블리드 유지 */
+  .reveal-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
 }
 .section {
   margin-top: 44px;
