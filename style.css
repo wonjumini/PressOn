@@ -336,10 +336,6 @@ body {
   .nav-menu {
     display: none;
   }
-  /* 본문도 PC에선 살짝 넓게 (640 → 800) */
-  .wrap {
-    max-width: 800px;
-  }
   .nav-top {
     max-width: 1040px;
     margin: 0 auto;
@@ -468,6 +464,12 @@ main {
   max-width: 640px;
   margin: 0 auto;
   padding: 0 24px;
+}
+/* PC(≥1024px, 네비 전환과 동일 기준)에선 본문 살짝 넓게 */
+@media (min-width: 1024px) {
+  .wrap {
+    max-width: 800px;
+  }
 }
 .section {
   margin-top: 44px;
