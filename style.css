@@ -336,6 +336,10 @@ body {
   .nav-menu {
     display: none;
   }
+  /* 본문도 PC에선 살짝 넓게 (640 → 800) */
+  .wrap {
+    max-width: 800px;
+  }
   .nav-top {
     max-width: 1040px;
     margin: 0 auto;

@@ -577,7 +577,7 @@ const SCHEDULE_ITEMS = [
   { date: "2026-05-31", day: "주", title: "선교학교1 / 팀모임2 (시작)", detail: "여름단기선교의 중요성", place: "비전5", badges: ["school", "team"] },
   { date: "2026-06-06", day: "토", title: "팀모임3 (구상&결정)", detail: "", place: "다움1", badges: ["team"] },
   { date: "2026-06-07", day: "주", title: "선교학교2 / 팀모임4 (실행)", detail: "단기선교 준비", place: "다움2", badges: ["school", "team"] },
-  { date: "2026-06-13", day: "토", title: "팀모임5 (등산)", detail: "인왕산 등산", place: "인왕산", badges: ["team"] },
+  { date: "2026-06-13", day: "토", title: "팀모임5 (등산)", detail: "인왕산 등산", place: "키움3층", badges: ["team"] },
   { date: "2026-06-14", day: "주", title: "선교학교3 / 팀모임6 (연습)", detail: "JOB", place: "채움3, 미팅룸3/4", badges: ["school", "team"] },
   { date: "2026-06-20", day: "토", title: "팀모임7 (최상화)", detail: "", place: "키움4층", badges: ["team"] },
   { date: "2026-06-21", day: "주", title: "선교학교4 / 팀모임8 (디테일)", detail: "영적인 일", place: "채움2, 미팅룸14", badges: ["school", "team"] },
@@ -2029,6 +2029,41 @@ document.addEventListener("click", function (e) {
   if (panel && panel.contains(e.target)) return;
   if (btn && btn.contains(e.target)) return;
   closeBgmPanel();
+});
+
+// Esc: 열린 모달/팝업 먼저, 없으면 펼쳐진 아코디언 모두 닫기 (주로 PC 편의)
+document.addEventListener("keydown", function (e) {
+  if (e.key !== "Escape") return;
+
+  // 1) 기도편지 이미지 모달
+  const letterModal = document.getElementById("letter-modal");
+  if (letterModal && letterModal.classList.contains("open")) {
+    closeLetterImg();
+    return;
+  }
+  // 2) NEPAL 말씀 팝업
+  const nepal = document.getElementById("nepalOverlay");
+  if (nepal && nepal.classList.contains("open")) {
+    closeNepal();
+    return;
+  }
+  // 3) 주제가 플로팅
+  if (bgmPanelOpen) {
+    closeBgmPanel();
+    return;
+  }
+  // 4) 펼쳐진 아코디언(일정 / 사역계획 / 선교이야기) 모두 접기
+  const openAcc = document.querySelectorAll(
+    ".sch-accordion.open, .plan-bd.open, .story-bd.open"
+  );
+  if (openAcc.length) {
+    openAcc.forEach((el) => el.classList.remove("open"));
+    document
+      .querySelectorAll(
+        ".sch-chevron.open, .plan-arrow.open, .story-arrow.open"
+      )
+      .forEach((a) => a.classList.remove("open"));
+  }
 });
 
 function toggleMenu() {
