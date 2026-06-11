@@ -1765,13 +1765,13 @@ function loadLiveDday() {
     if (labelEl) labelEl.textContent = "선교";
     valEl.textContent = Math.abs(dep) + 1;
     unitEl.textContent = "일차";
-    subEl.textContent = "선교 중 🙏";
+    subEl.textContent = "선교 중";
   } else {
     // 귀국 후
     if (labelEl) labelEl.textContent = "선교";
     valEl.textContent = "완료";
     unitEl.textContent = "";
-    subEl.textContent = "다녀왔습니다 🙏";
+    subEl.textContent = "Press On! 완주";
   }
 }
 
