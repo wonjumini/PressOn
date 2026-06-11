@@ -1024,6 +1024,24 @@ function renderSchedule(result) {
 }
 
 // 지난 모임 접기/펼치기
+// 출석률 카운트업 (0 → 값, 0.6초 ease-out / 같은 값 재렌더 시엔 생략)
+function countUpRate(el, to) {
+  if (el.dataset.v === String(to)) {
+    el.textContent = to + "%";
+    return;
+  }
+  el.dataset.v = String(to);
+  const t0 = performance.now();
+  const dur = 600;
+  function tick(t) {
+    const p = Math.min((t - t0) / dur, 1);
+    const e = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(to * e) + "%";
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
 function togglePastMeetings() {
   const group = document.getElementById("sch-past-group");
   const btn = document.getElementById("sch-past-toggle");
@@ -1399,7 +1417,7 @@ function renderAttendance(result) {
   const rateEl = document.getElementById("att-rate");
   const countEl = document.getElementById("att-count");
   if (totalEl) totalEl.textContent = members.length;
-  if (rateEl) rateEl.textContent = rate + "%";
+  if (rateEl) countUpRate(rateEl, rate);
   if (countEl) countEl.textContent = remaining;
 
   // B안: 팀원별 요약 카드 + 펼치기
@@ -2309,6 +2327,9 @@ async function refreshAll() {
 window.addEventListener("scroll", () => {
   const btn = document.getElementById("scroll-top");
   if (btn) btn.classList.toggle("visible", window.scrollY > 160);
+  // 스크롤 시작하면 헤더 하단 헤어라인 표시 (맨 위에선 숨김)
+  const nav = document.querySelector(".nav-wrapper");
+  if (nav) nav.classList.toggle("scrolled", window.scrollY > 4);
 });
 
 /* ═══════════════════════════════════════════════

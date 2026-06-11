@@ -77,8 +77,12 @@ body {
   right: 0;
   z-index: 100;
   background: #ffffff;
-  border-bottom: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s var(--ease);
   overflow: visible;
+}
+.nav-wrapper.scrolled {
+  border-bottom-color: var(--bd);
 }
 .nav-top {
   display: flex;
@@ -317,10 +321,14 @@ body {
   position: fixed;
   inset: 0;
   z-index: 99;
-  display: none;
+  background: rgba(20, 24, 30, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease);
 }
 .content-dim.on {
-  display: block;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* 인라인 SVG 아이콘 (이모지 대체) */
