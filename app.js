@@ -892,7 +892,7 @@ function renderHomeNextMeeting() {
     return d >= today;
   });
   if (!next) {
-    el.innerHTML = `<div class="next-row"><div class="next-dot"></div><div class="next-info"><div class="next-label">예정된 모임이 없습니다</div></div></div>`;
+    el.innerHTML = `<div class="next-row"><div class="next-dot"></div><div class="next-info"><div class="next-label">예정된 모임이 없어요</div></div></div>`;
     return;
   }
   const dd = kstDday(next.date);
@@ -1073,7 +1073,7 @@ function renderTeam(result) {
   if (!el) return;
 
   if (!result.ok) {
-    el.innerHTML = `<div class="error-state"><p class="error-msg">팀 정보를 불러오지 못했습니다</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadTeam()">다시 시도</button></div>`;
+    el.innerHTML = `<div class="error-state"><p class="error-msg">팀 정보를 불러오지 못했어요</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadTeam()">다시 시도</button></div>`;
     return;
   }
 
@@ -1279,7 +1279,7 @@ function renderPlan(result) {
   if (!el) return;
 
   if (!result.ok) {
-    el.innerHTML = `<div class="error-state"><p class="error-msg">사역계획을 불러오지 못했습니다</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadPlan()">다시 시도</button></div>`;
+    el.innerHTML = `<div class="error-state"><p class="error-msg">사역계획을 불러오지 못했어요</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadPlan()">다시 시도</button></div>`;
     return;
   }
 
@@ -1482,7 +1482,7 @@ function renderNotice(result) {
   if (!el) return;
 
   if (!result.ok) {
-    el.innerHTML = `<div class="error-state"><p class="error-msg">공지사항을 불러오지 못했습니다</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadNotice()">다시 시도</button></div>`;
+    el.innerHTML = `<div class="error-state"><p class="error-msg">공지사항을 불러오지 못했어요</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadNotice()">다시 시도</button></div>`;
     return;
   }
 
@@ -1537,7 +1537,7 @@ function renderLuggage(teamResult, rentalResult) {
   const personalEl = document.getElementById("lug-personal-list");
   if (personalEl) {
     if (!teamResult.ok) {
-      personalEl.innerHTML = `<div class="error-state"><p class="error-msg">개인 짐 목록을 불러오지 못했습니다</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadLuggage()">다시 시도</button></div>`;
+      personalEl.innerHTML = `<div class="error-state"><p class="error-msg">개인 짐 목록을 불러오지 못했어요</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadLuggage()">다시 시도</button></div>`;
     } else if (teamData.personal.length === 0) {
       personalEl.innerHTML = `
         <div class="empty-state">
@@ -1574,7 +1574,7 @@ function renderLuggage(teamResult, rentalResult) {
   const teamEl = document.getElementById("lug-team-list");
   if (teamEl) {
     if (!teamResult.ok) {
-      teamEl.innerHTML = `<div class="error-state"><p class="error-msg">팀별 짐 목록을 불러오지 못했습니다</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadLuggage()">다시 시도</button></div>`;
+      teamEl.innerHTML = `<div class="error-state"><p class="error-msg">팀별 짐 목록을 불러오지 못했어요</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadLuggage()">다시 시도</button></div>`;
     } else {
       // 사역팀별로 그룹화
       const grouped = {};
@@ -1642,7 +1642,7 @@ function renderLuggage(teamResult, rentalResult) {
   const rentalEl = document.getElementById("lug-rental-list");
   if (rentalEl) {
     if (!rentalResult.ok) {
-      rentalEl.innerHTML = `<div class="error-state"><p class="error-msg">물품대여 정보를 불러오지 못했습니다</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadLuggage()">다시 시도</button></div>`;
+      rentalEl.innerHTML = `<div class="error-state"><p class="error-msg">물품대여 정보를 불러오지 못했어요</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadLuggage()">다시 시도</button></div>`;
     } else if (rentalData.length === 0) {
       rentalEl.innerHTML = `
         <div class="empty-state">
