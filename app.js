@@ -952,9 +952,18 @@ function renderSchedule(result) {
   const today = kstNow();
   today.setHours(0, 0, 0, 0);
 
-  const itemsHtml = items.map((item) => {
+  // 다가오는 첫 모임 인덱스 (오늘 포함)
+  const nextIdx = items.findIndex((item) => {
     const d = new Date(item.date);
+    d.setHours(0, 0, 0, 0);
+    return d >= today;
+  });
+
+  const rendered = items.map((item, idx) => {
+    const d = new Date(item.date);
+    d.setHours(0, 0, 0, 0);
     const isPast = d < today;
+    const isToday = d.getTime() === today.getTime();
     const mo = d.getMonth() + 1 + "월";
     const day = d.getDate();
 
@@ -970,7 +979,11 @@ function renderSchedule(result) {
       .map((b) => `<span class="pill ${pillMap[b] || "pill-gray"}">${labelMap[b] || b}</span>`)
       .join("");
 
-    return `
+    const nextBadge = idx === nextIdx
+      ? `<span class="badge-next">${isToday ? "오늘" : "다음"}</span>`
+      : "";
+
+    const html = `
       <div class="sch-item${isPast ? " past" : ""}">
         <div class="sch-date">
           <div class="sch-month">${mo}</div>
@@ -979,15 +992,47 @@ function renderSchedule(result) {
         </div>
         <div class="sch-divider"></div>
         <div class="sch-content">
-          <div class="sch-title">${escHtml(item.title)}</div>
+          <div class="sch-title">${escHtml(item.title)}${nextBadge}</div>
           ${detailHtml}
           <div class="sch-badges">${badgesHtml}</div>
         </div>
       </div>`;
-  }).join("");
+    return { html, isPast };
+  });
+
+  // 지난 모임은 접어서 한 줄로 (다가오는 모임이 맨 위로)
+  const pastHtml = rendered.filter((r) => r.isPast).map((r) => r.html).join("");
+  const upcomingHtml = rendered.filter((r) => !r.isPast).map((r) => r.html).join("");
+  const pastCount = rendered.filter((r) => r.isPast).length;
+
+  let itemsHtml = "";
+  if (pastCount > 0) {
+    itemsHtml += `
+      <button class="sch-past-toggle" id="sch-past-toggle" data-count="${pastCount}" onclick="togglePastMeetings()">
+        <span id="sch-past-label">지난 모임 ${pastCount}개 보기</span>
+        <svg class="svgi" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="sch-past-group" id="sch-past-group">${pastHtml}</div>`;
+  }
+  itemsHtml += upcomingHtml;
 
   listEl.innerHTML = itemsHtml;
   listEl.classList.add("fade-in");
+}
+
+// 지난 모임 접기/펼치기
+function togglePastMeetings() {
+  const group = document.getElementById("sch-past-group");
+  const btn = document.getElementById("sch-past-toggle");
+  const label = document.getElementById("sch-past-label");
+  if (!group || !btn) return;
+  const open = group.classList.toggle("open");
+  btn.classList.toggle("open", open);
+  if (label) {
+    label.textContent = open
+      ? "지난 모임 접기"
+      : `지난 모임 ${btn.dataset.count}개 보기`;
+  }
 }
 
 // 이름에서 기수 추출해서 "xx년대" 형식으로 변환
@@ -1657,14 +1702,30 @@ function renderNextMeeting() {
     return;
   }
 
+  // 세트 안에서 "실제 다음 모임" 하나만 표시 (당일 22시 전까지가 그 모임 차례)
+  const nextItem = activeSet.find((item) => {
+    const end = new Date(item.date);
+    end.setHours(22, 0, 0, 0);
+    return now < end;
+  });
+  const today0 = kstNow();
+  today0.setHours(0, 0, 0, 0);
+
   listEl.innerHTML = activeSet
     .map((item) => {
       const d = new Date(item.date);
       const mo = d.getMonth() + 1;
       const day = d.getDate();
+      let nextBadge = "";
+      if (item === nextItem) {
+        const d0 = new Date(item.date);
+        d0.setHours(0, 0, 0, 0);
+        const isToday = d0.getTime() === today0.getTime();
+        nextBadge = `<span class="badge-next">${isToday ? "오늘" : "다음"}</span>`;
+      }
       const place = item.place ? `<svg class="svgi" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> ${escHtml(item.place)}` : "";
       return `<div class="next-meeting-item">
-        <div class="next-meeting-date">${mo}/${day} (${item.day})</div>
+        <div class="next-meeting-date">${mo}/${day} (${item.day})${nextBadge}</div>
         <div class="next-meeting-title">${escHtml(item.title)}</div>
         <div class="next-meeting-place">${place}</div>
       </div>`;

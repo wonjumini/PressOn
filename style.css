@@ -2916,6 +2916,53 @@ main {
 .sch-place .svgi {
   color: var(--t2);
 }
+/* 다음 모임 미니 배지 (일정 탭 · 홈 다음모임 카드 공용) */
+.badge-next {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--pri);
+  background: var(--pri-lt);
+  padding: 2px 7px;
+  border-radius: 6px;
+  vertical-align: 2px;
+  margin-left: 6px;
+}
+/* 지난 모임 접기 */
+.sch-past-toggle {
+  width: 100%;
+  background: var(--bg2);
+  border: none;
+  border-radius: 12px;
+  padding: 11px;
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--t3);
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 12px;
+  transition: background 0.2s var(--ease);
+}
+.sch-past-toggle:active {
+  transform: scale(0.98);
+}
+.sch-past-toggle .svgi {
+  font-size: 10px;
+  transition: transform 0.3s var(--ease);
+}
+.sch-past-toggle.open .svgi {
+  transform: rotate(180deg);
+}
+.sch-past-group {
+  display: none;
+}
+.sch-past-group.open {
+  display: block;
+}
 
 /* ═══ 새로고침 버튼 (푸터, 눈에 띄지 않게) ═══════════ */
 .refresh-footer {
