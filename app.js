@@ -6,6 +6,7 @@
 const SPREADSHEET_ID = "1GlDOaRDkmNnyF-u3RKigjlhB1OsMeQ2GHks9dQ5u6pc";
 const CACHE_VERSION = "v1";
 const DEPARTURE_DATE = "2026-07-11";
+const RETURN_DATE = "2026-07-19";
 const HOLD_MS = 800; // PRESS ON 꾹 누르기 시간
 
 const SHEETS = {
@@ -1741,22 +1742,36 @@ async function loadWeather() {
 
 function loadLiveDday() {
   const dep = kstDday(DEPARTURE_DATE);
+  const ret = kstDday(RETURN_DATE);
+  const labelEl = document.getElementById("dday-label");
   const valEl = document.getElementById("dday-val");
   const unitEl = document.getElementById("dday-unit");
   const subEl = document.getElementById("dday-sub");
   if (!valEl) return;
   if (dep > 0) {
+    // 출발 전
+    if (labelEl) labelEl.textContent = "출발까지";
     valEl.textContent = dep;
     unitEl.textContent = "일";
     subEl.textContent = "D-" + dep;
   } else if (dep === 0) {
-    valEl.textContent = "DAY";
+    // 출발 당일
+    if (labelEl) labelEl.textContent = "출발";
+    valEl.textContent = "D-DAY";
     unitEl.textContent = "";
     subEl.textContent = "오늘 출발!";
-  } else {
-    valEl.textContent = Math.abs(dep);
-    unitEl.textContent = "일째";
+  } else if (ret >= 0) {
+    // 선교 중 (7/11 ~ 7/19)
+    if (labelEl) labelEl.textContent = "선교";
+    valEl.textContent = Math.abs(dep) + 1;
+    unitEl.textContent = "일차";
     subEl.textContent = "선교 중 🙏";
+  } else {
+    // 귀국 후
+    if (labelEl) labelEl.textContent = "선교";
+    valEl.textContent = "완료";
+    unitEl.textContent = "";
+    subEl.textContent = "다녀왔습니다 🙏";
   }
 }
 
