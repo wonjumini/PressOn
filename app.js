@@ -952,18 +952,10 @@ function renderSchedule(result) {
   const today = kstNow();
   today.setHours(0, 0, 0, 0);
 
-  // 다가오는 첫 모임 인덱스 (오늘 포함)
-  const nextIdx = items.findIndex((item) => {
-    const d = new Date(item.date);
-    d.setHours(0, 0, 0, 0);
-    return d >= today;
-  });
-
-  const rendered = items.map((item, idx) => {
+  const rendered = items.map((item) => {
     const d = new Date(item.date);
     d.setHours(0, 0, 0, 0);
     const isPast = d < today;
-    const isToday = d.getTime() === today.getTime();
     const mo = d.getMonth() + 1 + "월";
     const day = d.getDate();
 
@@ -979,31 +971,42 @@ function renderSchedule(result) {
       .map((b) => `<span class="pill ${pillMap[b] || "pill-gray"}">${labelMap[b] || b}</span>`)
       .join("");
 
-    const nextBadge = idx === nextIdx
-      ? `<span class="badge-next">${isToday ? "오늘" : "다음"}</span>`
-      : "";
-
     const html = `
       <div class="sch-item${isPast ? " past" : ""}">
         <div class="sch-date">
-          <div class="sch-month">${mo}</div>
           <div class="sch-day">${day}</div>
           <div class="sch-wd">${item.day}</div>
         </div>
         <div class="sch-divider"></div>
         <div class="sch-content">
-          <div class="sch-title">${escHtml(item.title)}${nextBadge}</div>
+          <div class="sch-title">${escHtml(item.title)}</div>
           ${detailHtml}
           <div class="sch-badges">${badgesHtml}</div>
         </div>
       </div>`;
-    return { html, isPast };
+    return { html, isPast, month: d.getMonth() + 1 };
   });
 
+  // 월이 바뀌는 지점에 "N월" 구분 헤더 삽입
+  const withMonthHeaders = (arr) => {
+    let lastMonth = null;
+    return arr
+      .map((r) => {
+        const head = r.month !== lastMonth
+          ? `<div class="sch-mon-h"><span>${r.month}월</span></div>`
+          : "";
+        lastMonth = r.month;
+        return head + r.html;
+      })
+      .join("");
+  };
+
   // 지난 모임은 접어서 한 줄로 (다가오는 모임이 맨 위로)
-  const pastHtml = rendered.filter((r) => r.isPast).map((r) => r.html).join("");
-  const upcomingHtml = rendered.filter((r) => !r.isPast).map((r) => r.html).join("");
-  const pastCount = rendered.filter((r) => r.isPast).length;
+  const pastArr = rendered.filter((r) => r.isPast);
+  const upcomingArr = rendered.filter((r) => !r.isPast);
+  const pastHtml = withMonthHeaders(pastArr);
+  const upcomingHtml = withMonthHeaders(upcomingArr);
+  const pastCount = pastArr.length;
 
   let itemsHtml = "";
   if (pastCount > 0) {
@@ -1702,30 +1705,14 @@ function renderNextMeeting() {
     return;
   }
 
-  // 세트 안에서 "실제 다음 모임" 하나만 표시 (당일 22시 전까지가 그 모임 차례)
-  const nextItem = activeSet.find((item) => {
-    const end = new Date(item.date);
-    end.setHours(22, 0, 0, 0);
-    return now < end;
-  });
-  const today0 = kstNow();
-  today0.setHours(0, 0, 0, 0);
-
   listEl.innerHTML = activeSet
     .map((item) => {
       const d = new Date(item.date);
       const mo = d.getMonth() + 1;
       const day = d.getDate();
-      let nextBadge = "";
-      if (item === nextItem) {
-        const d0 = new Date(item.date);
-        d0.setHours(0, 0, 0, 0);
-        const isToday = d0.getTime() === today0.getTime();
-        nextBadge = `<span class="badge-next">${isToday ? "오늘" : "다음"}</span>`;
-      }
       const place = item.place ? `<svg class="svgi" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> ${escHtml(item.place)}` : "";
       return `<div class="next-meeting-item">
-        <div class="next-meeting-date">${mo}/${day} (${item.day})${nextBadge}</div>
+        <div class="next-meeting-date">${mo}/${day} (${item.day})</div>
         <div class="next-meeting-title">${escHtml(item.title)}</div>
         <div class="next-meeting-place">${place}</div>
       </div>`;
