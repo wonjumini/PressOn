@@ -1036,6 +1036,20 @@ function togglePastMeetings() {
       ? "지난 모임 접기"
       : `지난 모임 ${btn.dataset.count}개 보기`;
   }
+  // 펼쳤을 때 지난 그룹 마지막 월과 다가오는 목록 첫 월이 같으면 헤더 중복 숨김
+  const pastHeads = group.querySelectorAll(".sch-mon-h span");
+  const nextHead = group.nextElementSibling;
+  if (
+    pastHeads.length &&
+    nextHead &&
+    nextHead.classList.contains("sch-mon-h")
+  ) {
+    const lastPastMonth = pastHeads[pastHeads.length - 1].textContent;
+    const firstUpMonth = nextHead.querySelector("span")?.textContent;
+    if (lastPastMonth === firstUpMonth) {
+      nextHead.style.display = open ? "none" : "";
+    }
+  }
 }
 
 // 이름에서 기수 추출해서 "xx년대" 형식으로 변환
@@ -1801,7 +1815,7 @@ function loadLiveDday() {
     if (labelEl) labelEl.textContent = "출발까지";
     valEl.textContent = dep;
     unitEl.textContent = "일";
-    subEl.textContent = "D-" + dep;
+    subEl.textContent = "7.11 출발";
   } else if (dep === 0) {
     // 출발 당일
     if (labelEl) labelEl.textContent = "출발";
