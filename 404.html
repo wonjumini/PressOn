@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SPRING NEPAL</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/png" href="appicons/appicon-192.png" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
+  <style>
+    :root {
+      --pri: #0064ff;
+      --t1: #191f28;
+      --t3: #8b95a1;
+      --bg: #f9fafb;
+      --font: "Pretendard", -apple-system, BlinkMacSystemFont, sans-serif;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--t1);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 24px;
+    }
+    .box {
+      text-align: center;
+      max-width: 320px;
+      animation: enter 0.6s var(--ease) both;
+    }
+    @keyframes enter {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .mt {
+      width: 84px;
+      height: 52px;
+      stroke: #c8d4e4;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    h1 {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      margin-top: 18px;
+      word-break: keep-all;
+    }
+    p {
+      font-size: 13.5px;
+      color: var(--t3);
+      line-height: 1.65;
+      margin-top: 9px;
+      word-break: keep-all;
+    }
+    a.btn {
+      display: inline-block;
+      margin-top: 24px;
+      background: var(--t1);
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 100px;
+      transition: transform 0.2s var(--ease), opacity 0.2s;
+    }
+    a.btn:active { transform: scale(0.96); opacity: 0.9; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <svg class="mt" viewBox="0 0 64 40" aria-hidden="true">
+      <path d="m4 36 16-26 10 16 8-12 22 22" />
+      <path d="M20 10l3 5-3 2-3-2z" fill="#c8d4e4" stroke="none" />
+    </svg>
+    <h1>이 길은 지도에 없네요</h1>
+    <p>히말라야에서도 길을 잃으면<br />왔던 길로 돌아가는 게 정석이래요.</p>
+    <a class="btn" href="/">홈으로 돌아가기</a>
+  </div>
+</body>
+</html>
