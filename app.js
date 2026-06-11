@@ -960,7 +960,7 @@ function renderSchedule(result) {
     // 설명: detail + 장소 합치기 (구분점 없이 공백으로)
     const detailParts = [];
     if (item.detail) detailParts.push(escHtml(item.detail));
-    if (item.place) detailParts.push(`<span class="sch-place">📍 ${escHtml(item.place)}</span>`);
+    if (item.place) detailParts.push(`<span class="sch-place"><svg class="svgi" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> ${escHtml(item.place)}</span>`);
     const detailHtml = detailParts.length > 0
       ? `<div class="sch-detail">${detailParts.join(" ")}</div>`
       : "";
@@ -1099,7 +1099,7 @@ function renderTeam(result) {
             <div class="team-hd" ${detail ? `onclick="toggleTeamDetail(${ti})" style="cursor:pointer"` : ""}>
               <div class="team-icon" style="background:${meta.bg};color:${meta.color}">${meta.icon}</div>
               <div class="team-name">${escHtml(t.name)}</div>
-              ${detail ? `<span class="team-chevron" id="team-chev-${ti}">▼</span>` : ""}
+              ${detail ? `<span class="team-chevron" id="team-chev-${ti}"><svg class="svgi" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>` : ""}
             </div>
             <div class="team-bd">
               <div class="chips">
@@ -1156,7 +1156,7 @@ function renderTeam(result) {
               <div class="job-content-wrap">
                 <div class="job-title-row">
                   <div class="job-title">${escHtml(j.title)}</div>
-                  ${desc ? `<span class="job-chevron" id="job-chev-${ji}">▼</span>` : ""}
+                  ${desc ? `<span class="job-chevron" id="job-chev-${ji}"><svg class="svgi" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>` : ""}
                 </div>
                 <div class="job-members">${j.members
                   .map((m, i) => {
@@ -1271,7 +1271,7 @@ function renderPlan(result) {
         <div class="plan-hd" onclick="togglePlan(${idx})">
           <span class="plan-icon">${icon}</span>
           <span class="plan-name">${escHtml(p.name)}</span>
-          <span class="plan-arrow" id="plan-arrow-${idx}">▼</span>
+          <span class="plan-arrow" id="plan-arrow-${idx}"><svg class="svgi" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>
         </div>
         ${body}
       </div>`;
@@ -1375,7 +1375,7 @@ function renderAttendance(result) {
           </div>
           <div class="att-member-right">
             <span class="att-member-count">${count}<span class="att-member-total">/${dates.length}</span></span>
-            <span class="att-member-chevron" id="att-chev-${idx}">▼</span>
+            <span class="att-member-chevron" id="att-chev-${idx}"><svg class="svgi" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>
           </div>
         </div>
         <div class="att-member-detail" id="att-detail-${idx}">
@@ -1661,7 +1661,7 @@ function renderNextMeeting() {
       const d = new Date(item.date);
       const mo = d.getMonth() + 1;
       const day = d.getDate();
-      const place = item.place ? `📍 ${escHtml(item.place)}` : "";
+      const place = item.place ? `<svg class="svgi" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> ${escHtml(item.place)}` : "";
       return `<div class="next-meeting-item">
         <div class="next-meeting-date">${mo}/${day} (${item.day})</div>
         <div class="next-meeting-title">${escHtml(item.title)}</div>

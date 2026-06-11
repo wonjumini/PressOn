@@ -200,7 +200,7 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--t3);
   letter-spacing: 0.2px;
@@ -321,6 +321,18 @@ body {
 }
 .content-dim.on {
   display: block;
+}
+
+/* 인라인 SVG 아이콘 (이모지 대체) */
+.svgi {
+  width: 1em;
+  height: 1em;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: -0.125em;
 }
 
 /* PC용 가로 메뉴: 기본(모바일)은 숨김, 햄버거만 사용 */
@@ -744,7 +756,7 @@ main {
   gap: 6px;
 }
 .hero-meta-label {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--t4);
   letter-spacing: 1px;
@@ -896,7 +908,7 @@ main {
   margin-bottom: 6px;
 }
 .ov-lb {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--t4);
   letter-spacing: 0.5px;
@@ -994,14 +1006,14 @@ main {
   display: none;
 }
 .htl-date {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--pri);
   margin-bottom: 2px;
   letter-spacing: 0.3px;
 }
 .htl-date1 {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--acc);
   margin-bottom: 2px;
@@ -1058,7 +1070,7 @@ main {
   line-height: 1;
 }
 .live-label {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--t4);
   letter-spacing: 0.5px;
@@ -1144,7 +1156,7 @@ main {
     box-shadow 0.2s var(--ease);
 }
 .dir-tag {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -1440,7 +1452,7 @@ main {
 /* 자세/문화 카드 */
 .ac-lb {
   display: inline-block;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -1742,7 +1754,7 @@ main {
   align-items: center;
   background: var(--acc);
   color: #fff;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   padding: 1px 7px;
   border-radius: 100px;
@@ -1763,7 +1775,7 @@ main {
   color: var(--t2);
 }
 .pending-opt-label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   background: var(--t1);
   color: #fff;
@@ -1859,7 +1871,7 @@ main {
   line-height: 1.3;
 }
 .org-node small {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
   color: var(--t3);
   margin-top: 2px;
@@ -3081,7 +3093,7 @@ main {
   font-weight: 600;
 }
 .att-dot-date {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--t4);
   font-weight: 500;
 }
