@@ -2907,10 +2907,14 @@ main {
 
 /* ═══ 일정 장소 표시 ═══════════════════════════════ */
 .sch-place {
-  color: var(--t4);
+  color: var(--t2);
+  font-weight: 600;
   font-size: 11px;
   white-space: nowrap;
   margin-left: 4px;
+}
+.sch-place .svgi {
+  color: var(--pri);
 }
 
 /* ═══ 새로고침 버튼 (푸터, 눈에 띄지 않게) ═══════════ */
@@ -3235,7 +3239,11 @@ main {
 }
 .next-meeting-place {
   font-size: 12px;
-  color: var(--t4);
+  color: var(--t2);
+  font-weight: 600;
+}
+.next-meeting-place .svgi {
+  color: var(--pri);
 }
 .next-meeting-place:empty {
   display: none;
