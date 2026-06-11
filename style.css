@@ -3243,7 +3243,7 @@ main {
   font-weight: 600;
 }
 .next-meeting-place .svgi {
-  color: var(--pri);
+  color: var(--t2);
 }
 .next-meeting-place:empty {
   display: none;
