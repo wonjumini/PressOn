@@ -331,7 +331,7 @@ body {
   pointer-events: auto;
 }
 
-/* 능선 마크 — 말씀 섹션 장식 (C) + 드로어 시그니처 (D) */
+/* 능선 마크 — 말씀 섹션 장식 */
 .scripture-ridge {
   display: block;
   width: 26px;
@@ -343,32 +343,6 @@ body {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.menu-sig {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  padding: 13px 0 15px;
-  border-top: 1px solid var(--bg2);
-  margin-top: 6px;
-}
-.menu-sig svg {
-  width: 18px;
-  height: 12px;
-  stroke: var(--t4);
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.menu-sig span {
-  font-size: 9px;
-  font-weight: 700;
-  color: var(--t4);
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-}
-
 /* 인라인 SVG 아이콘 (이모지 대체) */
 .svgi {
   width: 1em;
