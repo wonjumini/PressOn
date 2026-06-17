@@ -19,6 +19,7 @@ const SHEETS = {
   notice: "🎤광고",
   luggageTeam: "👍각 팀 별도 탭",
   luggageRental: "🎹물품대여현황",
+  purchase: "📦물품 구매·정산 리스트",
 };
 
 const CONFIG = {
@@ -2209,12 +2210,118 @@ function loadIfStale(id, loadFn) {
   }
 }
 
+/* ═══ 구매 물품 ═══ */
+// 헤더 이름으로 컬럼을 찾아 매핑 (시트 컬럼 순서가 바뀌어도 안전)
+function parsePurchase(json) {
+  try {
+    const table = json?.table;
+    const rows = table?.rows ?? [];
+    if (!rows.length) return [];
+
+    const idx = { name: -1, category: -1, team: -1, bought: -1 };
+    const classify = (label) => {
+      const s = String(label || "").replace(/\s/g, "");
+      if (idx.name < 0 && /(물품|품목|이름|항목)/.test(s)) return "name";
+      if (idx.category < 0 && /(분류|카테고리|구분|종류)/.test(s)) return "category";
+      if (idx.team < 0 && /(구매팀|담당팀|팀|담당)/.test(s)) return "team";
+      if (idx.bought < 0 && /(구매여부|여부|완료|상태|체크|구매)/.test(s)) return "bought";
+      return null;
+    };
+
+    // 1) gviz가 헤더를 cols.label로 준 경우
+    const cols = table.cols ?? [];
+    cols.forEach((c, i) => {
+      const k = classify(c?.label);
+      if (k) idx[k] = i;
+    });
+
+    // 2) label로 못 찾으면 첫 행을 헤더로 사용
+    let startRow = 0;
+    if (idx.name < 0 || idx.bought < 0) {
+      idx.name = idx.category = idx.team = idx.bought = -1;
+      const header = rows[0];
+      const n = header?.c?.length ?? 0;
+      for (let i = 0; i < n; i++) {
+        const k = classify(safeStr(header, i));
+        if (k) idx[k] = i;
+      }
+      startRow = 1;
+    }
+    if (idx.name < 0) return [];
+
+    const items = [];
+    for (let r = startRow; r < rows.length; r++) {
+      const name = safeStr(rows[r], idx.name);
+      if (!name || name === "물품" || name === "품목") continue;
+      const category = idx.category >= 0 ? safeStr(rows[r], idx.category) : "";
+      const team = idx.team >= 0 ? safeStr(rows[r], idx.team) : "";
+      const raw = (idx.bought >= 0 ? safeStr(rows[r], idx.bought) : "")
+        .replace(/\s/g, "")
+        .toLowerCase();
+      const negative = /(미|안|x|×|예정|대기|아직|no|^$)/.test(raw);
+      const positive = /(완료|구매|^o$|^0$|^○$|^✓$|^✔$|^v$|^y$|^예$|^true$|^t$|^done$|^ok$)/.test(raw);
+      items.push({ name, category, team, bought: positive && !negative });
+    }
+    return items;
+  } catch (e) {
+    return [];
+  }
+}
+
+function renderPurchase(result) {
+  const el = document.getElementById("purchase-list");
+  if (!el) return;
+
+  if (!result.ok) {
+    el.innerHTML = `<div class="error-state"><p class="error-msg">구매 물품을 불러오지 못했어요</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadPurchase()">다시 시도</button></div>`;
+    return;
+  }
+
+  const items = parsePurchase(result.data);
+
+  if (items.length === 0) {
+    el.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">📦</div>
+        <p class="empty-title">아직 구매 물품이 없어요</p>
+        <p class="empty-desc">목록이 등록되면<br/>여기에 표시됩니다</p>
+      </div>`;
+    return;
+  }
+
+  const done = items.filter((it) => it.bought).length;
+  const check = '<svg class="svgi" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>';
+
+  el.innerHTML =
+    `<div class="pur-summary">전체 ${items.length}개 · 구매완료 <b>${done}</b>개</div>` +
+    items
+      .map((it) => {
+        const meta = [it.category, it.team].filter(Boolean).map(escHtml).join(" · ");
+        return `
+        <div class="pur-row${it.bought ? " bought" : ""}">
+          <span class="pur-check">${it.bought ? check : ""}</span>
+          <div class="pur-main">
+            <div class="pur-name">${escHtml(it.name)}</div>
+            ${meta ? `<div class="pur-meta">${meta}</div>` : ""}
+          </div>
+          <span class="pur-status">${it.bought ? "구매완료" : "미구매"}</span>
+        </div>`;
+      })
+      .join("");
+}
+
+async function loadPurchase() {
+  const result = await fetchSheetSafe(SHEETS.purchase);
+  renderPurchase(result);
+}
+
 // 강제 새로고침 (캐시 무시하고 즉시 fetch)
 const refreshLoaders = {
   attendance: loadAttendance,
   plan: loadPlan,
   notice: loadNotice,
   luggage: loadLuggage,
+  purchase: loadPurchase,
 };
 
 async function refreshData(id) {
@@ -2269,6 +2376,7 @@ function showPage(id) {
   if (id === "attendance") loadIfStale("attendance", loadAttendance);
   if (id === "notice") loadIfStale("notice", loadNotice);
   if (id === "luggage") loadIfStale("luggage", loadLuggage);
+  if (id === "purchase") loadIfStale("purchase", loadPurchase);
 }
 
 document.querySelectorAll(".drawer-item").forEach((btn) => {
