@@ -525,13 +525,15 @@
           </div>
 
           <div class="sub-page" id="sub-nepal">
-            <div class="nepal-map">
-              <iframe
-                src="https://www.google.com/maps/d/embed?mid=1Qf8TYM_JzISBOFBnWKWm8yQ5aj5CBB4&ll=27.692427779269345,85.295505&z=13"
-                loading="lazy"
-                title="네팔 사역지 지도"
-              ></iframe>
-            </div>
+            <button class="map-entry" id="map-entry-btn" onclick="toggleNepalMap()">
+              <span class="map-entry-ico"><svg class="svgi" viewBox="0 0 24 24"><path d="m9 5-6 2v12l6-2 6 2 6-2V5l-6 2z"/><path d="M9 5v12M15 7v12"/></svg></span>
+              <span class="map-entry-tx">
+                <span class="map-entry-t1">사역지 지도 보기</span>
+                <span class="map-entry-t2">카트만두 · 포카라 사역지 위치</span>
+              </span>
+              <span class="map-entry-chev"><svg class="svgi" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
+            </button>
+            <div class="nepal-map" id="nepal-map" hidden></div>
             <div style="padding-top: 4px">
               <div class="sch-mon-h"><span>7월</span></div>
 

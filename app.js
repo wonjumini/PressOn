@@ -2212,55 +2212,82 @@ function loadIfStale(id, loadFn) {
 
 /* ═══ 구매 물품 ═══ */
 // 헤더 이름으로 컬럼을 찾아 매핑 (시트 컬럼 순서가 바뀌어도 안전)
+/* ═══ 현지 사역지 지도 (탭하면 펼침, 첫 펼침에만 iframe 로드) ═══ */
+function toggleNepalMap() {
+  const wrap = document.getElementById("nepal-map");
+  const btn = document.getElementById("map-entry-btn");
+  if (!wrap || !btn) return;
+  const opening = wrap.hidden;
+  if (opening && !wrap.dataset.loaded) {
+    wrap.innerHTML =
+      '<iframe src="https://www.google.com/maps/d/embed?mid=1Qf8TYM_JzISBOFBnWKWm8yQ5aj5CBB4&ll=27.692427779269345,85.295505&z=13" title="네팔 사역지 지도" loading="lazy"></iframe>';
+    wrap.dataset.loaded = "1";
+  }
+  wrap.hidden = !opening;
+  btn.classList.toggle("open", opening);
+}
+
+/* ═══ 구매 물품 ═══ */
 function parsePurchase(json) {
   try {
     const table = json?.table;
     const rows = table?.rows ?? [];
     if (!rows.length) return [];
 
-    const idx = { name: -1, category: -1, team: -1, bought: -1 };
-    const classify = (label) => {
-      const s = String(label || "").replace(/\s/g, "");
-      if (idx.name < 0 && /(물품|품목|이름|항목)/.test(s)) return "name";
-      if (idx.category < 0 && /(분류|카테고리|구분|종류)/.test(s)) return "category";
-      if (idx.team < 0 && /(구매팀|담당팀|팀|담당)/.test(s)) return "team";
-      if (idx.bought < 0 && /(구매여부|여부|완료|상태|체크|구매)/.test(s)) return "bought";
-      return null;
+    const norm = (v) => String(v ?? "").replace(/\s/g, "");
+    const want = {
+      name: ["물품", "품목"],
+      category: ["분류"],
+      team: ["구매팀", "담당팀"],
+      bought: ["구매여부"],
     };
+    const matchIdx = (cells, keys) =>
+      cells.findIndex((v) => keys.some((k) => norm(v) === norm(k)));
 
-    // 1) gviz가 헤더를 cols.label로 준 경우
-    const cols = table.cols ?? [];
-    cols.forEach((c, i) => {
-      const k = classify(c?.label);
-      if (k) idx[k] = i;
-    });
+    const idx = { name: -1, category: -1, team: -1, bought: -1 };
+    let dataStart = 0;
 
-    // 2) label로 못 찾으면 첫 행을 헤더로 사용
-    let startRow = 0;
-    if (idx.name < 0 || idx.bought < 0) {
-      idx.name = idx.category = idx.team = idx.bought = -1;
-      const header = rows[0];
-      const n = header?.c?.length ?? 0;
-      for (let i = 0; i < n; i++) {
-        const k = classify(safeStr(header, i));
-        if (k) idx[k] = i;
+    // 1) gviz가 헤더를 컬럼 라벨로 올린 경우
+    const labels = (table.cols ?? []).map((c) => c?.label ?? "");
+    if (matchIdx(labels, want.name) >= 0 && matchIdx(labels, want.bought) >= 0) {
+      idx.name = matchIdx(labels, want.name);
+      idx.bought = matchIdx(labels, want.bought);
+      idx.category = matchIdx(labels, want.category);
+      idx.team = matchIdx(labels, want.team);
+      dataStart = 0;
+    } else {
+      // 2) 데이터 앞 행들 중 헤더 행 탐색 (제목행 건너뜀)
+      for (let r = 0; r < Math.min(rows.length, 6); r++) {
+        const cells = (rows[r]?.c ?? []).map((c) => c?.v);
+        const ni = matchIdx(cells, want.name);
+        const bi = matchIdx(cells, want.bought);
+        if (ni >= 0 && bi >= 0) {
+          idx.name = ni;
+          idx.bought = bi;
+          idx.category = matchIdx(cells, want.category);
+          idx.team = matchIdx(cells, want.team);
+          dataStart = r + 1;
+          break;
+        }
       }
-      startRow = 1;
     }
-    if (idx.name < 0) return [];
+    if (idx.name < 0 || idx.bought < 0) return [];
 
     const items = [];
-    for (let r = startRow; r < rows.length; r++) {
+    for (let r = dataStart; r < rows.length; r++) {
       const name = safeStr(rows[r], idx.name);
-      if (!name || name === "물품" || name === "품목") continue;
+      if (!name || name === "물품" || name === "합") continue;
+      if (safeStr(rows[r], 0) === "예") continue; // 예시 행
+
       const category = idx.category >= 0 ? safeStr(rows[r], idx.category) : "";
       const team = idx.team >= 0 ? safeStr(rows[r], idx.team) : "";
-      const raw = (idx.bought >= 0 ? safeStr(rows[r], idx.bought) : "")
-        .replace(/\s/g, "")
-        .toLowerCase();
-      const negative = /(미|안|x|×|예정|대기|아직|no|^$)/.test(raw);
-      const positive = /(완료|구매|^o$|^0$|^○$|^✓$|^✔$|^v$|^y$|^예$|^true$|^t$|^done$|^ok$)/.test(raw);
-      items.push({ name, category, team, bought: positive && !negative });
+      const raw = idx.bought >= 0 ? safeVal(rows[r], idx.bought) : "";
+      const s = String(raw).replace(/\s/g, "").toLowerCase();
+      const bought =
+        raw === true ||
+        (/(완료|구매|^o$|^○$|^✓$|^✔$|^y$|^예$|^true$|^done$|^ok$)/.test(s) &&
+          !/(미|안|x|×|예정|대기|아직|no|false)/.test(s));
+      items.push({ name, category, team, bought });
     }
     return items;
   } catch (e) {
