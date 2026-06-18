@@ -2277,9 +2277,16 @@ function parsePurchase(json) {
     for (let r = dataStart; r < rows.length; r++) {
       const name = safeStr(rows[r], idx.name);
       if (!name || name === "물품" || name === "합") continue;
-      const seq = safeStr(rows[r], 0);
-      if (seq === "예" || seq === "예시" || /^(예|예시|ex|example)$/i.test(seq))
-        continue; // 예시 행 제외
+
+      // 예시 행 제외: 순번 칸의 v/f 모두 확인 (숫자 열이면 "예"가 null로 올 수 있음)
+      const seqCell = rows[r]?.c?.[0];
+      const seqText = String(seqCell?.v ?? seqCell?.f ?? "").trim();
+      const seqNorm = seqText.replace(/[()\s]/g, "");
+      const isExampleText = /^(예|예시|ex|example|샘플|sample)$/i.test(seqNorm);
+      const seqNum = Number(seqText);
+      const seqIsPositiveNum = Number.isFinite(seqNum) && seqNum >= 1;
+      // 첫 데이터 행이면서 순번이 양수 숫자가 아니면 = 예시 행
+      if (isExampleText || (r === dataStart && !seqIsPositiveNum)) continue;
 
       const category = idx.category >= 0 ? safeStr(rows[r], idx.category) : "";
       const team = idx.team >= 0 ? safeStr(rows[r], idx.team) : "";
@@ -2359,13 +2366,18 @@ function renderPurchaseList() {
   } else {
     body = filtered
       .map((it) => {
-        const meta = [it.category, it.team].filter(Boolean).map(escHtml).join(" · ");
+        const tags = [];
+        if (it.category)
+          tags.push(`<span class="pur-tag pur-tag-cat">${escHtml(it.category)}</span>`);
+        if (it.team)
+          tags.push(`<span class="pur-tag pur-tag-team">${escHtml(it.team)}</span>`);
+        const tagsHtml = tags.length ? `<div class="pur-tags">${tags.join("")}</div>` : "";
         return `
         <div class="pur-row${it.bought ? " bought" : ""}">
           <span class="pur-check">${it.bought ? check : ""}</span>
           <div class="pur-main">
             <div class="pur-name">${escHtml(it.name)}</div>
-            ${meta ? `<div class="pur-meta">${meta}</div>` : ""}
+            ${tagsHtml}
           </div>
           <span class="pur-status">${it.bought ? "구매완료" : "미구매"}</span>
         </div>`;
