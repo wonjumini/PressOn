@@ -2220,7 +2220,7 @@ function toggleNepalMap() {
   const opening = wrap.hidden;
   if (opening && !wrap.dataset.loaded) {
     wrap.innerHTML =
-      '<iframe src="https://www.google.com/maps/d/embed?mid=1Qf8TYM_JzISBOFBnWKWm8yQ5aj5CBB4&ll=27.692427779269345,85.295505&z=13" title="네팔 사역지 지도" loading="lazy"></iframe>';
+      '<iframe src="https://www.google.com/maps/d/embed?mid=1Qf8TYM_JzISBOFBnWKWm8yQ5aj5CBB4&ll=27.692427779269345,85.295505&z=13&noprof=1" title="네팔 사역지 지도" loading="lazy"></iframe>';
     wrap.dataset.loaded = "1";
   }
   wrap.hidden = !opening;
