@@ -2331,6 +2331,11 @@ function renderPurchase(result) {
   }
 
   if (filterBar) filterBar.hidden = false;
+  // 재로드 시 필터를 '전체'로 초기화 (탭 하이라이트도 동기화)
+  purchaseFilter = "all";
+  filterBar.querySelectorAll(".sub-tab-btn").forEach((b) => {
+    b.classList.toggle("active", b.dataset.purchaseFilter === "all");
+  });
   renderPurchaseList();
 }
 
@@ -2505,6 +2510,7 @@ async function refreshAll() {
   if (activeId === "attendance") await loadAttendance();
   if (activeId === "notice") await loadNotice();
   if (activeId === "luggage") await loadLuggage();
+  if (activeId === "purchase") await loadPurchase();
 }
 
 /* ═══════════════════════════════════════════════
@@ -2561,7 +2567,7 @@ async function init() {
 
   // 초기 로드 시 hash 있으면 해당 탭으로 이동
   const hash = location.hash.replace("#", "");
-  const validPages = ["home", "overview", "schedule", "team", "plan", "attendance", "story", "luggage", "notice"];
+  const validPages = ["home", "overview", "schedule", "team", "plan", "attendance", "story", "luggage", "notice", "purchase"];
   if (hash && validPages.includes(hash)) {
     showPage(hash);
   }
