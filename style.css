@@ -387,39 +387,24 @@ body {
   flex: none;
   width: 84px;
   position: relative;
-  background: linear-gradient(135deg, #dde8e1, #cadcea);
-  overflow: hidden;
+  background: #fff;
+  border-right: 1px solid var(--bd);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.map-entry-thumb::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.45) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.45) 1px, transparent 1px);
-  background-size: 22px 22px;
+.map-entry-nepal {
+  width: 64px;
+  height: auto;
 }
-.map-entry-thumb::after {
-  content: "";
-  position: absolute;
-  left: 26%;
-  top: 58%;
-  width: 46%;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.65);
-  border-radius: 2px;
-  transform: rotate(-8deg);
+.map-entry-nepal .ne-line {
+  fill: none;
+  stroke: var(--t3);
+  stroke-width: 5;
+  stroke-linejoin: round;
 }
-.map-entry-pin {
-  position: absolute;
-  left: 50%;
-  top: 42%;
-  transform: translateX(-50%);
-  color: var(--acc);
-  z-index: 1;
-}
-.map-entry-pin .svgi {
-  width: 17px;
-  height: 17px;
+.map-entry-nepal .ne-pin {
+  fill: var(--t1);
 }
 .map-entry-tx {
   flex: 1;
@@ -446,14 +431,14 @@ body {
   align-items: center;
   color: var(--t4);
   padding-right: 12px;
-  transition: transform 0.3s var(--ease);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .map-entry-chev .svgi {
   width: 18px;
   height: 18px;
 }
 .map-entry.open .map-entry-chev {
-  transform: rotate(90deg);
+  transform: rotate(180deg);
 }
 .nepal-map {
   border: 1px solid var(--bd);
