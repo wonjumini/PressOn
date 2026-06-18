@@ -2278,15 +2278,14 @@ function parsePurchase(json) {
       const name = safeStr(rows[r], idx.name);
       if (!name || name === "물품" || name === "합") continue;
 
-      // 예시 행 제외: 순번 칸의 v/f 모두 확인 (숫자 열이면 "예"가 null로 올 수 있음)
+      // 순번이 양수 숫자인 행만 실제 물품 (예시"예"·합계"합"·빈칸 제외)
       const seqCell = rows[r]?.c?.[0];
       const seqText = String(seqCell?.v ?? seqCell?.f ?? "").trim();
       const seqNorm = seqText.replace(/[()\s]/g, "");
       const isExampleText = /^(예|예시|ex|example|샘플|sample)$/i.test(seqNorm);
       const seqNum = Number(seqText);
       const seqIsPositiveNum = Number.isFinite(seqNum) && seqNum >= 1;
-      // 첫 데이터 행이면서 순번이 양수 숫자가 아니면 = 예시 행
-      if (isExampleText || (r === dataStart && !seqIsPositiveNum)) continue;
+      if (isExampleText || !seqIsPositiveNum) continue;
 
       const category = idx.category >= 0 ? safeStr(rows[r], idx.category) : "";
       const team = idx.team >= 0 ? safeStr(rows[r], idx.team) : "";
@@ -2362,7 +2361,8 @@ function renderPurchaseList() {
 
   let body;
   if (filtered.length === 0) {
-    body = `<div class="pur-empty">${purchaseFilter === "done" ? "구매완료한 물품이 없어요" : "미구매 물품이 없어요"}</div>`;
+    const msg = purchaseFilter === "done" ? "구매완료한 물품이 없어요" : "미구매 물품이 없어요";
+    body = `<div class="pur-empty"><div class="pur-empty-icon">📦</div><p class="pur-empty-txt">${msg}</p></div>`;
   } else {
     body = filtered
       .map((it) => {

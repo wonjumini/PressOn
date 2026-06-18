@@ -559,9 +559,16 @@ body {
 }
 .pur-empty {
   text-align: center;
-  color: var(--t3);
+  padding: 36px 0;
+}
+.pur-empty-icon {
+  font-size: 30px;
+  margin-bottom: 10px;
+  opacity: 0.7;
+}
+.pur-empty-txt {
   font-size: 13px;
-  padding: 30px 0;
+  color: var(--t3);
 }
 
 /* 능선 마크 — 말씀 섹션 장식 */
