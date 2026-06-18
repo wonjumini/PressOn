@@ -505,6 +505,12 @@ body {
   color: var(--pri);
   background: var(--pri-lt);
 }
+.pur-empty {
+  text-align: center;
+  color: var(--t3);
+  font-size: 13px;
+  padding: 30px 0;
+}
 
 /* 능선 마크 — 말씀 섹션 장식 */
 .scripture-ridge {

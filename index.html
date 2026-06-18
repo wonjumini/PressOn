@@ -1131,6 +1131,11 @@
       <section class="page" id="page-purchase">
         <div class="wrap">
           <p class="page-title">구매 물품</p>
+          <div class="sub-tabs" id="purchase-filter" hidden>
+            <button class="sub-tab-btn active" data-purchase-filter="all" onclick="setPurchaseFilter('all', this)">전체</button>
+            <button class="sub-tab-btn" data-purchase-filter="todo" onclick="setPurchaseFilter('todo', this)">미구매</button>
+            <button class="sub-tab-btn" data-purchase-filter="done" onclick="setPurchaseFilter('done', this)">구매완료</button>
+          </div>
           <div id="purchase-list">
             <div class="skeleton-block" style="height: 60px; margin-bottom: 8px"></div>
             <div class="skeleton-block" style="height: 60px; margin-bottom: 8px"></div>

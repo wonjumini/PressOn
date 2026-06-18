@@ -2295,18 +2295,24 @@ function parsePurchase(json) {
   }
 }
 
+let purchaseItems = [];
+let purchaseFilter = "all";
+
 function renderPurchase(result) {
   const el = document.getElementById("purchase-list");
+  const filterBar = document.getElementById("purchase-filter");
   if (!el) return;
 
   if (!result.ok) {
+    if (filterBar) filterBar.hidden = true;
     el.innerHTML = `<div class="error-state"><p class="error-msg">구매 물품을 불러오지 못했어요</p><p class="error-sub">네트워크가 느리거나 불안정할 수 있어요</p><button class="retry-btn" onclick="loadPurchase()">다시 시도</button></div>`;
     return;
   }
 
-  const items = parsePurchase(result.data);
+  purchaseItems = parsePurchase(result.data);
 
-  if (items.length === 0) {
+  if (purchaseItems.length === 0) {
+    if (filterBar) filterBar.hidden = true;
     el.innerHTML = `
       <div class="empty-state">
         <div class="empty-icon">📦</div>
@@ -2316,12 +2322,40 @@ function renderPurchase(result) {
     return;
   }
 
-  const done = items.filter((it) => it.bought).length;
-  const check = '<svg class="svgi" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>';
+  if (filterBar) filterBar.hidden = false;
+  renderPurchaseList();
+}
 
-  el.innerHTML =
-    `<div class="pur-summary">전체 ${items.length}개 · 구매완료 <b>${done}</b>개</div>` +
-    items
+function setPurchaseFilter(f, btn) {
+  purchaseFilter = f;
+  document
+    .querySelectorAll("#purchase-filter .sub-tab-btn")
+    .forEach((b) => b.classList.remove("active"));
+  if (btn) btn.classList.add("active");
+  renderPurchaseList();
+}
+
+function renderPurchaseList() {
+  const el = document.getElementById("purchase-list");
+  if (!el) return;
+
+  const total = purchaseItems.length;
+  const done = purchaseItems.filter((it) => it.bought).length;
+  const filtered =
+    purchaseFilter === "done"
+      ? purchaseItems.filter((it) => it.bought)
+      : purchaseFilter === "todo"
+        ? purchaseItems.filter((it) => !it.bought)
+        : purchaseItems;
+
+  const check = '<svg class="svgi" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>';
+  const summary = `<div class="pur-summary">전체 ${total}개 · 구매완료 <b>${done}</b>개</div>`;
+
+  let body;
+  if (filtered.length === 0) {
+    body = `<div class="pur-empty">${purchaseFilter === "done" ? "구매완료한 물품이 없어요" : "미구매 물품이 없어요"}</div>`;
+  } else {
+    body = filtered
       .map((it) => {
         const meta = [it.category, it.team].filter(Boolean).map(escHtml).join(" · ");
         return `
@@ -2335,6 +2369,9 @@ function renderPurchase(result) {
         </div>`;
       })
       .join("");
+  }
+
+  el.innerHTML = summary + body;
 }
 
 async function loadPurchase() {
