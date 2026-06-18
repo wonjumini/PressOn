@@ -2277,7 +2277,9 @@ function parsePurchase(json) {
     for (let r = dataStart; r < rows.length; r++) {
       const name = safeStr(rows[r], idx.name);
       if (!name || name === "물품" || name === "합") continue;
-      if (safeStr(rows[r], 0) === "예") continue; // 예시 행
+      const seq = safeStr(rows[r], 0);
+      if (seq === "예" || seq === "예시" || /^(예|예시|ex|example)$/i.test(seq))
+        continue; // 예시 행 제외
 
       const category = idx.category >= 0 ? safeStr(rows[r], idx.category) : "";
       const team = idx.team >= 0 ? safeStr(rows[r], idx.team) : "";

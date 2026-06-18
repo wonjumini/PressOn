@@ -365,16 +365,15 @@ body {
   pointer-events: auto;
 }
 
-/* 현지 일정 — 사역지 지도 (진입 버튼 + 펼침) */
+/* 현지 일정 — 사역지 지도 (진입 카드 + 펼침) */
 .map-entry {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-items: stretch;
   width: 100%;
   background: var(--surface);
   border: 1px solid var(--bd);
   border-radius: 14px;
-  padding: 14px 16px;
+  overflow: hidden;
   margin-bottom: 14px;
   font-family: inherit;
   text-align: left;
@@ -384,26 +383,51 @@ body {
 .map-entry:active {
   transform: scale(0.99);
 }
-.map-entry-ico {
+.map-entry-thumb {
   flex: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 11px;
-  background: var(--pri-lt);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--pri);
+  width: 84px;
+  position: relative;
+  background: linear-gradient(135deg, #dde8e1, #cadcea);
+  overflow: hidden;
 }
-.map-entry-ico .svgi {
-  width: 20px;
-  height: 20px;
+.map-entry-thumb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.45) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.45) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.map-entry-thumb::after {
+  content: "";
+  position: absolute;
+  left: 26%;
+  top: 58%;
+  width: 46%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 2px;
+  transform: rotate(-8deg);
+}
+.map-entry-pin {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  transform: translateX(-50%);
+  color: var(--acc);
+  z-index: 1;
+}
+.map-entry-pin .svgi {
+  width: 17px;
+  height: 17px;
 }
 .map-entry-tx {
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  padding: 13px 14px;
 }
 .map-entry-t1 {
   font-size: 13.5px;
@@ -413,13 +437,20 @@ body {
 .map-entry-t2 {
   font-size: 11px;
   color: var(--t3);
-  margin-top: 1px;
+  margin-top: 3px;
+  line-height: 1.4;
 }
 .map-entry-chev {
   flex: none;
-  color: var(--t4);
   display: flex;
+  align-items: center;
+  color: var(--t4);
+  padding-right: 12px;
   transition: transform 0.3s var(--ease);
+}
+.map-entry-chev .svgi {
+  width: 18px;
+  height: 18px;
 }
 .map-entry.open .map-entry-chev {
   transform: rotate(90deg);
