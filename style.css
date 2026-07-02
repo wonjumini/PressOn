@@ -365,17 +365,22 @@ body {
   pointer-events: auto;
 }
 
-/* 현지 일정 — 일자별 Leaflet 지도 */
+/* 현지 일정 — 일자별 지도 (구글 My Maps) */
 .nepal-day-map {
-  height: 240px;
   border-radius: 12px;
   overflow: hidden;
   margin: 12px 0 4px;
   border: 1px solid var(--bd);
   background: var(--bg2);
 }
-.nepal-day-map:empty {
+.nepal-day-map[hidden] {
   display: none;
+}
+.nepal-day-map iframe {
+  display: block;
+  width: 100%;
+  height: 260px;
+  border: 0;
 }
 
 /* 구매 물품 */

@@ -2001,8 +2001,17 @@ function closeNepal() {
   const overlay = document.getElementById("nepalOverlay");
   overlay.classList.remove("open");
 }
-/* ═══ Leaflet 일자별 지도 ═══ */
-const nepalMaps = {}; // { dayIdx: L.Map instance }
+/* ═══ 현지 일자별 지도 (구글 My Maps · 날짜별 개별 지도) ═══ */
+const NEPAL_DAY_MIDS = [
+  "1ZZhAsfSJhIont9xpVd6CZElJWUd1BiM",
+  "1mCJBApdkNkpP__-Pb_ub-SdTzpA5QVQ",
+  "1zjzNJklIhEQ7QxMImR_0hXkNaIjoQHs",
+  "1ppPaIKH5i-DhHsNWFIY94nCzoQfuUI0",
+  "1Hf5dFIGwlApmYBqHXGBb9sK0qzDaxQ8",
+  "1uS7nUXy-vTTegplbrUSwcsFZp2-fmW4",
+  "1i8rriQ0LZ-43eY6OuAU_u0WJOWF1buY",
+  "1rQOgt3vxWTFJbztlNlXaFJbJnEjX9Fo",
+];
 
 function toggleNepalDay(idx) {
   const acc = document.getElementById(`nday-${idx}`);
@@ -2012,108 +2021,22 @@ function toggleNepalDay(idx) {
   acc.classList.toggle("open", !isOpen);
   if (chev) chev.classList.toggle("open", !isOpen);
 
+  const wrap = document.getElementById(`nday-map-${idx}`);
+  if (!wrap) return;
+
   if (!isOpen) {
-    // 펼칠 때 해당 날짜 지도 로드 (day1~day8, idx 0~7)
-    const dayNum = idx + 1;
-    if (dayNum <= 8) initNepalDayMap(idx, dayNum);
+    // 펼칠 때: 첫 열림이면 iframe 주입 (day1~day8 = idx 0~7)
+    const mid = NEPAL_DAY_MIDS[idx];
+    if (mid && !wrap.dataset.loaded) {
+      wrap.innerHTML =
+        `<iframe src="https://www.google.com/maps/d/embed?mid=${mid}&noprof=1" title="네팔 ${idx + 1}일차 지도" loading="lazy"></iframe>`;
+      wrap.dataset.loaded = "1";
+    }
+    wrap.hidden = false;
+  } else {
+    // 접을 때: 지도 숨김
+    wrap.hidden = true;
   }
-}
-
-function initNepalDayMap(idx, dayNum) {
-  const el = document.getElementById(`nday-map-${idx}`);
-  if (!el || el.dataset.loaded) return;
-
-  // Leaflet CSS/JS 지연 로드
-  loadLeaflet(() => {
-    el.dataset.loaded = "1";
-    const L = window.L;
-
-    const map = L.map(el, {
-      zoomControl: true,
-      scrollWheelZoom: false,
-      attributionControl: false,
-    });
-
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 16,
-    }).addTo(map);
-
-    // 브랜드 핀 아이콘
-    const pinIcon = (order) => L.divIcon({
-      className: "",
-      html: `<div style="
-        width:28px;height:28px;border-radius:50% 50% 50% 0;
-        background:#0064ff;border:2px solid #fff;
-        box-shadow:0 2px 6px rgba(0,0,0,.25);
-        display:flex;align-items:center;justify-content:center;
-        color:#fff;font-size:11px;font-weight:800;
-        transform:rotate(-45deg)">
-        <span style="transform:rotate(45deg)">${order}</span></div>`,
-      iconSize: [28, 28],
-      iconAnchor: [14, 28],
-      popupAnchor: [0, -30],
-    });
-
-    fetch(`maps/day${dayNum}.geojson`)
-      .then((r) => r.json())
-      .then((gj) => {
-        const bounds = [];
-        let pinCount = 0;
-
-        gj.features.forEach((f) => {
-          if (f.geometry.type === "Point") {
-            pinCount++;
-            const [lng, lat] = f.geometry.coordinates;
-            bounds.push([lat, lng]);
-            L.marker([lat, lng], { icon: pinIcon(pinCount) })
-              .addTo(map)
-              .bindPopup(
-                `<b style="font-size:13px;font-family:Pretendard,sans-serif">${f.properties.name}</b>`
-              );
-          } else if (f.geometry.type === "LineString") {
-            const latlngs = f.geometry.coordinates.map(([lng, lat]) => [lat, lng]);
-            L.polyline(latlngs, {
-              color: "#0064ff",
-              weight: 2.5,
-              opacity: 0.7,
-              dashArray: "6 4",
-            }).addTo(map);
-          }
-        });
-
-        if (bounds.length) {
-          map.fitBounds(bounds, { padding: [32, 32] });
-        }
-        nepalMaps[idx] = map;
-      })
-      .catch(() => {
-        el.innerHTML = `<div style="text-align:center;padding:24px;color:#8b95a1;font-size:13px">지도를 불러오지 못했어요</div>`;
-      });
-
-    // 아코디언 열릴 때 타일 깨짐 방지
-    setTimeout(() => map.invalidateSize(), 350);
-  });
-}
-
-// Leaflet CSS+JS 최초 한 번만 로드
-let _leafletLoaded = false;
-let _leafletCallbacks = [];
-function loadLeaflet(cb) {
-  if (_leafletLoaded) { cb(); return; }
-  _leafletCallbacks.push(cb);
-  if (_leafletCallbacks.length > 1) return; // 이미 로딩 중
-  const link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-  document.head.appendChild(link);
-  const script = document.createElement("script");
-  script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-  script.onload = () => {
-    _leafletLoaded = true;
-    _leafletCallbacks.forEach((fn) => fn());
-    _leafletCallbacks = [];
-  };
-  document.head.appendChild(script);
 }
 
 function togglePlan(idx) {
