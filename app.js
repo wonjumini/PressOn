@@ -2001,6 +2001,9 @@ function closeNepal() {
   const overlay = document.getElementById("nepalOverlay");
   overlay.classList.remove("open");
 }
+/* ═══ Leaflet 일자별 지도 ═══ */
+const nepalMaps = {}; // { dayIdx: L.Map instance }
+
 function toggleNepalDay(idx) {
   const acc = document.getElementById(`nday-${idx}`);
   const chev = document.getElementById(`nchev-${idx}`);
@@ -2008,6 +2011,109 @@ function toggleNepalDay(idx) {
   const isOpen = acc.classList.contains("open");
   acc.classList.toggle("open", !isOpen);
   if (chev) chev.classList.toggle("open", !isOpen);
+
+  if (!isOpen) {
+    // 펼칠 때 해당 날짜 지도 로드 (day1~day8, idx 0~7)
+    const dayNum = idx + 1;
+    if (dayNum <= 8) initNepalDayMap(idx, dayNum);
+  }
+}
+
+function initNepalDayMap(idx, dayNum) {
+  const el = document.getElementById(`nday-map-${idx}`);
+  if (!el || el.dataset.loaded) return;
+
+  // Leaflet CSS/JS 지연 로드
+  loadLeaflet(() => {
+    el.dataset.loaded = "1";
+    const L = window.L;
+
+    const map = L.map(el, {
+      zoomControl: true,
+      scrollWheelZoom: false,
+      attributionControl: false,
+    });
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 16,
+    }).addTo(map);
+
+    // 브랜드 핀 아이콘
+    const pinIcon = (order) => L.divIcon({
+      className: "",
+      html: `<div style="
+        width:28px;height:28px;border-radius:50% 50% 50% 0;
+        background:#0064ff;border:2px solid #fff;
+        box-shadow:0 2px 6px rgba(0,0,0,.25);
+        display:flex;align-items:center;justify-content:center;
+        color:#fff;font-size:11px;font-weight:800;
+        transform:rotate(-45deg)">
+        <span style="transform:rotate(45deg)">${order}</span></div>`,
+      iconSize: [28, 28],
+      iconAnchor: [14, 28],
+      popupAnchor: [0, -30],
+    });
+
+    fetch(`maps/day${dayNum}.geojson`)
+      .then((r) => r.json())
+      .then((gj) => {
+        const bounds = [];
+        let pinCount = 0;
+
+        gj.features.forEach((f) => {
+          if (f.geometry.type === "Point") {
+            pinCount++;
+            const [lng, lat] = f.geometry.coordinates;
+            bounds.push([lat, lng]);
+            L.marker([lat, lng], { icon: pinIcon(pinCount) })
+              .addTo(map)
+              .bindPopup(
+                `<b style="font-size:13px;font-family:Pretendard,sans-serif">${f.properties.name}</b>`
+              );
+          } else if (f.geometry.type === "LineString") {
+            const latlngs = f.geometry.coordinates.map(([lng, lat]) => [lat, lng]);
+            L.polyline(latlngs, {
+              color: "#0064ff",
+              weight: 2.5,
+              opacity: 0.7,
+              dashArray: "6 4",
+            }).addTo(map);
+          }
+        });
+
+        if (bounds.length) {
+          map.fitBounds(bounds, { padding: [32, 32] });
+        }
+        nepalMaps[idx] = map;
+      })
+      .catch(() => {
+        el.innerHTML = `<div style="text-align:center;padding:24px;color:#8b95a1;font-size:13px">지도를 불러오지 못했어요</div>`;
+      });
+
+    // 아코디언 열릴 때 타일 깨짐 방지
+    setTimeout(() => map.invalidateSize(), 350);
+  });
+}
+
+// Leaflet CSS+JS 최초 한 번만 로드
+let _leafletLoaded = false;
+let _leafletCallbacks = [];
+function loadLeaflet(cb) {
+  if (_leafletLoaded) { cb(); return; }
+  _leafletCallbacks.push(cb);
+  if (_leafletCallbacks.length > 1) return; // 이미 로딩 중
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+  document.head.appendChild(link);
+  const script = document.createElement("script");
+  script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+  script.onload = () => {
+    _leafletLoaded = true;
+    _leafletCallbacks.forEach((fn) => fn());
+    _leafletCallbacks = [];
+  };
+  document.head.appendChild(script);
 }
 
 function togglePlan(idx) {
@@ -2213,20 +2319,6 @@ function loadIfStale(id, loadFn) {
 /* ═══ 구매 물품 ═══ */
 // 헤더 이름으로 컬럼을 찾아 매핑 (시트 컬럼 순서가 바뀌어도 안전)
 /* ═══ 현지 사역지 지도 (탭하면 펼침, 첫 펼침에만 iframe 로드) ═══ */
-function toggleNepalMap() {
-  const wrap = document.getElementById("nepal-map");
-  const btn = document.getElementById("map-entry-btn");
-  if (!wrap || !btn) return;
-  const opening = wrap.hidden;
-  if (opening && !wrap.dataset.loaded) {
-    wrap.innerHTML =
-      '<iframe src="https://www.google.com/maps/d/embed?mid=1Qf8TYM_JzISBOFBnWKWm8yQ5aj5CBB4&ll=27.692427779269345,85.295505&z=13&noprof=1" title="네팔 사역지 지도" loading="lazy"></iframe>';
-    wrap.dataset.loaded = "1";
-  }
-  wrap.hidden = !opening;
-  btn.classList.toggle("open", opening);
-}
-
 /* ═══ 구매 물품 ═══ */
 function parsePurchase(json) {
   try {

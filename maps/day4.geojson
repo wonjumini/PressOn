@@ -1,0 +1,74 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          84.8886772,
+          27.9113895
+        ]
+      },
+      "properties": {
+        "name": "다딩 호텔",
+        "desc": "",
+        "order": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          84.7503416,
+          27.7803453
+        ]
+      },
+      "properties": {
+        "name": "너우모레 교회",
+        "desc": "",
+        "order": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.9659298,
+          28.2040147
+        ]
+      },
+      "properties": {
+        "name": "포카라 호텔",
+        "desc": "",
+        "order": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            84.8886408,
+            27.9113869
+          ],
+          [
+            84.7503416,
+            27.7803453
+          ],
+          [
+            83.9658864,
+            28.2039222
+          ]
+        ]
+      },
+      "properties": {
+        "name": "경로",
+        "type": "route"
+      }
+    }
+  ]
+}
